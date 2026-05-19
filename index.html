@@ -298,6 +298,140 @@
       footer a:hover {
         text-decoration: underline;
       }
+
+      /* ── PDF export button ── */
+      .btn-pdf {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: var(--red);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        padding: 9px 20px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+
+      .btn-pdf:hover {
+        background: #a00d00;
+      }
+
+      .btn-pdf svg {
+        flex-shrink: 0;
+      }
+
+      /* ── Print / PDF styles ── */
+      @media print {
+        /* Hide interactive UI */
+        .topbar,
+        .btn-pdf,
+        .copilot-note,
+        .toc,
+        .btn-chapter,
+        .quickref,
+        footer {
+          display: none !important;
+        }
+
+        /* Reset layout for paper */
+        body {
+          font-size: 10pt;
+          color: #000;
+          background: #fff;
+          line-height: 1.5;
+        }
+
+        main {
+          max-width: 100%;
+          margin: 0;
+          padding: 0 16pt;
+        }
+
+        /* Header repeated on every page */
+        header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1.5pt solid #1a1a1a;
+          padding: 10pt 0 8pt;
+          margin-bottom: 18pt;
+          position: running(header);
+        }
+
+        .header-address {
+          border-left: 3pt solid #1a1a1a;
+          padding-left: 10pt;
+          font-size: 9pt;
+        }
+
+        .logo-wmc {
+          font-size: 20pt;
+        }
+
+        .logo-name {
+          font-size: 6pt;
+          letter-spacing: 0.3em;
+        }
+
+        .logo-tagline {
+          font-size: 8pt;
+          color: #cc1100;
+        }
+
+        /* Document title */
+        .doc-title {
+          border-bottom: 2pt solid #cc1100;
+          padding-bottom: 10pt;
+          margin-bottom: 20pt;
+        }
+
+        .doc-title h1 {
+          font-size: 18pt;
+        }
+
+        /* Chapter sections */
+        .chapter {
+          border-top: 1pt solid #aaa;
+          padding-top: 14pt;
+          margin-bottom: 20pt;
+          page-break-inside: avoid;
+          break-inside: avoid;
+        }
+
+        .chapter-num {
+          background: #cc1100;
+          color: #fff;
+          font-size: 7pt;
+          padding: 2pt 6pt;
+        }
+
+        .chapter h2 {
+          font-size: 13pt;
+        }
+
+        .chapter-desc {
+          font-size: 9pt;
+        }
+
+        .chapter-topics li {
+          font-size: 8.5pt;
+        }
+
+        /* Avoid orphan headings */
+        h1, h2, h3 {
+          page-break-after: avoid;
+          break-after: avoid;
+        }
+
+        a {
+          color: #000;
+          text-decoration: none;
+        }
+      }
     </style>
   </head>
   <body>
@@ -307,10 +441,21 @@
       <div class="header-address">
         WAMOCON GmbH, Mergenthalerallee 79-81, 65760 Eschborn
       </div>
-      <div class="logo">
-        <div class="logo-wmc">WMC</div>
-        <div class="logo-name">W A M O C O N</div>
-        <div class="logo-tagline">IT-Testmanagement</div>
+      <div style="display:flex;align-items:center;gap:28px;">
+        <button class="btn-pdf" onclick="window.print()" title="Handbuch als PDF exportieren">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="18" x2="12" y2="12"/>
+            <polyline points="9 15 12 18 15 15"/>
+          </svg>
+          Als PDF exportieren
+        </button>
+        <div class="logo">
+          <div class="logo-wmc">WMC</div>
+          <div class="logo-name">W A M O C O N</div>
+          <div class="logo-tagline">IT-Testmanagement</div>
+        </div>
       </div>
     </header>
 
