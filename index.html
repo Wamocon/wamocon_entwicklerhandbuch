@@ -58,29 +58,30 @@
         text-transform: uppercase;
       }
 
-      h1,
+      h1 {
+        margin: 16px 0 12px;
+        font-size: 1.8rem;
+        line-height: 1.3;
+      }
+
       h2 {
-        margin: 0 0 16px;
+        margin: 0 0 20px;
+        font-size: 1.2rem;
+        color: var(--accent);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 10px;
       }
 
       p {
         color: var(--muted);
         line-height: 1.6;
+        margin: 0 0 8px;
       }
 
-      .status-grid,
       .chapter-grid {
         display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 16px;
-      }
-
-      .status-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        margin-top: 24px;
-      }
-
-      .chapter-grid {
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       }
 
       .card {
@@ -88,11 +89,39 @@
         border: 1px solid var(--border);
         border-radius: 16px;
         padding: 20px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        text-decoration: none;
+        display: block;
+        color: inherit;
+      }
+
+      .card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 4px 24px rgba(31, 208, 176, 0.12);
+      }
+
+      .card-num {
+        display: inline-block;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: bold;
+        padding: 3px 9px;
+        border-radius: 999px;
+        margin-bottom: 10px;
+        letter-spacing: 0.04em;
       }
 
       .card strong {
         display: block;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
+        font-size: 1rem;
+        color: var(--text);
+      }
+
+      .card p {
+        font-size: 0.88rem;
+        margin: 0;
       }
 
       .panel {
@@ -104,14 +133,22 @@
         color: #8feedd;
       }
 
-      ul {
-        color: var(--muted);
-        padding-left: 20px;
+      .copilot-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent-soft);
+        border: 1px solid rgba(31, 208, 176, 0.3);
+        border-radius: 12px;
+        padding: 12px 18px;
+        margin-top: 16px;
+        font-size: 0.9rem;
+        color: var(--text);
       }
 
-      .timestamp {
-        font-weight: bold;
-        color: var(--text);
+      .copilot-badge::before {
+        content: "🤖";
+        font-size: 1.2rem;
       }
     </style>
   </head>
@@ -119,75 +156,147 @@
     <main>
       <section class="hero">
         <span class="eyebrow">WAMOCON Entwicklerhandbuch</span>
-        <h1>Fortschrittsstand, Kapitelstruktur und GitHub-Pages-Startseite</h1>
+        <h1>Das offizielle Entwicklerhandbuch der WAMOCON Organisation</h1>
         <p>
-          Diese Seite bündelt den aktuellen Arbeitsstand des Entwicklerhandbuchs inklusive
-          Index, Markdown-Kapiteln, WAMOCON-Design, Pages-Workflow und Linkmanagement.
+          Vollständige Dokumentation von GitHub-Struktur, Tech Stack, Entwicklungsprozess,
+          Supabase, Vercel, Sicherheit, KI-Workflows und dem gesamten Produkt-Ökosystem.
         </p>
-        <p class="timestamp">Letzter dokumentierter Stand: 2026-05-19 09:02 UTC</p>
-
-        <div class="status-grid">
-          <article class="card">
-            <strong>Index.html</strong>
-            Startseite steht bereit und verlinkt die Kernbereiche des Handbuchs.
-          </article>
-          <article class="card">
-            <strong>Markdown-Kapitel</strong>
-            Kapitel liegen im Ordner <code>chapters/</code> und sind direkt referenziert.
-          </article>
-          <article class="card">
-            <strong>Pages-Workflow</strong>
-            Deployment erfolgt über GitHub Actions nach GitHub Pages.
-          </article>
-          <article class="card">
-            <strong>Live-Updates</strong>
-            Dauerhafte Chat-Autoupdates sind nicht möglich; Statusabruf erfolgt manuell.
-          </article>
+        <div class="copilot-badge">
+          Die gesamte App-Entwicklung bei WAMOCON wird vollständig mit <strong style="color:var(--accent);margin:0 4px;">GitHub Copilot</strong> durchgeführt.
         </div>
       </section>
 
       <section class="panel">
-        <h2>Status- und Kapitelübersicht</h2>
+        <h2>Kapitel 01–05 – Handbuch-Infrastruktur</h2>
         <div class="chapter-grid">
-          <article class="card">
-            <strong><a href="./STATUS.md">STATUS.md</a></strong>
-            Sofortiger Status-Report mit Ablaufplan, Timestamp und To-do-Status.
-          </article>
-          <article class="card">
-            <strong><a href="./chapters/01_komplettplan.md">Kapitel 01 – Kompletter Plan</a></strong>
-            Gesamtplan des Entwicklerhandbuchs mit Supabase-Ergänzung.
-          </article>
-          <article class="card">
-            <strong><a href="./chapters/02_fortschrittsbericht.md">Kapitel 02 – Fortschrittsbericht</a></strong>
-            Regeln für laufende Statusberichte und manuelle Abrufe.
-          </article>
-          <article class="card">
-            <strong><a href="./chapters/03_pages-workflow.md">Kapitel 03 – Pages-Workflow</a></strong>
-            Deployment-Ablauf für die statische Dokumentationsseite.
-          </article>
-          <article class="card">
-            <strong><a href="./chapters/04_linkmanagement.md">Kapitel 04 – Linkmanagement</a></strong>
-            Richtlinien für interne und externe Verlinkungen.
-          </article>
-          <article class="card">
-            <strong><a href="./chapters/05_wamocon-design.md">Kapitel 05 – WAMOCON-Design</a></strong>
-            Farbwelt, Kartenlayout und visuelle Grundregeln der Startseite.
-          </article>
+          <a class="card" href="./chapters/01_komplettplan.md">
+            <span class="card-num">KAP 01</span>
+            <strong>Kompletter Plan</strong>
+            <p>Gesamtplan des Entwicklerhandbuchs mit Kapitelübersicht.</p>
+          </a>
+          <a class="card" href="./chapters/02_fortschrittsbericht.md">
+            <span class="card-num">KAP 02</span>
+            <strong>Fortschrittsbericht</strong>
+            <p>Regeln für laufende Statusberichte und manuelle Abrufe.</p>
+          </a>
+          <a class="card" href="./chapters/03_pages-workflow.md">
+            <span class="card-num">KAP 03</span>
+            <strong>Pages-Workflow</strong>
+            <p>Deployment-Ablauf für diese Dokumentationsseite.</p>
+          </a>
+          <a class="card" href="./chapters/04_linkmanagement.md">
+            <span class="card-num">KAP 04</span>
+            <strong>Linkmanagement</strong>
+            <p>Richtlinien für interne und externe Verlinkungen.</p>
+          </a>
+          <a class="card" href="./chapters/05_wamocon-design.md">
+            <span class="card-num">KAP 05</span>
+            <strong>WAMOCON-Design</strong>
+            <p>Farbwelt, Kartenlayout und visuelle Grundregeln.</p>
+          </a>
         </div>
       </section>
 
       <section class="panel">
-        <h2>Manueller Update-Ablauf</h2>
-        <ul>
-          <li>Im Chat nach einer Aktualisierung des EHB-Fortschrittsberichts fragen.</li>
-          <li><a href="./STATUS.md">STATUS.md</a> für den letzten dokumentierten Stand prüfen.</li>
-          <li>Nach Deployments die GitHub-Pages-Seite neu laden.</li>
-          <li>
-            Den Workflow unter
-            <a href="https://github.com/Wamocon/wamocon_entwicklerhandbuch/blob/main/.github/workflows/pages.yml"><code>.github/workflows/pages.yml</code></a>
-            kontrollieren.
-          </li>
-        </ul>
+        <h2>Kapitel 06–09 – Organisation & Prozesse</h2>
+        <div class="chapter-grid">
+          <a class="card" href="./chapters/06_github-repository-struktur.md">
+            <span class="card-num">KAP 06</span>
+            <strong>GitHub & Repository-Struktur</strong>
+            <p>Naming Conventions, Repository-Typen, Branching-Strategie main/dev, Commit-Konventionen, CI/CD-Übersicht.</p>
+          </a>
+          <a class="card" href="./chapters/07_tech-stack-standards.md">
+            <span class="card-num">KAP 07</span>
+            <strong>Tech Stack & Standards</strong>
+            <p>Next.js 16, TypeScript, Tailwind CSS v4, Supabase, Vercel — Konfiguration und Konventionen.</p>
+          </a>
+          <a class="card" href="./chapters/08_entwicklungsprozess.md">
+            <span class="card-num">KAP 08</span>
+            <strong>Entwicklungsprozess</strong>
+            <p>Von der Idee bis zur Produktion: Anforderungsdokument, Infrastruktur beantragen, Copilot-Entwicklung, Landing Page generieren.</p>
+          </a>
+          <a class="card" href="./chapters/09_jira-aufgabenmanagement.md">
+            <span class="card-num">KAP 09</span>
+            <strong>Jira & Aufgabenmanagement</strong>
+            <p>Optional bei Wellen-Apps, verpflichtend bei großen Projekten. Ticket-Typen, Status-Workflow, ARGUS Review Pipeline.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Kapitel 10–12 – Infrastruktur & Deployment</h2>
+        <div class="chapter-grid">
+          <a class="card" href="./chapters/10_supabase.md">
+            <span class="card-num">KAP 10</span>
+            <strong>Supabase Cloud Projekt</strong>
+            <p>Pro-Version, Beantragung per E-Mail, env.local Einrichtung, Migrationen, RLS, lokale Instanz als Fallback.</p>
+          </a>
+          <a class="card" href="./chapters/11_vercel-deployment.md">
+            <span class="card-num">KAP 11</span>
+            <strong>Vercel Deployment</strong>
+            <p>Hobby Plan, GitHub Actions Workflow, initiales Setup, Domain-Konfiguration. Landing Pages bevorzugt auf GitHub Pages.</p>
+          </a>
+          <a class="card" href="./chapters/12_sicherheit-code-qualitaet.md">
+            <span class="card-num">KAP 12</span>
+            <strong>Sicherheit & Code-Qualität</strong>
+            <p>RLS-Pflicht, Zod-Validierung, Umgang mit Secrets, TypeScript Strict Mode, ESLint, Dependency-Sicherheit.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Kapitel 13–15 – KI, Apps & Referenzen</h2>
+        <div class="chapter-grid">
+          <a class="card" href="./chapters/13_ki-entwicklung-copilot.md">
+            <span class="card-num">KAP 13</span>
+            <strong>KI-Entwicklung & Copilot-Workflows</strong>
+            <p>@planner, @developer, @reviewer Agents. Copilot Instructions, Supabase MCP für Datenbankkontext.</p>
+          </a>
+          <a class="card" href="./chapters/14_produkt-oekosystem.md">
+            <span class="card-num">KAP 14</span>
+            <strong>Produkt-Ökosystem & App-Katalog</strong>
+            <p>Alle bestehenden WAMOCON-Apps alphabetisch mit Links — Apps, Landing Pages und Infrastruktur-Repositories.</p>
+          </a>
+          <a class="card" href="./chapters/15_glossar-referenzen.md">
+            <span class="card-num">KAP 15</span>
+            <strong>Glossar & Referenzen</strong>
+            <p>WAMOCON-Begriffe, technisches Glossar, Tool-Referenz, externe Dokumentationen und interne Links.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Schnellzugriff</h2>
+        <div class="chapter-grid">
+          <div class="card">
+            <strong>🚀 Neue App starten</strong>
+            <p>
+              <a href="./chapters/08_entwicklungsprozess.md">Kapitel 08 – Entwicklungsprozess</a> →
+              Template Repo klonen → Anforderungsdokument in Copilot laden
+            </p>
+          </div>
+          <div class="card">
+            <strong>🗄️ Supabase einrichten</strong>
+            <p>
+              <a href="./chapters/10_supabase.md">Kapitel 10 – Supabase</a> →
+              Per E-Mail beantragen → env.local befüllen → Migrationen mit Copilot
+            </p>
+          </div>
+          <div class="card">
+            <strong>🌐 Deployen</strong>
+            <p>
+              <a href="./chapters/11_vercel-deployment.md">Kapitel 11 – Vercel</a> →
+              Vercel Project ID als Secret → Push auf main → automatisches Deploy
+            </p>
+          </div>
+          <div class="card">
+            <strong>🤖 Copilot nutzen</strong>
+            <p>
+              <a href="./chapters/13_ki-entwicklung-copilot.md">Kapitel 13 – KI & Copilot</a> →
+              @planner → @developer → @reviewer → PR erstellen
+            </p>
+          </div>
+        </div>
       </section>
     </main>
   </body>

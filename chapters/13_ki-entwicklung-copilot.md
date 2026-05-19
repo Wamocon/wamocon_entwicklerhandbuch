@@ -7,7 +7,7 @@ Jedes App-Repository enthält vorkonfigurierte Agents, Instructions und globale 
 
 ## Copilot-Konfigurationsstruktur
 
-```
+```text
 .github/
 ├── copilot-instructions.md        # Globale Regeln (für jede Copilot-Interaktion)
 ├── instructions/
@@ -19,8 +19,7 @@ Jedes App-Repository enthält vorkonfigurierte Agents, Instructions und globale 
     ├── planner.agent.md           # @planner – Planung ohne Code
     ├── developer.agent.md         # @developer – Implementierung mit Verifikation
     └── reviewer.agent.md          # @reviewer – Code-Review vor dem PR
-```
-
+```text
 ## Die drei Copilot-Agents
 
 ### `@planner` — Technische Planung
@@ -38,11 +37,10 @@ Jedes App-Repository enthält vorkonfigurierte Agents, Instructions und globale 
 
 **Beispiel:**
 
-```
+```text
 @planner Analysiere, was für eine Authentifizierungsseite mit Supabase
 benötigt wird. Erstelle einen nummerierten Implementierungsplan.
-```
-
+```text
 ---
 
 ### `@developer` — Strukturierte Implementierung
@@ -61,10 +59,9 @@ benötigt wird. Erstelle einen nummerierten Implementierungsplan.
 
 **Beispiel:**
 
-```
+```text
 @developer Implementiere diesen Plan: [Plan aus @planner einfügen]
-```
-
+```text
 ---
 
 ### `@reviewer` — Code-Review vor dem PR
@@ -81,18 +78,16 @@ benötigt wird. Erstelle einen nummerierten Implementierungsplan.
 
 **Beispiel:**
 
-```
+```text
 @reviewer Überprüfe die Änderungen in src/app/dashboard/ vor dem PR.
-```
-
+```text
 ---
 
 ## Empfohlener Workflow
 
-```
+```text
 @planner  →  @developer  →  @reviewer  →  PR erstellen
-```
-
+```text
 1. `@planner`: Aufgabe analysieren und Implementierungsplan erstellen lassen
 2. `@developer`: Plan übergeben und implementieren lassen
 3. `@reviewer`: Code prüfen lassen, Review-Bericht lesen
@@ -103,7 +98,7 @@ benötigt wird. Erstelle einen nummerierten Implementierungsplan.
 Instructions werden automatisch geladen, wenn Copilot an Dateien arbeitet, die dem `applyTo`-Glob-Muster entsprechen:
 
 | Datei | Gilt für | Inhalt |
-|---|---|---|
+| --- | --- | --- |
 | `nextjs.instructions.md` | `**/*.tsx, **/*.ts` | Next.js 16 App Router Patterns, async APIs, Server/Client Components |
 | `tailwind.instructions.md` | `**/*.tsx, **/*.css` | Tailwind CSS v4 Utility-First, Responsive Design |
 | `typescript.instructions.md` | `**/*.ts, **/*.tsx` | Strict Mode, Naming Conventions, Type Safety |
@@ -116,8 +111,7 @@ Instructions werden automatisch geladen, wenn Copilot an Dateien arbeitet, die d
 applyTo: "**/*.tsx"
 ---
 # Deine projektspezifischen Regeln hier
-```
-
+```text
 ## Supabase MCP — Datenbankkontext für Copilot
 
 Der **Supabase MCP (Model Context Protocol) Server** gibt Copilot Zugriff auf das echte Datenbankschema. Damit generiert Copilot akkuraten Code statt Tabellenstrukturen zu raten.
@@ -144,8 +138,7 @@ Der **Supabase MCP (Model Context Protocol) Server** gibt Copilot Zugriff auf da
     }
   }
 }
-```
-
+```text
 ### VS Code Setup (Benutzer-Ebene, gilt für alle Repos)
 
 In VS Code User Settings (`settings.json`) unter `"mcp"` eintragen — Struktur wie oben.
@@ -160,14 +153,13 @@ In VS Code User Settings (`settings.json`) unter `"mcp"` eintragen — Struktur 
 
 Im Copilot-Chat:
 
-```
+```text
 Nutze MCP für Datenbank <project-ref>. Liste alle Schemas und Tabellen auf.
-```
-
+```text
 MCP aktiviert folgende Fähigkeiten in Copilot:
 
 | Fähigkeit | Beispiel-Prompt |
-|---|---|
+| --- | --- |
 | Tabellen auflisten | „Welche Tabellen gibt es im test-Schema?" |
 | Tabelle beschreiben | „Zeig mir die Spalten der orders-Tabelle" |
 | SQL generieren | „Schreib eine Abfrage für alle offenen Bestellungen mit Nutzerinfo" |
@@ -187,10 +179,9 @@ MCP aktiviert folgende Fähigkeiten in Copilot:
 Jeder Entwickler kann persönliche Copilot-Instructions definieren, die für alle Repos gelten:
 
 **Windows-Pfad:**
-```
+```text
 C:\Users\<user>\AppData\Roaming\Code\User\prompts\my-default.instructions.md
-```
-
+```text
 **Beispiel-Inhalt:**
 
 ```markdown
@@ -201,12 +192,11 @@ description: "Gilt für alle Repos"
 - Für Datenbankaufgaben MCP mit dem korrekten project-ref nutzen
 - Minimale, sichere Änderungen bevorzugen
 - Annahmen kommentieren
-```
-
+```text
 ## Fehlerbehebung bei Copilot-Problemen
 
 | Problem | Lösung |
-|---|---|
+| --- | --- |
 | Agent ignoriert Instructions | `applyTo`-Glob-Muster prüfen — ggf. breiter setzen (`**/*.ts` statt `src/**/*.ts`) |
 | Agent überspringt typecheck/lint | In `.agent.md` die Anweisung verschärfen: „muss" statt „sollte" |
 | Agent schreibt schlechten Next.js-Code | Konkretes Code-Beispiel in `nextjs.instructions.md` hinzufügen |

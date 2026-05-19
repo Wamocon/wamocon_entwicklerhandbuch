@@ -2,14 +2,14 @@
 
 ## Organisation
 
-Alle WAMOCON-Projekte sind unter der GitHub-Organisation **Wamocon** zusammengefasst.
+Alle WAMOCON-Projekte sind unter der GitHub-Organisation **[Wamocon](https://github.com/Wamocon)** zusammengefasst.
 Die Organisation enthält aktuell über 90 Repositories, die sich in drei Hauptkategorien unterteilen:
 
 | Kategorie | Beschreibung | Beispiele |
-|---|---|---|
+| --- | --- | --- |
 | **Apps** | TypeScript/Next.js-Webanwendungen | `wamohub`, `carman`, `TeamRadar`, `belegbox` |
 | **Landing Pages** | Statische HTML-Seiten für Apps | `carman_lp`, `trace_lp`, `away_lp` |
-| **Infrastruktur** | Shared Workflows, Templates, Docs | `github_workflow`, `localSupabaseDB`, `template_repo` |
+| **Infrastruktur** | Shared Workflows, Templates, Docs | [`github_workflow`](https://github.com/Wamocon/github_workflow), [`localSupabaseDB`](https://github.com/Wamocon/localSupabaseDB), [`template_repo`](https://github.com/Wamocon/template_repo) |
 
 ## Infrastruktur-Repositories
 
@@ -17,7 +17,7 @@ Die Organisation enthält aktuell über 90 Repositories, die sich in drei Hauptk
 
 Das zentrale CI/CD-Repository der Organisation. Enthält wiederverwendbare GitHub Actions Workflows, die alle Projekte einbinden:
 
-```
+```text
 github_workflow/
 ├── .github/workflows/
 │   ├── pr-checks.yml           # TypeScript + ESLint-Validierung (reusable)
@@ -34,8 +34,7 @@ github_workflow/
     ├── mcp-setup.md
     ├── github-copilot-guide.md
     └── tips-and-best-practices.md
-```
-
+```text
 ### `Wamocon/localSupabaseDB`
 
 Template-Repository für lokale Supabase-Entwicklungsumgebungen.
@@ -57,25 +56,46 @@ Das Haupt-App-Template der Organisation (intern „relda" genannt). Dient als Au
 
 ## Branch-Strategie
 
-Alle Projekte folgen derselben Branch-Konvention:
+### Standard: main / dev
 
-```
-main          ← Produktions-Branch, immer deploybar
-feature/xyz   ← Neue Funktionen
-fix/xyz       ← Fehlerbehebungen
-hotfix/xyz    ← Dringende Produktionskorrekturen
-chore/xyz     ← Wartung (Dependencies, Config)
-refactor/xyz  ← Code-Umstrukturierung
-```
+Der Standardansatz bei allen WAMOCON-Apps:
 
-**Wichtigste Regel:** Nach dem ersten Push niemals direkt auf `main` arbeiten.
-Immer einen Feature-Branch anlegen, lokal testen, dann PR erstellen.
+```text
+main   ← Produktions-Branch, immer deploybar, kein direkter Commit
+dev    ← Entwicklungs-Branch, aktive Arbeit
+```text
+- Entwicklung geschieht auf `dev`
+- PRs laufen von `dev` → `main` nach Review & Tests
+- Direkte Commits auf `main` sind nicht erlaubt
+
+### Themenspezifisches Branching (vereinzelt)
+
+Bei größeren Features oder paralleler Entwicklung können zusätzliche Branches genutzt werden:
+
+```text
+feature/auth       ← Neues Feature
+fix/bugname        ← Fehlerbehebung
+hotfix/kritisch    ← Dringender Produktionsfehler
+```text
+Diese Branches werden von `dev` abgezweigt und zurück nach `dev` gemergt.
+
+**Grundregel:** Niemals direkt auf `main` commiten — immer über `dev` und dann PR.
+
+## Naming Conventions
+
+| Typ | Konvention | Beispiele |
+| --- | --- | --- |
+| **App-Repos** | `snake_case`, kleingeschrieben | `backup_planner`, `carman`, `daily_echo` |
+| **Landing-Page-Repos** | `[appname]_lp`, kleingeschrieben | `carman_lp`, `trace_lp`, `away_lp` |
+| **Infrastruktur-Repos** | `camelCase` | `AppMonitor`, `TeamRadar`, `localSupabaseDB` |
+
+Sonderfälle und Ausnahmen sind im App-Katalog (Kapitel 14) dokumentiert.
 
 ## Commit-Konventionen
 
 WAMOCON folgt dem [Conventional Commits](https://www.conventionalcommits.org/) Standard:
 
-```
+```text
 feat(auth): Login-Seite hinzufügen
 fix(orders): Gesamtberechnung bei Rabatten korrigieren
 chore(deps): supabase-js auf v2.45 aktualisieren
@@ -83,13 +103,12 @@ db(migration): Tabelle notifications erstellen
 ci(workflow): Node.js-Version auf 20 aktualisieren
 docs(readme): Deployment-Anleitung ergänzen
 style(lint): Formatierungsfehler automatisch behoben
-```
-
+```text
 ## Repository-Struktur (Standard-App)
 
 Alle App-Repos basieren auf dem `wamohub`-Template und haben diese Struktur:
 
-```
+```text
 <app-name>/
 ├── .github/
 │   ├── agents/                 # KI-Personas (@planner, @developer, @reviewer)
@@ -111,8 +130,7 @@ Alle App-Repos basieren auf dem `wamohub`-Template und haben diese Struktur:
 ├── tsconfig.json
 ├── next.config.ts
 └── eslint.config.mjs
-```
-
+```text
 ## Pull Requests
 
 Richtlinien für jeden PR:
@@ -127,7 +145,7 @@ Richtlinien für jeden PR:
 ## Secrets-Management
 
 | Secret | Scope | Beschreibung |
-|---|---|---|
+| --- | --- | --- |
 | `VERCEL_TOKEN` | Organisation | Vercel API-Token (org-weit konfiguriert) |
 | `VERCEL_ORG_ID` | Organisation | Vercel Organisations-ID (org-weit konfiguriert) |
 | `VERCEL_PROJECT_ID` | Repository | Vercel Projekt-ID (pro Repo in Repo-Secrets) |

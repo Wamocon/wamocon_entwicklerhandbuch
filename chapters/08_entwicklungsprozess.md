@@ -1,213 +1,240 @@
 # Kapitel 08 – Entwicklungsprozess
 
+> **Wichtig:** Die gesamte App-Entwicklung bei WAMOCON wird vollständig mit **GitHub Copilot** durchgeführt. Copilot ist nicht nur ein Hilfsmittel, sondern das primäre Entwicklungswerkzeug – von der Planung über die Implementierung bis hin zu Migrationen und Deployment-Konfigurationen.
+
 ## Überblick: Von der Idee bis zur Produktion
 
-```
-Neue App anlegen
+```text
+Produktidee & Anforderungserstellung (manuell)
        │
        ▼
-Template klonen & einrichten
+Anforderungsdokument in OneDrive ablegen & einreichen
        │
        ▼
-Lokal entwickeln (Feature-Branches)
+Freigabe abwarten
        │
-       ▼
-Lokal testen (typecheck → lint → dev-Server)
-       │
-       ▼
-Pull Request erstellen
-       │
-       ├─→ CI: Auto-Fix (ESLint --fix, Formatierung)
-       ├─→ CI: Checks (TypeScript + ESLint)
-       └─→ Vercel: Preview-Deployment
+       ├─→ Supabase Cloud Projekt per E-Mail beantragen (→ Kapitel 10)
+       └─→ Strato-Domain per E-Mail beantragen (→ Kapitel 11)
                 │
                 ▼
-          PR mergen → Vercel: Produktions-Deployment
-```
+Template Repo klonen → dev-Branch → Anforderungsdokument in Copilot laden
+       │
+       ▼
+Copilot erstellt Entwicklungsplan → iterative Implementierung
+       │
+       ▼
+Lokale Tests → PR dev → main → Vercel Produktion
+       │
+       ▼
+Landing Page generieren (bevorzugt GitHub Pages, optional Vercel)
+```text
+---
 
-## 1. Neue App anlegen
+## 1. Produktidee & Anforderungserstellung
 
-1. Im Browser: GitHub → `Wamocon/wamohub` → **Use this template** → **Create a new repository**
-2. Repository in der `Wamocon`-Organisation anlegen, Name wählen
-3. Sichtbarkeit: **Internal** (Standardeinstellung)
+Die Ideenfindung und erste Anforderungsdefinition erfolgen **manuell durch den Entwickler**.
 
-## 2. Repository klonen & einrichten
+### Anforderungsdokument erstellen
+
+**Bevorzugter Weg:** Das **[WMC-Anforderungsportal](https://github.com/Wamocon/WMC-Anforderungsportal)** nutzen.
+
+**Alternativer Weg:** Anforderungsdokument manuell erstellen und per E-Mail einreichen.
+
+Das Anforderungsdokument enthält:
+- App-Name und Kurzbeschreibung
+- Zielgruppe und Hauptnutzen
+- Kernfunktionen und Anforderungen
+- Gewünschtes Datenbankschema (grob)
+- Technische Rahmenbedingungen
+
+### Ablage in OneDrive
+
+Das fertige Anforderungsdokument wird in **OneDrive** abgelegt:
+
+```text
+OneDrive / Welle [Nummer] / [App-Name] / Anforderungsdokument_[App-Name].docx
+```text
+**Wichtig:** Die Entwicklung beginnt **erst nach Freigabe** des Anforderungsdokuments.
+
+---
+
+## 2. Nach Freigabe: Infrastruktur beantragen
+
+Direkt nach der Freigabe des Anforderungsdokuments — damit keine Wartezeit beim Go-live entsteht:
+
+### Supabase Cloud Projekt beantragen
+
+Das Supabase Cloud Projekt wird **per E-Mail beantragt** (kein Self-Service).
+
+Angaben in der E-Mail:
+- App-Name (identisch mit dem geplanten Repo-Namen)
+- Kurzbeschreibung / Zweck der App
+- Gewünschte Region (z. B. `eu-central-1`)
+
+Details zur Einrichtung nach Freigabe → **Kapitel 10 – Supabase Cloud Projekt**
+
+### Strato-Domain beantragen
+
+Die Domain für die App wird **per E-Mail bei Strato beantragt**.
+
+- Domain-Name angeben (z. B. `app-name.de` oder `app-name.wamocon.de`)
+- Nach Zuteilung wird die Domain in Vercel konfiguriert → **Kapitel 11 – Vercel Deployment**
+
+---
+
+## 3. Entwicklungsstart: Template Repo & GitHub Copilot
+
+### Repository anlegen
+
+1. Auf GitHub: [`Wamocon/template_repo`](https://github.com/Wamocon/template_repo) → **„Use this template"** → **„Create a new repository"**
+2. Repository in der `Wamocon`-Organisation anlegen
+3. Name nach Naming Convention setzen (→ **Kapitel 06**)
+4. Sichtbarkeit: **Internal**
+5. `dev`-Branch anlegen — `main` bleibt geschützt
+
+### Anforderungsdokument in GitHub Copilot laden
+
+Das freigegebene Anforderungsdokument als Kontext in GitHub Copilot laden und Copilot anweisen, einen vollständigen Entwicklungsplan zu erstellen:
+
+```text
+Lade das Anforderungsdokument aus OneDrive und erstelle auf Basis dieses Dokuments
+einen vollständigen Entwicklungsplan für die App [App-Name]:
+
+- Datenbankschema & Migrationen (Tabellen, Spalten, RLS-Policies)
+- Komponentenstruktur (Seiten, UI-Komponenten, Layouts)
+- API-Endpunkte und Server Actions
+- Meilensteine & Aufgabenpakete in sinnvoller Reihenfolge
+```text
+### Entwicklung mit Copilot durchführen
+
+Copilot übernimmt:
+- Datenbankmigrationen erstellen und ausführen
+- Komponenten und Seiten implementieren
+- API-Routen und Server Actions schreiben
+- Konfigurationsdateien anpassen
+- Deployment-Workflows konfigurieren
+
+**Entwickler-Rolle:** Anforderungen definieren, Copilot steuern, Output reviewen und freigeben.
+
+Die Entwicklung läuft **iterativ entlang des Copilot-Plans**:
+1. Plan-Schritt lesen
+2. Copilot anweisen diesen Schritt umzusetzen
+3. Output lokal testen
+4. Bei Problemen: Copilot korrigieren
+5. Nächsten Schritt
+
+---
+
+## 4. Lokale Entwicklung & Datenbankmigrationen
+
+### Umgebung einrichten
 
 ```bash
 # Repository klonen
 git clone https://github.com/Wamocon/<repo-name>.git
 cd <repo-name>
 
+# Auf dev-Branch wechseln
+git checkout dev
+
 # Abhängigkeiten installieren
 npm install
 
-# Umgebungsvariablen aus Template kopieren
+# Umgebungsvariablen einrichten
 cp .env.example .env.local
-# .env.local mit Supabase-Credentials befüllen (siehe Kapitel 10)
+# Supabase-Credentials in .env.local eintragen (→ Kapitel 10)
 
 # Entwicklungsserver starten
 npm run dev
-```
+```text
+### Supabase-Fallback: Lokale Instanz
 
-Die App läuft dann auf [http://localhost:3000](http://localhost:3000).
+Solange das Supabase Cloud Projekt noch **in Beantragung** ist, lokale Instanz nutzen:
+→ **Kapitel 10.5 – Lokale Supabase Instanz**
 
-## 3. Workflow-Dateien aktualisieren
+### Datenbankmigrationen
 
-Nach dem Klonen: Workflow-Dateien in `.github/workflows/deploy.yml` und `.github/workflows/pr-pipeline.yml` öffnen und prüfen, dass `Wamocon/github_workflow` als Org/Repo-Referenz korrekt eingetragen ist.
-
-## 4. Lokale Entwicklung
-
-### Branch anlegen
+GitHub Copilot erstellt und führt Migrationen direkt aus der App heraus in Supabase Cloud durch:
 
 ```bash
-# Ersten Stand auf main pushen (einmalig)
-git add .
-git commit -m "chore: initial setup"
-git push origin main
+# Migration erstellen (Copilot generiert den SQL-Inhalt)
+npx supabase migration new <migrations-name>
 
-# Ab jetzt: immer auf Feature-Branch arbeiten
-git checkout -b feature/mein-feature
-```
+# Migration lokal anwenden (Fallback auf lokaler Instanz)
+npx supabase db reset
 
-### Arbeitsloop
+# Migration in Supabase Cloud anwenden
+npx supabase db push
+```text
+Migrationshistorie wird im Repo unter `/supabase/migrations/` versioniert.
+
+### Lokale Qualitätsprüfung vor Commit
 
 ```bash
-# Entwickeln und testen
-npm run dev
-
-# Vor jedem Commit prüfen
-npm run typecheck   # TypeScript-Fehler finden
-npm run lint        # Lint-Probleme finden
-
-# Committen und pushen
-git add .
-git commit -m "feat: beschreibung der Änderung"
-git push origin feature/mein-feature
-```
-
-### Wichtige Regeln
-
-- **Lokal testen vor dem Push** — `typecheck` und `lint` müssen lokal grün sein
-- **Alle Änderungen pushen, bevor der PR geöffnet wird** — jeder weitere Push auf einen offenen PR löst die gesamte CI-Pipeline aus (kostet GitHub-Actions-Minuten)
-- **Nur einen offenen PR gleichzeitig** — erst mergen, dann neuen Branch anlegen
+npm run typecheck   # TypeScript-Fehler
+npm run lint        # Lint-Probleme
+npm run dev         # Manuell testen
+```text
+---
 
 ## 5. CI/CD-Pipeline (automatisch)
 
-Die Pipeline läuft automatisch beim Öffnen eines PRs gegen `main`.
+### Bei Push auf `dev`: Preview-Deployment
 
-### PR-Pipeline
+```text
+Push auf dev
+  └─→ pr-autofix: ESLint --fix (committet zurück)
+  └─→ pr-checks: TypeScript + ESLint validieren
+  └─→ Vercel: Preview-Deployment
+```text
+### Bei Merge auf `main`: Produktions-Deployment
 
-```
-Push auf offenen PR
-       │
-       ├─→ pr-autofix: ESLint --fix, Prettier --write (committet automatisch zurück)
-       │
-       └─→ pr-checks:
-               ├─ tsc --noEmit        (TypeScript)
-               └─ eslint .            (Lint)
-                      │
-                      ├─ ❌ Fail → PR blockiert
-                      └─ ✅ Pass → Vercel Preview-Deploy
-```
+```text
+PR von dev → main gemergt
+  └─→ Vercel: Produktions-Deployment
+```text
+Details → **Kapitel 11 – Vercel Deployment**
 
-### Deploy-Pipeline
+---
 
-| Auslöser | Ergebnis |
-|---|---|
-| Pull Request → `main` | Vercel **Preview**-Deployment (einzigartige URL pro PR) |
-| Merge / Push → `main` | Vercel **Produktions**-Deployment |
+## 6. Landing Page generieren
 
-## 6. Erstaliniges Vercel-Setup (einmalig pro App)
+Jede App bekommt ein eigenes Landing-Page-Repository: `[app-name]_lp`
 
-Da Vercel Zugriff auf den Repository-Code benötigt, gibt es bei internen Repos einen einmaligen Workaround:
+Landing Pages werden **nicht manuell gebaut**, sondern über den **KI-Generierungs-Workflow** erstellt:
 
-1. **Repo vorübergehend öffentlich machen**: `Repository → Settings → General → Change visibility → Public`
-2. Auf [vercel.com](https://vercel.com) → **Add New Project** → **Import** das Repo importieren
-3. Projekt deployen
-4. **Vercel Project ID kopieren**: `Vercel Project → Settings → General → Project ID`
-5. **Als GitHub Secret hinzufügen**: `Repository → Settings → Secrets → Actions → New secret`
-   - Name: `VERCEL_PROJECT_ID`
-   - Wert: die kopierte Project ID
-6. **Repo wieder auf intern setzen**: `Repository → Settings → General → Change visibility → Internal`
-7. **Umgebungsvariablen in Vercel eintragen**: `Vercel Project → Settings → Environment Variables` → alle Variablen aus `.env.local` eintragen
+### Prozess
 
-> Die Org-weiten Secrets `VERCEL_TOKEN` und `VERCEL_ORG_ID` sind bereits auf Organisationsebene konfiguriert und müssen nicht manuell hinzugefügt werden.
+1. App-Beschreibung und Key Features als Prompt aufbereiten
+2. KI-Workflow triggern (GitHub Actions / n8n-basiert)
+3. KI generiert vollständige HTML-Landing-Page
+4. Entwickler reviewed Output und mergt nach `main`
+5. Automatisches Deployment
 
-## 7. Fehlerbehebung bei CI-Failures
+### Deployment
 
-### Vorgehen
+- **Bevorzugt:** GitHub Pages (kostenlos, kein Build-Step, direkt über GitHub)
+- **Optional:** Vercel (für erweiterte Deployment-Features)
 
-1. **GitHub → Actions-Tab → Fehlgeschlagener Run öffnen**
-2. Den fehlgeschlagenen Job-Schritt aufklappen → genaue Fehlermeldung lesen
-3. Fehler lokal reproduzieren:
+Standard: reines HTML, kein Framework-Overhead — direkt deploybar ohne Build-Prozess.
 
-| Fehler | Lokale Reproduktion |
-|---|---|
-| TypeScript-Fehler | `npm run typecheck` |
-| Lint-Fehler | `npm run lint` |
-| Fehlende Abhängigkeiten | `package-lock.json` im Git prüfen |
-| Vercel-Deploy schlägt fehl | Vercel-Secrets und Umgebungsvariablen prüfen |
+---
 
-### Häufige lokale Probleme
-
-| Problem | Lösung |
-|---|---|
-| `Module not found` | `npm install` → Dev-Server neu starten |
-| Veraltete Daten nach Migration | Dev-Server neu starten |
-| TypeScript-Fehler in IDE, aber nicht im Terminal | `Ctrl+Shift+P` → „Restart TS Server" |
-| `.env`-Änderungen werden nicht übernommen | `next dev` neu starten |
-| Port bereits belegt | `npx kill-port 3000` |
-
-## 8. Datenbank-Migrations-Workflow
-
-Schema-Änderungen werden **immer versioniert** und niemals direkt über das Supabase-Dashboard gemacht.
-
-```bash
-# Neue Migration erstellen
-npx supabase migration new <name>
-
-# Migrationen anwenden (lokal)
-npx supabase db reset
-
-# Migrationen anwenden (Cloud via CLI)
-npx supabase db push
-```
-
-Migrationen liegen in `supabase/migrations/` und werden mit Git versioniert.
-Details in **Kapitel 10 – Supabase Cloud Projekt**.
-
-## 9. Projekt-Checkliste für jede neue App
-
-- [ ] Landing Page
-- [ ] Handbuch / Manual (HOWTO.md)
-- [ ] Hauptprozess (Kernfunktion der App)
-- [ ] Demo-Video
-- [ ] Domain (über Strato gesichert und in Vercel konfiguriert)
-- [ ] Alle Env-Variablen in Vercel eingetragen
-- [ ] RLS auf allen Supabase-Tabellen aktiviert
-- [ ] Rechtliche Dokumente (Impressum, Datenschutzerklärung, AGB) aus `legal-docs/` angepasst
-
-## 10. Schnellreferenz-Befehle
+## 7. Schnellreferenz-Befehle
 
 ```bash
 # Development
 npm run dev
-
-# Qualitätsprüfung
 npm run typecheck
 npm run lint
 
-# Lint mit Auto-Fix
-npx eslint . --fix
-
-# Vercel
-vercel link                 # Projekt verknüpfen
-vercel env pull .env.local  # Env-Variablen ziehen
-vercel deploy               # Preview-Deployment
-vercel deploy --prod        # Produktions-Deployment
-
 # Supabase
 npx supabase migration new <name>   # Migration erstellen
-npx supabase db push                # Migrationen anwenden
-npx supabase db reset               # DB zurücksetzen (lokal)
-```
+npx supabase db push                # In Supabase Cloud deployen
+npx supabase db reset               # Lokal zurücksetzen
+
+# Git-Workflow
+git checkout dev                    # Auf dev-Branch
+git checkout -b feature/xyz         # Themenspezifischer Branch (von dev)
+git push origin dev                 # Auf dev pushen → Preview Deploy
+```text

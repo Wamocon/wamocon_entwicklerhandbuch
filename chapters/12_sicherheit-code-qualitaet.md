@@ -18,8 +18,7 @@ ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Eigene Daten lesen"
   ON public.profiles FOR SELECT
   USING (auth.uid() = user_id);
-```
-
+```text
 ### Service Role Key
 
 - `SUPABASE_SERVICE_ROLE_KEY` **niemals** im Browser-Code verwenden
@@ -49,15 +48,14 @@ const result = createOrderSchema.safeParse(formData);
 if (!result.success) {
   return { error: result.error.flatten() };
 }
-```
-
+```text
 - Client-seitige Validierung gibt schnelles Feedback
 - Server-seitige Validierung ist Pflicht (Client-Validierung kann umgangen werden)
 
 ## Umgebungsvariablen
 
 | Regel | Begründung |
-|---|---|
+| --- | --- |
 | Keine Secrets in Code oder Git | `.env.local` ist in `.gitignore` |
 | `NEXT_PUBLIC_`-Prefix nur für öffentliche Werte | Alles mit diesem Prefix ist im Browser sichtbar |
 | Service Role Key niemals mit `NEXT_PUBLIC_` | Würde in den Browser-Bundle gelangen |
@@ -79,8 +77,7 @@ Strict Mode verhindert eine ganze Klasse von Bugs zur Laufzeit:
     "strict": true
   }
 }
-```
-
+```text
 - `any` vermeiden — erzwingt explizite Typen
 - `unknown` statt `any` bei unbekannten Werten — Typ muss vor Nutzung eingeschränkt werden
 - Generierte Supabase-Typen nutzen — keine falsch getippten Spaltennamen
@@ -104,8 +101,7 @@ ESLint läuft automatisch in der CI-Pipeline. Vor jedem Push lokal ausführen:
 
 ```bash
 npm run lint
-```
-
+```text
 Die ESLint-Konfiguration (`eslint.config.mjs`) basiert auf `eslint-config-next` und deckt Next.js-spezifische Regeln ab.
 
 ### TypeScript
@@ -114,14 +110,12 @@ TypeScript-Typprüfung vor jedem Push:
 
 ```bash
 npm run typecheck
-```
-
+```text
 Typfehler blockieren den CI-Build. Lokal reproduzieren mit:
 
 ```bash
 npx tsc --noEmit
-```
-
+```text
 ### Code-Review (Vier-Augen-Prinzip)
 
 Jeder Code-Merge auf `main` muss über einen Pull Request erfolgen. Direkte Pushes auf `main` sind nicht erlaubt. Vor dem PR-Erstellen den `@reviewer`-Copilot-Agent nutzen (Details in Kapitel 13).
@@ -154,6 +148,5 @@ npm audit
 
 # Sicherheitslücken automatisch beheben (minor/patch)
 npm audit fix
-```
-
+```text
 Bei Major-Updates: manuell testen, da Breaking Changes möglich.

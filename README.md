@@ -1,30 +1,48 @@
-# WAMOCON Entwicklerhandbuch
+# 📘 WAMOCON Entwicklerhandbuch
 
-Dieses Repository enthält die Startversion des Entwicklerhandbuchs als statische GitHub-Pages-Seite mit Markdown-Kapiteln, Status-Report und Linkmanagement.
+Vollständiges Entwicklerhandbuch für alle WAMOCON-Apps und -Prozesse.
 
-## Sofortiger Status-Report
+🌐 **Online lesen:** [wamocon.github.io/wamocon_entwicklerhandbuch/](https://wamocon.github.io/wamocon_entwicklerhandbuch/)
 
-> Stand: **2026-05-19 09:02 UTC**
+> **Die gesamte App-Entwicklung bei WAMOCON wird vollständig mit GitHub Copilot durchgeführt.**
 
-| Bereich | Status | Nächster Schritt | Manuelle Aktualisierung |
-| --- | --- | --- | --- |
-| Index.html | Erledigt | Inhalte bei Bedarf ergänzen | Browser-Refresh auf GitHub Pages |
-| Markdown-Kapitel | Erledigt | Kapitel fortlaufend pflegen | Kapiteldateien im Repo öffnen |
-| WAMOCON-Design | Erledigt | Design-Richtlinien bei Bedarf erweitern | Kapitel 05 prüfen |
-| Pages-Workflow | Erledigt | Deployment-Run nach Merge prüfen | Workflow-Run prüfen |
-| Linkmanagement | Erledigt | Interne und externe Links regelmäßig kontrollieren | Linkliste in Kapitel 04 prüfen |
+---
 
-## Wichtig
+## Kapitelübersicht
 
-Ein Copilot-Agent kann **keine dauerhaft autonome Minutentakt-Berichterstattung im Chat** sicher aufrechterhalten. Deshalb liefert dieses Repo:
+### Organisation & Prozesse
 
-1. einen sofort lesbaren Status-Report in [`STATUS.md`](./STATUS.md),
-2. eine statische Startseite in [`index.html`](./index.html),
-3. Markdown-Kapitel unter [`chapters/`](./chapters/),
-4. einen GitHub-Pages-Workflow unter [`.github/workflows/pages.yml`](./.github/workflows/pages.yml).
+| # | Kapitel | Inhalt |
+| --- | --- | --- |
+| 06 | [GitHub & Repository-Struktur](chapters/06_github-repository-struktur.md) | Naming Conventions, Branching (main/dev), CI/CD |
+| 07 | [Tech Stack & Standards](chapters/07_tech-stack-standards.md) | Next.js 16, TypeScript, Tailwind CSS v4, Supabase |
+| 08 | [Entwicklungsprozess](chapters/08_entwicklungsprozess.md) | Anforderungsdokument → Freigabe → Copilot → Deploy |
+| 09 | [Jira & Aufgabenmanagement](chapters/09_jira-aufgabenmanagement.md) | Optional (Wellen), verpflichtend (große Projekte) |
 
-## Manuelle Updates abrufen
+### Infrastruktur & Deployment
 
-- Im Chat nach einem neuen Status fragen, z. B. **„Bitte aktualisiere den EHB-Fortschrittsbericht.“**
-- [`STATUS.md`](./STATUS.md) öffnen und den letzten Timestamp prüfen.
-- Nach dem Deployment die GitHub-Pages-Seite neu laden.
+| # | Kapitel | Inhalt |
+| --- | --- | --- |
+| 10 | [Supabase Cloud Projekt](chapters/10_supabase.md) | Pro-Version, E-Mail-Beantragung, Migrationen, RLS |
+| 11 | [Vercel Deployment](chapters/11_vercel-deployment.md) | Hobby Plan, GitHub Actions, Domain-Konfiguration |
+| 12 | [Sicherheit & Code-Qualität](chapters/12_sicherheit-code-qualitaet.md) | RLS, Zod, Secrets, ESLint, TypeScript Strict |
+
+### KI, Apps & Referenzen
+
+| # | Kapitel | Inhalt |
+| --- | --- | --- |
+| 13 | [KI-Entwicklung & Copilot-Workflows](chapters/13_ki-entwicklung-copilot.md) | @planner, @developer, @reviewer, Supabase MCP |
+| 14 | [Produkt-Ökosystem & App-Katalog](chapters/14_produkt-oekosystem.md) | Alle WAMOCON-Apps alphabetisch mit Links |
+| 15 | [Glossar & Referenzen](chapters/15_glossar-referenzen.md) | Begriffe, Tool-Referenz, externe & interne Links |
+
+---
+
+## Wichtige Links
+
+| Ressource | Link |
+| --- | --- |
+| Template Repo | [github.com/Wamocon/template_repo](https://github.com/Wamocon/template_repo) |
+| CI/CD Workflows | [github.com/Wamocon/github_workflow](https://github.com/Wamocon/github_workflow) |
+| Lokale Supabase | [github.com/Wamocon/localSupabaseDB](https://github.com/Wamocon/localSupabaseDB) |
+| Anforderungsportal | [github.com/Wamocon/WMC-Anforderungsportal](https://github.com/Wamocon/WMC-Anforderungsportal) |
+| Standard-Prozessablauf | [wamocon.github.io/standard_prozessablauf/](https://wamocon.github.io/standard_prozessablauf/) |

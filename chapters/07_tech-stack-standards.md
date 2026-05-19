@@ -6,7 +6,7 @@ Alle WAMOCON-Webanwendungen basieren auf einem einheitlichen Tech Stack.
 Dieser Standard gilt für alle neuen Apps und sollte nicht ohne Absprache abgewichen werden.
 
 | Schicht | Technologie | Version |
-|---|---|---|
+| --- | --- | --- |
 | Framework | Next.js (App Router) | 16.x |
 | Sprache | TypeScript (strict mode) | 5.x |
 | Styling | Tailwind CSS | v4 |
@@ -34,7 +34,7 @@ Alle Apps verwenden den **App Router** (`src/app/`). Der Pages Router wird nicht
 ### verfügbare npm-Scripts
 
 | Befehl | Beschreibung |
-|---|---|
+| --- | --- |
 | `npm run dev` | Dev-Server mit Turbopack starten (Hot Reload) |
 | `npm run build` | Produktions-Build erstellen |
 | `npm run start` | Produktionsserver starten |
@@ -60,8 +60,7 @@ Alle Projekte nutzen TypeScript im **Strict Mode** (`strict: true` in `tsconfig.
 ```typescript
 import { Database } from '@/types/supabase';
 const supabase = createServerClient<Database>(...);
-```
-
+```text
 ## Tailwind CSS v4
 
 Alle Apps verwenden Tailwind CSS v4 mit dem PostCSS-Plugin (`@tailwindcss/postcss`).
@@ -87,14 +86,13 @@ Details zur Konfiguration und Nutzung in **Kapitel 10 – Supabase Cloud Projekt
 ```typescript
 const { data, error } = await supabase.from('users').select('*');
 if (error) throw error;
-```
-
+```text
 ## Abhängigkeiten (Standard)
 
 ### Produktions-Dependencies
 
 | Paket | Zweck |
-|---|---|
+| --- | --- |
 | `next` | Framework |
 | `react` / `react-dom` | UI-Library |
 | `@supabase/supabase-js` | Supabase JavaScript Client |
@@ -104,7 +102,7 @@ if (error) throw error;
 ### Entwicklungs-Dependencies
 
 | Paket | Zweck |
-|---|---|
+| --- | --- |
 | `typescript` | Sprachkompilierung |
 | `eslint` | Linter |
 | `eslint-config-next` | Next.js ESLint-Konfiguration |
@@ -135,8 +133,7 @@ SUPABASE_SERVICE_ROLE_KEY=<aus npx supabase status>
 
 # Schema
 SUPABASE_DB_SCHEMA=public
-```
-
+```text
 **Wichtig:** `NEXT_PUBLIC_`-Prefix bedeutet, dass die Variable im Browser sichtbar ist.
 Der `SUPABASE_SERVICE_ROLE_KEY` darf **niemals** mit `NEXT_PUBLIC_` versehen werden.
 
@@ -154,12 +151,11 @@ npm install -g vercel
 
 # Supabase CLI
 npm install -g supabase
-```
-
+```text
 ## VS Code Extensions (Empfohlen)
 
 | Extension | Zweck |
-|---|---|
+| --- | --- |
 | GitHub Copilot | KI-Code-Assistent |
 | GitHub Copilot Chat | KI-Chat-Interface |
 | ESLint | Linting |
@@ -186,4 +182,4 @@ In `.vscode/settings.json`:
     "**/node_modules": true
   }
 }
-```
+```text

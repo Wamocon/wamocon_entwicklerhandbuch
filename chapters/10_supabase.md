@@ -2,46 +2,61 @@
 
 ## Was ist Supabase?
 
-Supabase ist der Backend-as-a-Service für alle WAMOCON-Apps. Es stellt bereit:
+WAMOCON nutzt **Supabase Pro** als primären Backend-as-a-Service für alle Apps. Es stellt bereit:
 
 - **PostgreSQL-Datenbank** mit vollem SQL-Zugriff
-- **Auth** — Benutzerauthentifizierung (E-Mail, OAuth)
+- **Auth** — Benutzerauthentifizierung (E-Mail, OAuth, Magic Links)
 - **Row Level Security (RLS)** — feingranulare Zugriffssteuerung auf Datenbankebene
-- **Storage** — Dateispeicherung
+- **Storage** — Dateispeicherung (Bilder, Dokumente)
 - **Edge Functions** — Serverless-Funktionen (bei Bedarf)
 - **REST & Realtime API** — automatisch generiert aus dem Datenbankschema
 
-## 1. Neues Cloud-Projekt anlegen
+## 1. Beantragung (Pflicht vor Entwicklungsstart)
 
-1. Gehe zu [supabase.com/dashboard](https://supabase.com/dashboard)
-2. **New project** klicken
-3. Organisation auswählen
-4. Projektname setzen (identisch mit dem GitHub-Repository-Namen)
-5. Datenbankpasswort und Region setzen
-6. Projekt erstellen — Status abwarten bis „Healthy"
+Das Supabase Cloud Projekt wird **per E-Mail beantragt** — kein Self-Service.
 
-## 2. Credentials sammeln
+**Zeitpunkt:** Direkt nach Freigabe des Anforderungsdokuments (→ **Kapitel 08, Abschnitt 2**)
 
-Nach der Erstellung im Dashboard unter **Project Settings → API**:
+**Angaben in der E-Mail:**
 
-| Variable | Quelle | Zweck |
-|---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Project URL | Verbindungsendpunkt |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | anon public key | Clientseitiger, eingeschränkter Zugriff |
-| `SUPABASE_SERVICE_ROLE_KEY` | service_role key | Serverseitiger Vollzugriff (niemals im Browser!) |
+- App-Name (identisch mit dem GitHub-Repo-Namen)
+- Kurzbeschreibung und Zweck der App
+- Gewünschte Region (z. B. `eu-central-1` für Deutschland)
 
-Diese Werte in `.env.local` eintragen und in Vercel als Environment Variables hinterlegen.
+> Durch frühzeitige Beantragung entsteht keine Wartezeit kurz vor dem Go-live.
+
+## 2. Einrichtung (env.local)
+
+Nach Projekterstellung im Supabase Dashboard folgende Credentials unter **Project Settings → API** abrufen und in `.env.local` eintragen:
+
+```env
+# Supabase Cloud
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=xxxx
+SUPABASE_SERVICE_ROLE_KEY=xxxx
+DATABASE_URL=postgresql://postgres:xxxx@db.xxxx.supabase.co:5432/postgres
+
+# Schema (Standard: public)
+SUPABASE_DB_SCHEMA=public
+```text
+| Variable | Quelle in Supabase | Verwendung |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` | Project Settings → API → Project URL | Verbindungsendpunkt |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Project Settings → API → anon public | Client-seitiger Zugriff (eingeschränkt) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Project Settings → API → service_role | Server-seitiger Vollzugriff |
+| `DATABASE_URL` | Project Settings → Database → Connection string | Direkte Datenbankverbindung (CLI, MCP) |
+
+> **Sicherheit:** `.env.local` niemals ins Repository committen (`.gitignore` prüfen).
+> `SUPABASE_SERVICE_ROLE_KEY` **niemals** mit `NEXT_PUBLIC_`-Prefix versehen.
 
 ## 3. Schemas
-
-Standardmäßig ist nur das `public`-Schema über die Supabase-API erreichbar.
 
 ### Empfohlene Schema-Struktur
 
 | Schema | Zweck |
-|---|---|
+| --- | --- |
 | `public` | Standard-Schema (Supabase-Default) |
-| `test` | Daten für Entwicklung und Tests |
+| `test` | Entwicklungs- und Testdaten |
 | `prod` | Produktionsdaten (Trennung von Testdaten) |
 
 ### Schema erstellen und Berechtigungen setzen
@@ -50,7 +65,6 @@ Standardmäßig ist nur das `public`-Schema über die Supabase-API erreichbar.
 CREATE SCHEMA IF NOT EXISTS test;
 CREATE SCHEMA IF NOT EXISTS prod;
 
--- Berechtigungen für Supabase-Rollen vergeben
 GRANT USAGE ON SCHEMA test TO anon, authenticated, service_role;
 GRANT USAGE ON SCHEMA prod TO anon, authenticated, service_role;
 
@@ -61,159 +75,115 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA test
 GRANT ALL ON ALL TABLES IN SCHEMA prod TO anon, authenticated, service_role;
 ALTER DEFAULT PRIVILEGES IN SCHEMA prod
   GRANT ALL ON TABLES TO anon, authenticated, service_role;
-```
+```text
+Schemas über die API zugänglich machen: **Project Settings → API → Exposed schemas** → Schema-Namen hinzufügen.
 
-Schema über die Supabase-API zugänglich machen: **Project Settings → API → Exposed schemas** → Schema-Namen hinzufügen.
+## 4. Datenbankmigrationen
 
-> Ohne diese Berechtigungen gibt PostgREST leere Ergebnisse oder Fehler zurück.
+Schema-Änderungen werden **ausschließlich über Migrations-Dateien** vorgenommen — niemals direkt über das Supabase-Dashboard.
 
-## 4. Migrations-Workflow
-
-Schema-Änderungen werden **ausschließlich über Migrations-Dateien** vorgenommen — nie direkt über das Supabase-Dashboard-UI.
-
-### Migration erstellen
+**GitHub Copilot übernimmt die Erstellung und Ausführung der Migrationen** auf Basis des Anforderungsdokuments.
 
 ```bash
+# Migration erstellen (Copilot generiert den SQL-Inhalt)
 npx supabase migration new <migrations-name>
 # Erstellt: supabase/migrations/<timestamp>_<name>.sql
-```
 
-### Migration bearbeiten
-
-Die erstellte SQL-Datei in `supabase/migrations/` öffnen und die Datenbankänderungen eintragen.
-
-### Migration anwenden
-
-```bash
-# Lokal (Docker läuft)
+# Migrationen lokal anwenden
 npx supabase db reset
 
-# Cloud
+# Migrationen in Supabase Cloud anwenden
 npx supabase db push
-```
 
-### Migrations-Status prüfen
-
-```bash
+# Migrations-Status prüfen
 npx supabase migration list
-```
-
-**Wichtige Regeln:**
-
-- Migrations-Dateien werden mit Git versioniert — immer committen
-- Bestehende Migrations-Dateien niemals nachträglich ändern — neue Migration erstellen
-- Testdaten nicht als lokale Fixture-Dateien ablegen — direkt in Supabase eintragen
+```text
+**Wichtig:** Migrations-Dateien in `supabase/migrations/` immer in Git committen. Bestehende Migrations-Dateien niemals nachträglich ändern.
 
 ## 5. Row Level Security (RLS)
 
-RLS ist für **alle Tabellen verpflichtend**. Ohne RLS hat jeder authentifizierte Nutzer vollen Tabellenzugriff.
-
-### RLS aktivieren und Policy erstellen (Beispiel)
+RLS muss für **jede Tabelle** aktiviert sein — Copilot wird mit der Anweisung gesteuert, RLS immer zu aktivieren und niemals deaktiviert zu lassen.
 
 ```sql
 -- RLS aktivieren
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
--- Policy: Nutzer sehen nur ihr eigenes Profil
-CREATE POLICY "Users can view own profile"
+-- Policy: Nutzer sehen nur ihre eigenen Daten
+CREATE POLICY "Eigene Daten lesen"
   ON public.profiles FOR SELECT
   USING (auth.uid() = user_id);
+```text
+RLS-Policies werden als Teil der Migrationen versioniert.
 
--- Policy: Nutzer können ihr Profil bearbeiten
-CREATE POLICY "Users can update own profile"
-  ON public.profiles FOR UPDATE
-  USING (auth.uid() = user_id);
-```
+## 6. Supabase Auth
 
-## 6. Supabase-Client in Next.js
+Auth-Konfiguration über das Supabase Dashboard:
+- E-Mail / Passwort aktivieren/deaktivieren
+- OAuth-Provider konfigurieren (Google, GitHub, etc.)
+- E-Mail-Templates anpassen
 
-### Server Components / Server Actions
+In der App wird `@supabase/ssr` für serverseitige Auth-Integration genutzt (Details → **Kapitel 07 – Tech Stack**).
 
-```typescript
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+## 7. Lokale Supabase Instanz (Fallback & Entwicklungsphase)
 
-const supabase = createServerClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  { cookies: () => cookies() }
-);
-```
+### Wann nutzen?
 
-### Client Components
+- Supabase Cloud Projekt noch in Beantragung (→ Kapitel 08, Abschnitt 1)
+- Offline-Entwicklung und schnelles Prototyping ohne Cloud-Anbindung
 
-```typescript
-import { createBrowserClient } from '@supabase/ssr';
+### Lokale Instanzen via localSupabaseDB
 
-const supabase = createBrowserClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-```
+Das Repo [`Wamocon/localSupabaseDB`](https://github.com/Wamocon/localSupabaseDB) ermöglicht das parallele Hochfahren mehrerer lokaler Supabase-Instanzen für verschiedene App-Entwicklungen:
 
-### Fehlerbehandlung (immer prüfen!)
-
-```typescript
-const { data, error } = await supabase.from('users').select('*');
-if (error) throw error;
-```
-
-## 7. Lokale Entwicklung mit localSupabaseDB
-
-Wenn noch kein Supabase-Cloud-Projekt existiert, kann lokal mit dem `localSupabaseDB`-Template gearbeitet werden.
-
-### Voraussetzungen
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) läuft
-
-### Einrichtung
+- Jede App bekommt eine eigene isolierte Instanz
+- Setup gemäß der [README.md im localSupabaseDB-Repo](https://github.com/Wamocon/localSupabaseDB/blob/main/README.md)
+- `.env.local` auf die lokale Instanz-URL zeigen lassen statt auf Supabase Cloud
 
 ```bash
-# localSupabaseDB als eigenes Repo klonen (Template verwenden)
-git clone https://github.com/Wamocon/localSupabaseDB.git
-cd localSupabaseDB
-
-npm install
-```
-
-### Lokale Instanz starten
-
-```bash
-# Im App-Verzeichnis
-npm run db:start
-# oder direkt:
+# Lokale Instanz starten
 npx supabase start
-```
 
-Nach dem Start zeigt Supabase die lokalen Credentials an. Diese in `.env.local` eintragen:
+# Status und lokale Credentials anzeigen
+npx supabase status
+```text
+Lokale Credentials in `.env.local` eintragen:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<aus npx supabase status>
 SUPABASE_SERVICE_ROLE_KEY=<aus npx supabase status>
-```
+```text
+### ⚠️ Hardware-Limit: Huawei-Laptop RAM
 
-### Hardware-Hinweis
+Bei mehr als **2 parallelen lokalen Supabase-Instanzen** und **2 gleichzeitig laufenden Apps** stößt der Huawei-Laptop an seine RAM-Grenzen.
 
-Bei mehr als zwei parallelen lokalen Supabase-Instanzen und zwei laufenden Apps stößt Hardware mit wenig RAM (z. B. Huawei-Geräte) an Grenzen.
-**Empfehlung:** Maximal zwei lokale Instanzen plus zwei aktive Apps gleichzeitig betreiben.
+Symptome: Verlangsamte Response-Zeiten, App-Freezes, Instanz-Abstürze.
 
-Sobald das Cloud-Projekt verfügbar ist, auf Supabase Cloud umstellen und lokale Ressourcen freigeben.
+**Empfehlung:** Maximal 2 lokale Supabase-Instanzen + 2 aktive Apps gleichzeitig betreiben. Nicht benötigte Instanzen aktiv stoppen.
 
-## 8. Supabase MCP für KI-Assistenten
+### Wechsel lokal → Supabase Cloud
 
-Das Supabase MCP (Model Context Protocol) ermöglicht es GitHub Copilot, den echten Datenbankschema-Kontext zu lesen. Dadurch generiert Copilot akkuraten Code statt zu raten.
+Sobald das Supabase Cloud Projekt genehmigt ist:
 
-Details dazu in **Kapitel 13 – KI-Entwicklung & Copilot-Workflows**.
+1. `.env.local` Variablen auf die Cloud-Werte aktualisieren
+2. Lokal entwickelte Migrationen in Supabase Cloud anwenden: `npx supabase db push`
+3. Lokale Instanz stoppen: `npx supabase stop`
+4. Ressourcen freigeben
 
-## 9. Checkliste: Supabase-Integration
+## 8. Supabase MCP für GitHub Copilot
 
-- [ ] Cloud-Projekt erstellt und Status „Healthy"
-- [ ] URL und Keys in `.env.local` eingetragen
-- [ ] URL und Keys als Vercel Environment Variables konfiguriert
-- [ ] `test`- und `prod`-Schemas erstellt (falls verwendet)
-- [ ] Schema-Grants vergeben und Schemas in API Exposed Schemas eingetragen
+Der Supabase MCP (Model Context Protocol) Server gibt Copilot Zugriff auf das echte Datenbankschema.
+
+Details zur Konfiguration → **Kapitel 13 – KI-Entwicklung & Copilot-Workflows**
+
+## 9. Checkliste: Supabase-Setup
+
+- [ ] Supabase Cloud Projekt per E-Mail beantragt (direkt nach Anforderungsfreigabe)
+- [ ] Projekt erstellt und Status „Healthy"
+- [ ] `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL` in `.env.local` eingetragen
+- [ ] Alle Variablen als Vercel Environment Variables hinterlegt (→ Kapitel 11)
+- [ ] `SUPABASE_SERVICE_ROLE_KEY` **kein** `NEXT_PUBLIC_`-Prefix
+- [ ] `.env.local` in `.gitignore` vorhanden
 - [ ] RLS für alle Tabellen aktiviert
-- [ ] Erste Migration erstellt und committed
-- [ ] MCP für lokale KI-Tools konfiguriert
-- [ ] `SUPABASE_SERVICE_ROLE_KEY` nur server-seitig genutzt (kein `NEXT_PUBLIC_`-Prefix)
+- [ ] Erste Migration erstellt und in `supabase/migrations/` committed
+- [ ] MCP für lokale Copilot-Tools konfiguriert (→ Kapitel 13)
