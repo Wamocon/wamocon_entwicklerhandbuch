@@ -20,16 +20,16 @@ Dieses Handbuch richtet sich an:
 
 | Kapitel | Thema |
 | ------- | ----- |
-| 06 | GitHub & Repository-Struktur |
-| 07 | Tech Stack & Standards |
-| 08 | Entwicklungsprozess |
-| 09 | Jira & Aufgabenmanagement |
-| 10 | Supabase Cloud Projekt |
-| 11 | Vercel Deployment |
-| 12 | Sicherheit & Code-Qualität |
-| 13 | KI-Entwicklung & Copilot-Workflows |
-| 14 | Produkt-Ökosystem & App-Katalog |
-| 15 | Glossar & Referenzen |
+| 1 | GitHub & Repository-Struktur |
+| 2 | Tech Stack & Standards |
+| 3 | Entwicklungsprozess |
+| 4 | Jira & Aufgabenmanagement |
+| 5 | Supabase Cloud Projekt |
+| 6 | Vercel Deployment |
+| 7 | Sicherheit & Code-Qualität |
+| 8 | KI-Entwicklung & Copilot-Workflows |
+| 9 | Produkt-Ökosystem & App-Katalog |
+| 10 | Glossar & Referenzen |
 
 ## Entwicklungsphilosophie
 
