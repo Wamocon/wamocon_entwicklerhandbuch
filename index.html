@@ -13,6 +13,8 @@
         --border-gray: #dddddd;
         --text-muted: #555555;
         --topbar: #444444;
+        --sidebar-w: 260px;
+        --header-h: 72px;
       }
 
       * {
@@ -32,23 +34,37 @@
       .topbar {
         background: var(--topbar);
         height: 6px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
       }
 
       /* ── Header ── */
       header {
         background: var(--bg);
-        padding: 20px 40px;
+        padding: 14px 32px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px dashed var(--border-gray);
+        border-bottom: 1px solid var(--border-gray);
+        height: var(--header-h);
+        position: sticky;
+        top: 6px;
+        z-index: 99;
+        box-shadow: 0 1px 4px rgba(0,0,0,.07);
       }
 
       .header-address {
         border-left: 3px solid var(--black);
         padding-left: 16px;
-        font-size: 1rem;
+        font-size: 0.92rem;
         color: var(--black);
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 24px;
       }
 
       .logo {
@@ -56,7 +72,7 @@
       }
 
       .logo-wmc {
-        font-size: 2.4rem;
+        font-size: 2.2rem;
         font-weight: 900;
         letter-spacing: -2px;
         color: var(--black);
@@ -65,220 +81,265 @@
       }
 
       .logo-name {
-        font-size: 0.55rem;
+        font-size: 0.52rem;
         letter-spacing: 0.35em;
         color: var(--black);
         text-transform: uppercase;
       }
 
       .logo-tagline {
-        font-size: 0.78rem;
+        font-size: 0.74rem;
         color: var(--red);
         font-style: italic;
         margin-top: 2px;
       }
 
-      /* ── Main ── */
-      main {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 40px 24px 80px;
+      /* ── PDF button ── */
+      .btn-pdf {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: var(--red);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        padding: 8px 18px;
+        font-size: 0.83rem;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+        white-space: nowrap;
+        transition: background .2s;
       }
 
-      /* ── Document title ── */
-      .doc-title {
-        border-bottom: 3px solid var(--red);
-        padding-bottom: 16px;
-        margin-bottom: 28px;
+      .btn-pdf:hover {
+        background: #a00d00;
       }
 
-      .doc-title h1 {
-        font-size: 2rem;
-        color: var(--black);
-        margin-bottom: 8px;
+      /* ── Layout ── */
+      .layout {
+        display: flex;
+        min-height: calc(100vh - 6px - var(--header-h));
       }
 
-      .doc-title p {
-        color: var(--text-muted);
-        font-size: 0.95rem;
-      }
-
-      /* ── Copilot note ── */
-      .copilot-note {
+      /* ── Sidebar ── */
+      .sidebar {
+        width: var(--sidebar-w);
+        flex-shrink: 0;
         background: var(--light-gray);
-        border-left: 4px solid var(--red);
-        padding: 12px 16px;
-        margin-bottom: 36px;
-        font-size: 0.9rem;
-        color: var(--black);
+        border-right: 1px solid var(--border-gray);
+        position: sticky;
+        top: calc(6px + var(--header-h));
+        height: calc(100vh - 6px - var(--header-h));
+        overflow-y: auto;
+        padding: 24px 0;
       }
 
-      /* ── TOC ── */
-      .toc {
-        background: var(--light-gray);
-        border: 1px solid var(--border-gray);
-        border-top: 4px solid var(--red);
-        padding: 24px 28px;
-        margin-bottom: 48px;
-      }
-
-      .toc h2 {
-        font-size: 0.9rem;
+      .sidebar-title {
+        font-size: 0.7rem;
         text-transform: uppercase;
-        letter-spacing: 0.1em;
+        letter-spacing: .12em;
         color: var(--text-muted);
-        margin-bottom: 16px;
+        padding: 0 20px 14px;
+        border-bottom: 1px solid var(--border-gray);
+        margin-bottom: 12px;
       }
 
-      .toc ol {
-        padding-left: 20px;
+      .sidebar nav ol {
+        list-style: none;
+        padding: 0;
       }
 
-      .toc li {
-        margin-bottom: 7px;
+      .sidebar nav ol li {
+        border-left: 3px solid transparent;
+        transition: border-color .15s, background .15s;
       }
 
-      .toc a {
+      .sidebar nav ol li.active {
+        border-left-color: var(--red);
+        background: rgba(204,17,0,.06);
+      }
+
+      .sidebar nav ol li a {
+        display: block;
+        padding: 7px 20px;
         color: var(--black);
         text-decoration: none;
-        font-size: 0.95rem;
+        font-size: 0.83rem;
+        line-height: 1.35;
       }
 
-      .toc a:hover {
+      .sidebar nav ol li a:hover {
         color: var(--red);
-        text-decoration: underline;
       }
 
-      .toc .kap-num {
-        color: var(--red);
+      .kap-num {
         font-weight: bold;
-        font-size: 0.78rem;
+        font-size: 0.7rem;
+        color: var(--red);
         margin-right: 6px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ── Main content ── */
+      .content {
+        flex: 1;
+        min-width: 0;
+        padding: 40px 48px 80px;
+        max-width: 860px;
+      }
+
+      /* ── Document header ── */
+      .doc-header {
+        border-bottom: 3px solid var(--red);
+        padding-bottom: 20px;
+        margin-bottom: 40px;
+      }
+
+      .doc-header h1 {
+        font-size: 2rem;
+        color: var(--black);
+        margin-bottom: 6px;
+      }
+
+      .doc-header p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
       }
 
       /* ── Chapter sections ── */
       .chapter {
+        padding-top: 36px;
+        margin-bottom: 56px;
         border-top: 2px solid var(--border-gray);
-        padding-top: 32px;
-        margin-bottom: 40px;
-        scroll-margin-top: 16px;
+        scroll-margin-top: calc(6px + var(--header-h) + 16px);
       }
 
-      .chapter-header {
-        display: flex;
-        align-items: baseline;
-        gap: 12px;
-        margin-bottom: 12px;
+      .chapter:first-of-type {
+        border-top: none;
+        padding-top: 0;
       }
 
-      .chapter-num {
-        background: var(--red);
-        color: #fff;
-        font-size: 0.68rem;
-        font-weight: bold;
-        padding: 3px 9px;
-        letter-spacing: 0.06em;
-        white-space: nowrap;
+      /* Chapter h1 → styled chapter title */
+      .chapter > h1 {
+        font-size: 1.7rem;
+        color: var(--black);
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-gray);
       }
 
       .chapter h2 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         color: var(--black);
-      }
-
-      .chapter-desc {
-        color: var(--text-muted);
-        font-size: 0.95rem;
+        margin-top: 32px;
         margin-bottom: 12px;
-        line-height: 1.55;
       }
 
-      .chapter-topics {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 16px;
-      }
-
-      .chapter-topics li {
-        padding: 4px 0 4px 18px;
-        font-size: 0.88rem;
-        color: var(--black);
-        border-left: 2px solid var(--border-gray);
-        margin-bottom: 4px;
-        position: relative;
-      }
-
-      .chapter-topics li::before {
-        content: "–";
-        color: var(--red);
-        position: absolute;
-        left: 5px;
-      }
-
-      .chapter-topics code {
-        background: #eee;
-        padding: 1px 4px;
-        font-size: 0.82rem;
-        border-radius: 2px;
-        font-family: "Courier New", monospace;
-      }
-
-      .btn-chapter {
-        display: inline-block;
-        background: var(--black);
-        color: #fff;
-        text-decoration: none;
-        padding: 8px 18px;
-        font-size: 0.85rem;
+      .chapter h3 {
+        font-size: 1rem;
         font-weight: bold;
-        transition: background 0.2s;
+        color: var(--black);
+        margin-top: 24px;
+        margin-bottom: 8px;
       }
 
-      .btn-chapter:hover {
-        background: var(--red);
+      .chapter p {
+        margin-bottom: 12px;
+        font-size: 0.95rem;
       }
 
-      /* ── Quick reference ── */
-      .quickref {
-        background: var(--black);
-        color: #fff;
-        padding: 28px 32px;
-        margin-top: 48px;
+      .chapter ul, .chapter ol {
+        padding-left: 22px;
+        margin-bottom: 14px;
       }
 
-      .quickref h2 {
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--red);
-        margin-bottom: 20px;
-      }
-
-      .quickref-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-        gap: 16px;
-      }
-
-      .qr-item {
-        border-left: 3px solid var(--red);
-        padding-left: 12px;
-      }
-
-      .qr-item strong {
-        display: block;
-        font-size: 0.88rem;
+      .chapter li {
         margin-bottom: 4px;
+        font-size: 0.93rem;
       }
 
-      .qr-item a {
-        color: #ccc;
-        text-decoration: none;
+      /* ── Tables ── */
+      .chapter table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 16px 0 20px;
+        font-size: 0.88rem;
+      }
+
+      .chapter th {
+        background: var(--light-gray);
+        text-align: left;
+        padding: 8px 12px;
+        border: 1px solid var(--border-gray);
         font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: .04em;
       }
 
-      .qr-item a:hover {
+      .chapter td {
+        padding: 7px 12px;
+        border: 1px solid var(--border-gray);
+        vertical-align: top;
+      }
+
+      .chapter tr:nth-child(even) td {
+        background: #fafafa;
+      }
+
+      /* ── Code blocks ── */
+      .chapter pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 14px 18px;
+        overflow-x: auto;
+        margin: 14px 0 18px;
+        font-size: 0.83rem;
+        line-height: 1.5;
+        border-radius: 2px;
+      }
+
+      .chapter code {
+        font-family: "Courier New", Courier, monospace;
+      }
+
+      .chapter p code,
+      .chapter li code,
+      .chapter td code {
+        background: #eee;
+        padding: 1px 5px;
+        font-size: 0.82em;
+        border-radius: 2px;
+      }
+
+      /* ── Blockquotes ── */
+      .chapter blockquote {
+        border-left: 4px solid var(--red);
+        background: var(--light-gray);
+        padding: 10px 16px;
+        margin: 14px 0;
+        font-size: 0.92rem;
+        color: var(--black);
+      }
+
+      .chapter blockquote p {
+        margin: 0;
+      }
+
+      /* ── Links ── */
+      .chapter a {
         color: var(--red);
+        text-decoration: none;
+      }
+
+      .chapter a:hover {
+        text-decoration: underline;
+      }
+
+      /* ── Horizontal rules ── */
+      .chapter hr {
+        border: none;
+        border-top: 1px solid var(--border-gray);
+        margin: 28px 0;
       }
 
       /* ── Footer ── */
@@ -299,138 +360,39 @@
         text-decoration: underline;
       }
 
-      /* ── PDF export button ── */
-      .btn-pdf {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        background: var(--red);
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        padding: 9px 20px;
-        font-size: 0.85rem;
-        font-weight: bold;
-        font-family: Arial, Helvetica, sans-serif;
-        text-decoration: none;
-        transition: background 0.2s;
-      }
-
-      .btn-pdf:hover {
-        background: #a00d00;
-      }
-
-      .btn-pdf svg {
-        flex-shrink: 0;
-      }
-
       /* ── Print / PDF styles ── */
       @media print {
-        /* Hide interactive UI */
-        .topbar,
-        .btn-pdf,
-        .copilot-note,
-        .toc,
-        .btn-chapter,
-        .quickref,
-        footer {
-          display: none !important;
-        }
+        .topbar, .btn-pdf, .sidebar, footer { display: none !important; }
 
-        /* Reset layout for paper */
-        body {
-          font-size: 10pt;
-          color: #000;
-          background: #fff;
-          line-height: 1.5;
-        }
-
-        main {
-          max-width: 100%;
-          margin: 0;
-          padding: 0 16pt;
-        }
-
-        /* Header repeated on every page */
         header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+          position: static;
           border-bottom: 1.5pt solid #1a1a1a;
-          padding: 10pt 0 8pt;
-          margin-bottom: 18pt;
-          position: running(header);
+          padding: 8pt 0;
+          box-shadow: none;
         }
 
-        .header-address {
-          border-left: 3pt solid #1a1a1a;
-          padding-left: 10pt;
-          font-size: 9pt;
+        .layout { display: block; }
+
+        .content {
+          max-width: 100%;
+          padding: 0;
         }
 
-        .logo-wmc {
-          font-size: 20pt;
-        }
+        body { font-size: 10pt; color: #000; }
 
-        .logo-name {
-          font-size: 6pt;
-          letter-spacing: 0.3em;
-        }
+        .chapter { scroll-margin-top: 0; }
 
-        .logo-tagline {
-          font-size: 8pt;
-          color: #cc1100;
-        }
-
-        /* Document title */
-        .doc-title {
-          border-bottom: 2pt solid #cc1100;
-          padding-bottom: 10pt;
-          margin-bottom: 20pt;
-        }
-
-        .doc-title h1 {
-          font-size: 18pt;
-        }
-
-        /* Chapter sections */
-        .chapter {
-          border-top: 1pt solid #aaa;
-          padding-top: 14pt;
-          margin-bottom: 20pt;
-          page-break-inside: avoid;
-          break-inside: avoid;
-        }
-
-        .chapter-num {
-          background: #cc1100;
-          color: #fff;
-          font-size: 7pt;
-          padding: 2pt 6pt;
-        }
-
-        .chapter h2 {
-          font-size: 13pt;
-        }
-
-        .chapter-desc {
-          font-size: 9pt;
-        }
-
-        .chapter-topics li {
-          font-size: 8.5pt;
-        }
-
-        /* Avoid orphan headings */
-        h1, h2, h3 {
-          page-break-after: avoid;
-          break-after: avoid;
-        }
-
-        a {
+        .chapter pre {
+          background: #f5f5f5;
           color: #000;
-          text-decoration: none;
+          border: 1pt solid #ccc;
         }
+
+        h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+
+        .chapter { page-break-inside: avoid; break-inside: avoid; }
+
+        a { color: #000; text-decoration: none; }
       }
     </style>
   </head>
@@ -441,9 +403,9 @@
       <div class="header-address">
         WAMOCON GmbH, Mergenthalerallee 79-81, 65760 Eschborn
       </div>
-      <div style="display:flex;align-items:center;gap:28px;">
+      <div class="header-right">
         <button class="btn-pdf" onclick="window.print()" title="Handbuch als PDF exportieren">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14 2 14 8 20 8"/>
             <line x1="12" y1="18" x2="12" y2="12"/>
@@ -459,273 +421,2421 @@
       </div>
     </header>
 
-    <main>
-      <div class="doc-title">
-        <h1>WAMOCON Entwicklerhandbuch</h1>
-        <p>Offizielle Entwicklerdokumentation für alle WAMOCON-Apps und -Prozesse</p>
-      </div>
+    <div class="layout">
+      <!-- ── Sidebar ── -->
+      <aside class="sidebar">
+        <div class="sidebar-title">Inhaltsverzeichnis</div>
+        <nav>
+          <ol>
+            <li><a href="#kap00"><span class="kap-num">00</span> Einleitung</a></li>
+            <li><a href="#kap01"><span class="kap-num">01</span> GitHub & Repository-Struktur</a></li>
+            <li><a href="#kap02"><span class="kap-num">02</span> Tech Stack & Standards</a></li>
+            <li><a href="#kap03"><span class="kap-num">03</span> Entwicklungsprozess</a></li>
+            <li><a href="#kap04"><span class="kap-num">04</span> Jira & Aufgabenmanagement</a></li>
+            <li><a href="#kap05"><span class="kap-num">05</span> Supabase Cloud Projekt</a></li>
+            <li><a href="#kap06"><span class="kap-num">06</span> Vercel Deployment</a></li>
+            <li><a href="#kap07"><span class="kap-num">07</span> Sicherheit &amp; Code-Qualität</a></li>
+            <li><a href="#kap08"><span class="kap-num">08</span> KI-Entwicklung &amp; Copilot-Workflows</a></li>
+            <li><a href="#kap09"><span class="kap-num">09</span> Produkt-Ökosystem &amp; App-Katalog</a></li>
+            <li><a href="#kap10"><span class="kap-num">10</span> Glossar &amp; Referenzen</a></li>
+          </ol>
+        </nav>
+      </aside>
 
-      <div class="copilot-note">
-        <strong>Entwicklungsphilosophie:</strong> Die gesamte App-Entwicklung bei WAMOCON
-        wird vollständig mit <strong>GitHub Copilot</strong> durchgeführt. Copilot ist das
-        primäre Entwicklungswerkzeug – von der Planung über die Implementierung bis hin zu
-        Migrationen und Deployment-Konfigurationen.
-      </div>
-
-      <div class="toc">
-        <h2>Inhaltsverzeichnis</h2>
-        <ol>
-          <li><a href="#kap00"><span class="kap-num">00</span> Einleitung</a></li>
-          <li><a href="#kap06"><span class="kap-num">06</span> GitHub &amp; Repository-Struktur</a></li>
-          <li><a href="#kap07"><span class="kap-num">07</span> Tech Stack &amp; Standards</a></li>
-          <li><a href="#kap08"><span class="kap-num">08</span> Entwicklungsprozess</a></li>
-          <li><a href="#kap09"><span class="kap-num">09</span> Jira &amp; Aufgabenmanagement</a></li>
-          <li><a href="#kap10"><span class="kap-num">10</span> Supabase Cloud Projekt</a></li>
-          <li><a href="#kap11"><span class="kap-num">11</span> Vercel Deployment</a></li>
-          <li><a href="#kap12"><span class="kap-num">12</span> Sicherheit &amp; Code-Qualität</a></li>
-          <li><a href="#kap13"><span class="kap-num">13</span> KI-Entwicklung &amp; Copilot-Workflows</a></li>
-          <li><a href="#kap14"><span class="kap-num">14</span> Produkt-Ökosystem &amp; App-Katalog</a></li>
-          <li><a href="#kap15"><span class="kap-num">15</span> Glossar &amp; Referenzen</a></li>
-        </ol>
-      </div>
-
-      <!-- ── Chapters ────────────────────────────────────────────────── -->
-
-      <section class="chapter" id="kap00">
-        <div class="chapter-header">
-          <span class="chapter-num">KAP 00</span>
-          <h2>Einleitung</h2>
+      <!-- ── Main content ── -->
+      <main class="content">
+        <div class="doc-header">
+          <h1>WAMOCON Entwicklerhandbuch</h1>
+          <p>Offizielle Entwicklerdokumentation für alle WAMOCON-Apps und -Prozesse</p>
         </div>
-        <p class="chapter-desc">
-          Was ist das WAMOCON Entwicklerhandbuch, wer ist die Zielgruppe und welche
-          Philosophie liegt der Entwicklung bei WAMOCON zugrunde?
-        </p>
-        <ul class="chapter-topics">
-          <li>Zweck und Verbindlichkeit dieses Handbuchs</li>
-          <li>Zielgruppe: Copilot-Entwickler, Admins, Prozessbeteiligte</li>
-          <li>Aufbau: Kapitelübersicht und Querverweise</li>
-          <li>Entwicklungsphilosophie: GitHub Copilot als primäres Werkzeug</li>
-          <li>Empfohlener Workflow: @planner &#8594; @developer &#8594; @reviewer &#8594; PR</li>
-        </ul>
-        <a class="btn-chapter" href="./chapters/00_einleitung.md">Kapitel lesen &#8594;</a>
-      </section>
 
-      <section class="chapter" id="kap06">
-        <div class="chapter-header">
-          <span class="chapter-num">KAP 06</span>
-          <h2>GitHub &amp; Repository-Struktur</h2>
-        </div>
-        <p class="chapter-desc">
-          Wie der Code organisiert ist – von der Benennung der Repositories bis zur
-          Branching-Strategie und CI/CD-Automatisierung.
-        </p>
-        <ul class="chapter-topics">
-          <li>Naming Conventions: <code>snake_case</code> (Apps), <code>[app]_lp</code> (Landing Pages), <code>camelCase</code> (Infrastruktur)</li>
-          <li>Repository-Typen: App, Landing Page, Infrastruktur, Template</li>
-          <li>Branching-Strategie: Standard <code>main / dev</code>, themenspezifisches Branching vereinzelt</li>
-          <li>GitHub Workflow &amp; CI/CD via <code>github_workflow</code></li>
-          <li>Commit-Konventionen (Conventional Commits)</li>
-          <li>Secrets-Management &amp; Repository-Sichtbarkeit</li>
-        </ul>
-        <a class="btn-chapter" href="./chapters/06_github-repository-struktur.md">Kapitel lesen &#8594;</a>
-      </section>
+<section class="chapter" id="kap00">
+<h1>Kapitel 00 – Einleitung</h1>
+<h2>Was ist das WAMOCON Entwicklerhandbuch?</h2>
+<p>Das WAMOCON Entwicklerhandbuch ist die zentrale Referenz für alle Entwickler, die Apps,
+Landing Pages oder Infrastruktur-Projekte innerhalb der WAMOCON Organisation erstellen
+und betreiben. Es beschreibt verbindliche Standards, Prozesse und Werkzeuge, die bei
+jeder Entwicklung einzuhalten sind.</p>
+<h2>Zielgruppe</h2>
+<p>Dieses Handbuch richtet sich an:</p>
+<ul>
+<li>Entwickler, die mit GitHub Copilot WAMOCON-Apps umsetzen</li>
+<li>Administratoren, die Supabase- oder Vercel-Projekte verwalten</li>
+<li>Alle Beteiligten, die WAMOCON-Prozesse (Wellen-Rhythmus, Jira, Anforderungsdokument)
+  anwenden</li>
+</ul>
+<h2>Aufbau des Handbuchs</h2>
+<table>
+<thead>
+<tr>
+<th>Kapitel</th>
+<th>Thema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>06</td>
+<td>GitHub &amp; Repository-Struktur</td>
+</tr>
+<tr>
+<td>07</td>
+<td>Tech Stack &amp; Standards</td>
+</tr>
+<tr>
+<td>08</td>
+<td>Entwicklungsprozess</td>
+</tr>
+<tr>
+<td>09</td>
+<td>Jira &amp; Aufgabenmanagement</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Supabase Cloud Projekt</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Vercel Deployment</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Sicherheit &amp; Code-Qualität</td>
+</tr>
+<tr>
+<td>13</td>
+<td>KI-Entwicklung &amp; Copilot-Workflows</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Produkt-Ökosystem &amp; App-Katalog</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Glossar &amp; Referenzen</td>
+</tr>
+</tbody>
+</table>
+<h2>Entwicklungsphilosophie</h2>
+<p>Die gesamte App-Entwicklung bei WAMOCON wird vollständig mit <strong>GitHub Copilot</strong>
+durchgeführt. Copilot ist das primäre Entwicklungswerkzeug – von der Planung über
+die Implementierung bis hin zu Migrationen und Deployment-Konfigurationen.</p>
+<p>Der empfohlene Workflow lautet:</p>
+<ol>
+<li><strong>@planner</strong> – Entwicklungsplan aus dem Anforderungsdokument ableiten</li>
+<li><strong>@developer</strong> – Plan iterativ mit Copilot umsetzen</li>
+<li><strong>@reviewer</strong> – Code-Review und ARGUS-Pipeline durchlaufen</li>
+<li><strong>PR erstellen</strong> und auf <code>main</code> mergen → automatisches Produktions-Deployment</li>
+</ol>
+<h2>Verbindlichkeit</h2>
+<p>Alle in diesem Handbuch beschriebenen Standards sind verbindlich für jede WAMOCON-App.
+Abweichungen bedürfen einer expliziten Entscheidung und Dokumentation im jeweiligen
+Projekt-Repository.</p>
+</section>
 
-      <section class="chapter" id="kap07">
-        <div class="chapter-header">
-          <span class="chapter-num">KAP 07</span>
-          <h2>Tech Stack &amp; Standards</h2>
-        </div>
-        <p class="chapter-desc">
-          Welche Technologien bei WAMOCON eingesetzt werden und wie sie konfiguriert
-          und genutzt werden.
-        </p>
-        <ul class="chapter-topics">
-          <li>Frontend: Next.js 16 (App Router), TypeScript Strict, Tailwind CSS v4</li>
-          <li>Backend: Supabase (PostgreSQL, Auth, RLS), <code>@supabase/ssr</code></li>
-          <li>Deployment: Vercel (alle TypeScript-Apps), Strato (Domains)</li>
-          <li>npm-Scripts: <code>dev</code>, <code>build</code>, <code>lint</code>, <code>typecheck</code>, <code>db:start</code></li>
-          <li>Umgebungsvariablen: <code>.env.example</code> &#8594; <code>.env.local</code></li>
-          <li>VS Code Extensions &amp; Workspace-Einstellungen</li>
-        </ul>
-        <a class="btn-chapter" href="./chapters/07_tech-stack-standards.md">Kapitel lesen &#8594;</a>
-      </section>
+<section class="chapter" id="kap01">
+<h1>Kapitel 06 – GitHub &amp; Repository-Struktur</h1>
+<h2>Organisation</h2>
+<p>Alle WAMOCON-Projekte sind unter der GitHub-Organisation <strong><a href="https://github.com/Wamocon">Wamocon</a></strong> zusammengefasst.
+Die Organisation enthält aktuell über 90 Repositories, die sich in drei Hauptkategorien unterteilen:</p>
+<table>
+<thead>
+<tr>
+<th>Kategorie</th>
+<th>Beschreibung</th>
+<th>Beispiele</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Apps</strong></td>
+<td>TypeScript/Next.js-Webanwendungen</td>
+<td><code>wamohub</code>, <code>carman</code>, <code>TeamRadar</code>, <code>belegbox</code></td>
+</tr>
+<tr>
+<td><strong>Landing Pages</strong></td>
+<td>Statische HTML-Seiten für Apps</td>
+<td><code>carman_lp</code>, <code>trace_lp</code>, <code>away_lp</code></td>
+</tr>
+<tr>
+<td><strong>Infrastruktur</strong></td>
+<td>Shared Workflows, Templates, Docs</td>
+<td><a href="https://github.com/Wamocon/github_workflow"><code>github_workflow</code></a>, <a href="https://github.com/Wamocon/localSupabaseDB"><code>localSupabaseDB</code></a>, <a href="https://github.com/Wamocon/template_repo"><code>template_repo</code></a></td>
+</tr>
+</tbody>
+</table>
+<h2>Infrastruktur-Repositories</h2>
+<h3><code>Wamocon/github_workflow</code></h3>
+<p>Das zentrale CI/CD-Repository der Organisation. Enthält wiederverwendbare GitHub Actions Workflows, die alle Projekte einbinden:</p>
+<pre><code>github_workflow/
+├── .github/workflows/
+│   ├── pr-checks.yml           # TypeScript + ESLint-Validierung (reusable)
+│   ├── pr-autofix.yml          # Auto-Fix von Lint- &amp; Formatierungsfehlern (reusable)
+│   ├── deploy-preview.yml      # Vercel Preview-Deployment (reusable)
+│   └── deploy-production.yml   # Vercel Produktions-Deployment (reusable)
+├── examples/
+│   ├── caller-pr-pipeline.yml  # Vorlage für PR-Workflow im eigenen Repo
+│   └── caller-production-deploy.yml  # Vorlage für Deploy-Workflow
+└── docs/
+    ├── workflow-guide.md
+    ├── supabase-vercel-linking.md
+    ├── database-schema-migrations.md
+    ├── mcp-setup.md
+    ├── github-copilot-guide.md
+    └── tips-and-best-practices.md
+</code></pre>
+<h3><code>Wamocon/localSupabaseDB</code></h3>
+<p>Template-Repository für lokale Supabase-Entwicklungsumgebungen.
+Jede Next.js-App bekommt bei Bedarf eine eigene Kopie, um lokal ohne Supabase Cloud entwickeln zu können.</p>
+<h3><code>Wamocon/wamohub</code></h3>
+<p>Das Haupt-App-Template der Organisation (intern „relda" genannt). Dient als Ausgangspunkt für alle neuen Next.js-Apps. Enthält vollständige Konfiguration für:
+- Next.js 16 App Router
+- Supabase-Integration
+- GitHub Actions CI/CD
+- Copilot-Agents und -Instructions</p>
+<h2>Sichtbarkeit und Zugriff</h2>
+<ul>
+<li>Alle App-Repositories sind standardmäßig <strong>intern</strong> (nur für Org-Mitglieder sichtbar)</li>
+<li>Landing Pages können je nach Bedarf öffentlich sein</li>
+<li>Repos werden für das initiale Vercel-Deployment <strong>vorübergehend öffentlich</strong> gestellt und danach wieder auf intern gesetzt</li>
+</ul>
+<h2>Branch-Strategie</h2>
+<h3>Standard: main / dev</h3>
+<p>Der Standardansatz bei allen WAMOCON-Apps:</p>
+<pre><code>main   ← Produktions-Branch, immer deploybar, kein direkter Commit
+dev    ← Entwicklungs-Branch, aktive Arbeit
+</code></pre>
+<ul>
+<li>Entwicklung geschieht auf <code>dev</code></li>
+<li>PRs laufen von <code>dev</code> → <code>main</code> nach Review &amp; Tests</li>
+<li>Direkte Commits auf <code>main</code> sind nicht erlaubt</li>
+</ul>
+<h3>Themenspezifisches Branching (vereinzelt)</h3>
+<p>Bei größeren Features oder paralleler Entwicklung können zusätzliche Branches genutzt werden:</p>
+<pre><code>feature/auth       ← Neues Feature
+fix/bugname        ← Fehlerbehebung
+hotfix/kritisch    ← Dringender Produktionsfehler
+</code></pre>
+<p>Diese Branches werden von <code>dev</code> abgezweigt und zurück nach <code>dev</code> gemergt.</p>
+<p><strong>Grundregel:</strong> Niemals direkt auf <code>main</code> commiten — immer über <code>dev</code> und dann PR.</p>
+<h2>Naming Conventions</h2>
+<table>
+<thead>
+<tr>
+<th>Typ</th>
+<th>Konvention</th>
+<th>Beispiele</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>App-Repos</strong></td>
+<td><code>snake_case</code>, kleingeschrieben</td>
+<td><code>backup_planner</code>, <code>carman</code>, <code>daily_echo</code></td>
+</tr>
+<tr>
+<td><strong>Landing-Page-Repos</strong></td>
+<td><code>[appname]_lp</code>, kleingeschrieben</td>
+<td><code>carman_lp</code>, <code>trace_lp</code>, <code>away_lp</code></td>
+</tr>
+<tr>
+<td><strong>Infrastruktur-Repos</strong></td>
+<td><code>camelCase</code></td>
+<td><code>AppMonitor</code>, <code>TeamRadar</code>, <code>localSupabaseDB</code></td>
+</tr>
+</tbody>
+</table>
+<p>Sonderfälle und Ausnahmen sind im App-Katalog (Kapitel 14) dokumentiert.</p>
+<h2>Commit-Konventionen</h2>
+<p>WAMOCON folgt dem <a href="https://www.conventionalcommits.org/">Conventional Commits</a> Standard:</p>
+<pre><code>feat(auth): Login-Seite hinzufügen
+fix(orders): Gesamtberechnung bei Rabatten korrigieren
+chore(deps): supabase-js auf v2.45 aktualisieren
+db(migration): Tabelle notifications erstellen
+ci(workflow): Node.js-Version auf 20 aktualisieren
+docs(readme): Deployment-Anleitung ergänzen
+style(lint): Formatierungsfehler automatisch behoben
+</code></pre>
+<h2>Repository-Struktur (Standard-App)</h2>
+<p>Alle App-Repos basieren auf dem <code>wamohub</code>-Template und haben diese Struktur:</p>
+<pre><code>&lt;app-name&gt;/
+├── .github/
+│   ├── agents/                 # KI-Personas (@planner, @developer, @reviewer)
+│   ├── instructions/           # Datei-spezifische Copilot-Regeln
+│   ├── workflows/
+│   │   ├── pr-pipeline.yml     # Ruft zentralen Workflow auf
+│   │   └── deploy.yml          # Ruft zentralen Deploy-Workflow auf
+│   └── copilot-instructions.md # Globale Copilot-Regeln
+├── src/
+│   └── app/                    # Next.js App Router
+├── supabase/
+│   └── migrations/             # SQL-Migrationsdateien
+├── tests/                      # Playwright E2E-Tests
+├── legal-docs/                 # Impressum, Datenschutzerklärung, AGB
+├── .env.example                # Template für Umgebungsvariablen
+├── HOWTO.md                    # Setup- &amp; Deployment-Guide (DE/EN)
+├── AGENTS.md                   # Copilot-Agents Dokumentation
+├── package.json
+├── tsconfig.json
+├── next.config.ts
+└── eslint.config.mjs
+</code></pre>
+<h2>Pull Requests</h2>
+<p>Richtlinien für jeden PR:</p>
+<ol>
+<li>PRs klein halten — angestrebt unter 400 geänderte Zeilen</li>
+<li>Einen Fokus pro PR — keine Mischung von Feature und Refactoring</li>
+<li>Klare Beschreibung: Was wurde geändert und warum?</li>
+<li>Screenshots bei UI-Änderungen beifügen</li>
+<li>Erst alle Änderungen pushen, dann den PR öffnen (jeder Push auf offenen PR triggert CI)</li>
+<li>Immer nur einen offenen PR gleichzeitig haben</li>
+</ol>
+<h2>Secrets-Management</h2>
+<table>
+<thead>
+<tr>
+<th>Secret</th>
+<th>Scope</th>
+<th>Beschreibung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VERCEL_TOKEN</code></td>
+<td>Organisation</td>
+<td>Vercel API-Token (org-weit konfiguriert)</td>
+</tr>
+<tr>
+<td><code>VERCEL_ORG_ID</code></td>
+<td>Organisation</td>
+<td>Vercel Organisations-ID (org-weit konfiguriert)</td>
+</tr>
+<tr>
+<td><code>VERCEL_PROJECT_ID</code></td>
+<td>Repository</td>
+<td>Vercel Projekt-ID (pro Repo in Repo-Secrets)</td>
+</tr>
+</tbody>
+</table>
+<p>Supabase-Credentials (URL, Anon Key, Service Role Key) werden als Vercel Environment Variables konfiguriert, nicht als GitHub Secrets.</p>
+</section>
 
-      <section class="chapter" id="kap08">
-        <div class="chapter-header">
-          <span class="chapter-num">KAP 08</span>
-          <h2>Entwicklungsprozess</h2>
-        </div>
-        <p class="chapter-desc">
-          Von der Produktidee bis zum Go-live – der vollständige Schritt-für-Schritt-Prozess.
-        </p>
-        <ul class="chapter-topics">
-          <li>Anforderungsdokument erstellen &amp; in OneDrive ablegen (Welle / App-Ordner)</li>
-          <li>Nach Freigabe: Supabase Cloud &amp; Strato-Domain per E-Mail beantragen</li>
-          <li>Entwicklungsstart: Template Repo &#8594; <code>dev</code>-Branch &#8594; Anforderungsdokument in Copilot</li>
-          <li>Copilot erstellt Entwicklungsplan (Schema, Komponenten, API, Meilensteine)</li>
-          <li>Iterative Implementierung mit Copilot entlang des Plans</li>
-          <li>Landing Page generieren via KI-Workflow (bevorzugt GitHub Pages)</li>
-        </ul>
-        <a class="btn-chapter" href="./chapters/08_entwicklungsprozess.md">Kapitel lesen &#8594;</a>
-      </section>
+<section class="chapter" id="kap02">
+<h1>Kapitel 07 – Tech Stack &amp; Standards</h1>
+<h2>Übersicht</h2>
+<p>Alle WAMOCON-Webanwendungen basieren auf einem einheitlichen Tech Stack.
+Dieser Standard gilt für alle neuen Apps und sollte nicht ohne Absprache abgewichen werden.</p>
+<table>
+<thead>
+<tr>
+<th>Schicht</th>
+<th>Technologie</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Framework</td>
+<td>Next.js (App Router)</td>
+<td>16.x</td>
+</tr>
+<tr>
+<td>Sprache</td>
+<td>TypeScript (strict mode)</td>
+<td>5.x</td>
+</tr>
+<tr>
+<td>Styling</td>
+<td>Tailwind CSS</td>
+<td>v4</td>
+</tr>
+<tr>
+<td>Backend &amp; Datenbank</td>
+<td>Supabase (PostgreSQL, Auth, RLS)</td>
+<td>2.x</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td>Vercel</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Package Manager</td>
+<td>npm</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Linter</td>
+<td>ESLint</td>
+<td>9.x</td>
+</tr>
+<tr>
+<td>Dev-Server</td>
+<td>Next.js mit Turbopack</td>
+<td>–</td>
+</tr>
+<tr>
+<td>E2E-Tests</td>
+<td>Playwright</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<h2>Next.js 16 – App Router</h2>
+<p>Alle Apps verwenden den <strong>App Router</strong> (<code>src/app/</code>). Der Pages Router wird nicht verwendet.</p>
+<h3>Wichtigste Regeln</h3>
+<ul>
+<li><strong>Server Components sind der Standard</strong> — <code>"use client"</code> nur hinzufügen, wenn Interaktivität benötigt wird</li>
+<li>Server Actions in eigene Dateien auslagern (<code>actions.ts</code> im Feature-Ordner)</li>
+<li><code>loading.tsx</code> und <code>error.tsx</code> für jedes Route-Segment anlegen</li>
+<li>Formulareingaben auf Client- und Server-Seite validieren</li>
+<li><code>revalidatePath</code> / <code>revalidateTag</code> statt manuellem Cache-Busting verwenden</li>
+<li><code>next/image</code> für alle Bilder verwenden (automatische Optimierung)</li>
+<li><code>next/font</code> für Schriften verwenden (kein Layout-Shift)</li>
+</ul>
+<h3>verfügbare npm-Scripts</h3>
+<table>
+<thead>
+<tr>
+<th>Befehl</th>
+<th>Beschreibung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm run dev</code></td>
+<td>Dev-Server mit Turbopack starten (Hot Reload)</td>
+</tr>
+<tr>
+<td><code>npm run build</code></td>
+<td>Produktions-Build erstellen</td>
+</tr>
+<tr>
+<td><code>npm run start</code></td>
+<td>Produktionsserver starten</td>
+</tr>
+<tr>
+<td><code>npm run lint</code></td>
+<td>ESLint ausführen</td>
+</tr>
+<tr>
+<td><code>npm run typecheck</code></td>
+<td>TypeScript-Typprüfung ausführen</td>
+</tr>
+<tr>
+<td><code>npm run db:start</code></td>
+<td>Lokale Supabase-Instanz starten</td>
+</tr>
+<tr>
+<td><code>npm run db:stop</code></td>
+<td>Lokale Supabase-Instanz stoppen</td>
+</tr>
+<tr>
+<td><code>npm run db:reset</code></td>
+<td>Lokale Datenbank zurücksetzen</td>
+</tr>
+<tr>
+<td><code>npm run db:status</code></td>
+<td>Status der lokalen Supabase prüfen</td>
+</tr>
+</tbody>
+</table>
+<h2>TypeScript</h2>
+<p>Alle Projekte nutzen TypeScript im <strong>Strict Mode</strong> (<code>strict: true</code> in <code>tsconfig.json</code>).</p>
+<h3>Konventionen</h3>
+<ul>
+<li><strong><code>any</code> vermeiden</strong> — <code>unknown</code> verwenden und den Typ einschränken</li>
+<li><strong>Zod für Runtime-Validierung</strong> an API-Grenzen einsetzen</li>
+<li><strong>Interfaces bevorzugen</strong> gegenüber <code>type</code> für Objektformen (bessere Fehlermeldungen)</li>
+<li><strong>Typen zentral exportieren</strong> pro Feature in <code>types.ts</code></li>
+<li>Generierte Supabase-Typen verwenden:</li>
+</ul>
+<pre><code class="language-typescript">import { Database } from '@/types/supabase';
+const supabase = createServerClient&lt;Database&gt;(...);
+</code></pre>
+<h2>Tailwind CSS v4</h2>
+<p>Alle Apps verwenden Tailwind CSS v4 mit dem PostCSS-Plugin (<code>@tailwindcss/postcss</code>).</p>
+<h3>Grundregeln</h3>
+<ul>
+<li>Utility-First-Ansatz — keine separaten CSS-Dateien außer für globale Styles</li>
+<li>Responsive Design mit den Standard-Breakpoints von Tailwind</li>
+<li>Keine magischen Zahlen — Tailwind-Scale-Werte verwenden</li>
+<li>Das WAMOCON-Design-System (dunkler Blauverlauf, Akzentfarbe <code>#1fd0b0</code>) aus Kapitel 05 beachten</li>
+</ul>
+<h2>Supabase</h2>
+<p>Supabase stellt PostgreSQL-Datenbank, Authentifizierung und Row Level Security bereit.
+Details zur Konfiguration und Nutzung in <strong>Kapitel 10 – Supabase Cloud Projekt</strong>.</p>
+<h3>Supabase-Client-Regeln</h3>
+<ul>
+<li><strong><code>createServerClient</code></strong> in Server Components und Server Actions verwenden</li>
+<li><strong><code>createBrowserClient</code></strong> nur in Client Components verwenden</li>
+<li>Fehler immer prüfen:</li>
+</ul>
+<pre><code class="language-typescript">const { data, error } = await supabase.from('users').select('*');
+if (error) throw error;
+</code></pre>
+<h2>Abhängigkeiten (Standard)</h2>
+<h3>Produktions-Dependencies</h3>
+<table>
+<thead>
+<tr>
+<th>Paket</th>
+<th>Zweck</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>next</code></td>
+<td>Framework</td>
+</tr>
+<tr>
+<td><code>react</code> / <code>react-dom</code></td>
+<td>UI-Library</td>
+</tr>
+<tr>
+<td><code>@supabase/supabase-js</code></td>
+<td>Supabase JavaScript Client</td>
+</tr>
+<tr>
+<td><code>@supabase/ssr</code></td>
+<td>Supabase SSR-Helpers für Next.js</td>
+</tr>
+<tr>
+<td><code>lucide-react</code></td>
+<td>Icon-Library</td>
+</tr>
+</tbody>
+</table>
+<h3>Entwicklungs-Dependencies</h3>
+<table>
+<thead>
+<tr>
+<th>Paket</th>
+<th>Zweck</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>typescript</code></td>
+<td>Sprachkompilierung</td>
+</tr>
+<tr>
+<td><code>eslint</code></td>
+<td>Linter</td>
+</tr>
+<tr>
+<td><code>eslint-config-next</code></td>
+<td>Next.js ESLint-Konfiguration</td>
+</tr>
+<tr>
+<td><code>tailwindcss</code></td>
+<td>CSS-Framework</td>
+</tr>
+<tr>
+<td><code>@tailwindcss/postcss</code></td>
+<td>Tailwind v4 PostCSS-Plugin</td>
+</tr>
+<tr>
+<td><code>@types/react</code> / <code>@types/node</code></td>
+<td>TypeScript-Typen</td>
+</tr>
+</tbody>
+</table>
+<h2>Umgebungsvariablen</h2>
+<p>Jedes Projekt hat eine <code>.env.example</code>-Datei als Template. Die eigentliche <code>.env.local</code> wird niemals in Git eingecheckt.</p>
+<h3>Standard-Variablen</h3>
+<pre><code class="language-env"># Next.js
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_SITE_NAME=&lt;App-Name&gt;
 
-      <section class="chapter" id="kap09">
-        <div class="chapter-header">
-          <span class="chapter-num">KAP 09</span>
-          <h2>Jira &amp; Aufgabenmanagement</h2>
-        </div>
-        <p class="chapter-desc">
-          Aufgabenverwaltung mit Jira – optional bei Wellen-Apps, verpflichtend
-          bei großen Projekten außerhalb des Wellen-Rhythmus.
-        </p>
-        <ul class="chapter-topics">
-          <li>Jira optional für Wellen-Apps, verpflichtend bei Großprojekten</li>
-          <li>Ticket-Typen: Story, Task, Bug, Sub-Task</li>
-          <li>Status-Workflow: Backlog &#8594; To Do &#8594; In Progress &#8594; In Review &#8594; Done</li>
-          <li>ARGUS Review Pipeline: Multi-Agent Review für Entwicklungs-Artefakte</li>
-          <li>Standard-Prozessablauf: wamocon.github.io/standard_prozessablauf/</li>
-        </ul>
-        <a class="btn-chapter" href="./chapters/09_jira-aufgabenmanagement.md">Kapitel lesen &#8594;</a>
-      </section>
+# Supabase (lokal)
+NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
+NEXT_PUBLIC_SUPABASE_ANON_KEY=&lt;aus npx supabase status&gt;
+SUPABASE_SERVICE_ROLE_KEY=&lt;aus npx supabase status&gt;
 
-      <section class="chapter" id="kap10">
-        <div class="chapter-header">
-          <span class="chapter-num">KAP 10</span>
-          <h2>Supabase Cloud Projekt</h2>
-        </div>
-        <p class="chapter-desc">
-          Datenbankprojekte beantragen, einrichten und nutzen – WAMOCON nutzt Supabase Pro.
-        </p>
-        <ul class="chapter-topics">
-          <li>Beantragung per E-Mail (kein Self-Service) – direkt nach Anforderungsfreigabe</li>
-          <li><code>.env.local</code>: SUPABASE_URL, ANON_KEY, SERVICE_ROLE_KEY, DATABASE_URL</li>
-          <li>Migrationen: Copilot erstellt &amp; führt sie direkt in Supabase Cloud aus</li>
-          <li>Row Level Security (RLS): Pflicht für alle Tabellen</li>
-          <li>Lokale Instanz via <code>localSupabaseDB</code> als Fallback (max. 2 parallel)</li>
-          <li>Wechsel lokal &#8594; Cloud nach Projektgenehmigung</li>
-        </ul>
-        <a class="btn-chapter" href="./chapters/10_supabase.md">Kapitel lesen &#8594;</a>
-      </section>
+# Supabase (Cloud)
+# NEXT_PUBLIC_SUPABASE_URL=https://&lt;project-ref&gt;.supabase.co
+# NEXT_PUBLIC_SUPABASE_ANON_KEY=&lt;anon-key&gt;
+# SUPABASE_SERVICE_ROLE_KEY=&lt;service-role-key&gt;
 
-      <section class="chapter" id="kap11">
-        <div class="chapter-header">
-          <span class="chapter-num">KAP 11</span>
-          <h2>Vercel Deployment</h2>
-        </div>
-        <p class="chapter-desc">
-          Deployment aller TypeScript-Apps über Vercel mit dem GitHub Actions Workflow
-          aus dem Template Repo.
-        </p>
-        <ul class="chapter-topics">
-          <li>Vercel Hobby Plan – Deployment über GitHub Actions aus <code>template_repo</code></li>
-          <li>Einmaliges Setup: Repo öffentlich &#8594; Vercel importieren &#8594; <code>VERCEL_PROJECT_ID</code> als Secret</li>
-          <li>Push auf <code>dev</code> &#8594; Preview-Deploy, Merge auf <code>main</code> &#8594; Produktions-Deploy</li>
-          <li>Landing Pages bevorzugt auf GitHub Pages (kostenlos, kein Build-Step)</li>
-          <li>Domain-Konfiguration: Strato (A/CNAME) + Vercel (SSL automatisch)</li>
-        </ul>
-        <a class="btn-chapter" href="./chapters/11_vercel-deployment.md">Kapitel lesen &#8594;</a>
-      </section>
+# Schema
+SUPABASE_DB_SCHEMA=public
+</code></pre>
+<p><strong>Wichtig:</strong> <code>NEXT_PUBLIC_</code>-Prefix bedeutet, dass die Variable im Browser sichtbar ist.
+Der <code>SUPABASE_SERVICE_ROLE_KEY</code> darf <strong>niemals</strong> mit <code>NEXT_PUBLIC_</code> versehen werden.</p>
+<h2>Globale Tools (Entwicklerrechner)</h2>
+<p>Jeder Entwickler sollte folgende Tools installiert haben:</p>
+<pre><code class="language-bash"># Node.js via nvm (Version 20)
+nvm install 20
+nvm use 20
 
-      <section class="chapter" id="kap12">
-        <div class="chapter-header">
-          <span class="chapter-num">KAP 12</span>
-          <h2>Sicherheit &amp; Code-Qualität</h2>
-        </div>
-        <p class="chapter-desc">
-          Entwicklungsstandards für sicheren und qualitativ hochwertigen Code.
-        </p>
-        <ul class="chapter-topics">
-          <li>RLS auf allen Supabase-Tabellen – verpflichtend</li>
-          <li>Zod-Validierung an allen API-Grenzen (Server Actions, API-Routes)</li>
-          <li>Secrets: niemals in Git – nur <code>.env.local</code> und Vercel Environment Variables</li>
-          <li>TypeScript Strict Mode, ESLint, Pre-Commit Hooks</li>
-          <li>Dependabot, <code>npm audit</code>, GitHub Secret Scanning</li>
-          <li>Performance: <code>next/image</code>, Paginierung, Datenbankindizes</li>
-        </ul>
-        <a class="btn-chapter" href="./chapters/12_sicherheit-code-qualitaet.md">Kapitel lesen &#8594;</a>
-      </section>
+# Vercel CLI
+npm install -g vercel
 
-      <section class="chapter" id="kap13">
-        <div class="chapter-header">
-          <span class="chapter-num">KAP 13</span>
-          <h2>KI-Entwicklung &amp; Copilot-Workflows</h2>
-        </div>
-        <p class="chapter-desc">
-          Wie GitHub Copilot und KI-Systeme bei WAMOCON in der Entwicklung eingesetzt werden.
-        </p>
-        <ul class="chapter-topics">
-          <li><code>@planner</code> &#8594; <code>@developer</code> &#8594; <code>@reviewer</code> – der empfohlene Workflow</li>
-          <li>Copilot Instructions: Next.js, Tailwind, TypeScript, Supabase (datei-spezifisch)</li>
-          <li>Supabase MCP: Schema-Kontext für akkurate Code-Generierung</li>
-          <li>VS Code MCP-Setup (<code>.vscode/mcp.json</code>) mit <code>--read-only</code></li>
-          <li>Lokale KI-Stacks: <code>lokal-ai-stack</code>, <code>localforge</code></li>
-        </ul>
-        <a class="btn-chapter" href="./chapters/13_ki-entwicklung-copilot.md">Kapitel lesen &#8594;</a>
-      </section>
+# Supabase CLI
+npm install -g supabase
+</code></pre>
+<h2>VS Code Extensions (Empfohlen)</h2>
+<table>
+<thead>
+<tr>
+<th>Extension</th>
+<th>Zweck</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub Copilot</td>
+<td>KI-Code-Assistent</td>
+</tr>
+<tr>
+<td>GitHub Copilot Chat</td>
+<td>KI-Chat-Interface</td>
+</tr>
+<tr>
+<td>ESLint</td>
+<td>Linting</td>
+</tr>
+<tr>
+<td>Prettier</td>
+<td>Code-Formatierung</td>
+</tr>
+<tr>
+<td>Tailwind CSS IntelliSense</td>
+<td>Tailwind-Autovervollständigung</td>
+</tr>
+<tr>
+<td>Error Lens</td>
+<td>Inline-Fehleranzeige</td>
+</tr>
+<tr>
+<td>GitLens</td>
+<td>Git-Blame &amp; History</td>
+</tr>
+<tr>
+<td>Supabase</td>
+<td>Supabase-Integration</td>
+</tr>
+</tbody>
+</table>
+<h2>VS Code Workspace-Einstellungen (Empfohlen)</h2>
+<p>In <code>.vscode/settings.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;editor.formatOnSave&quot;: true,
+  &quot;editor.defaultFormatter&quot;: &quot;esbenp.prettier-vscode&quot;,
+  &quot;editor.codeActionsOnSave&quot;: {
+    &quot;source.fixAll.eslint&quot;: &quot;explicit&quot;
+  },
+  &quot;typescript.tsdk&quot;: &quot;node_modules/typescript/lib&quot;,
+  &quot;files.exclude&quot;: {
+    &quot;**/.next&quot;: true,
+    &quot;**/node_modules&quot;: true
+  }
+}
+</code></pre>
+</section>
 
-      <section class="chapter" id="kap14">
-        <div class="chapter-header">
-          <span class="chapter-num">KAP 14</span>
-          <h2>Produkt-Ökosystem &amp; App-Katalog</h2>
-        </div>
-        <p class="chapter-desc">
-          Alle bestehenden WAMOCON-Apps und -Repositories alphabetisch aufgelistet
-          mit direkten GitHub-Links.
-        </p>
-        <ul class="chapter-topics">
-          <li>Über 50 aktive Apps von accessCheck bis WMC-Anforderungsportal</li>
-          <li>Landing Page Repositories (<code>[app]_lp</code>) für jede App</li>
-          <li>Infrastruktur-Repos: <code>github_workflow</code>, <code>localSupabaseDB</code>, <code>template_repo</code></li>
-          <li>Direkte GitHub-Links zu jedem Repository</li>
-        </ul>
-        <a class="btn-chapter" href="./chapters/14_produkt-oekosystem.md">Kapitel lesen &#8594;</a>
-      </section>
+<section class="chapter" id="kap03">
+<h1>Kapitel 08 – Entwicklungsprozess</h1>
+<blockquote>
+<p><strong>Wichtig:</strong> Die gesamte App-Entwicklung bei WAMOCON wird vollständig mit <strong>GitHub Copilot</strong> durchgeführt. Copilot ist nicht nur ein Hilfsmittel, sondern das primäre Entwicklungswerkzeug – von der Planung über die Implementierung bis hin zu Migrationen und Deployment-Konfigurationen.</p>
+</blockquote>
+<h2>Überblick: Von der Idee bis zur Produktion</h2>
+<pre><code>Produktidee &amp; Anforderungserstellung (manuell)
+       │
+       ▼
+Anforderungsdokument in OneDrive ablegen &amp; einreichen
+       │
+       ▼
+Freigabe abwarten
+       │
+       ├─→ Supabase Cloud Projekt per E-Mail beantragen (→ Kapitel 10)
+       └─→ Strato-Domain per E-Mail beantragen (→ Kapitel 11)
+                │
+                ▼
+Template Repo klonen → dev-Branch → Anforderungsdokument in Copilot laden
+       │
+       ▼
+Copilot erstellt Entwicklungsplan → iterative Implementierung
+       │
+       ▼
+Lokale Tests → PR dev → main → Vercel Produktion
+       │
+       ▼
+Landing Page generieren (bevorzugt GitHub Pages, optional Vercel)
+</code></pre>
+<hr />
+<h2>1. Produktidee &amp; Anforderungserstellung</h2>
+<p>Die Ideenfindung und erste Anforderungsdefinition erfolgen <strong>manuell durch den Entwickler</strong>.</p>
+<h3>Anforderungsdokument erstellen</h3>
+<p><strong>Bevorzugter Weg:</strong> Das <strong><a href="https://github.com/Wamocon/WMC-Anforderungsportal">WMC-Anforderungsportal</a></strong> nutzen.</p>
+<p><strong>Alternativer Weg:</strong> Anforderungsdokument manuell erstellen und per E-Mail einreichen.</p>
+<p>Das Anforderungsdokument enthält:
+- App-Name und Kurzbeschreibung
+- Zielgruppe und Hauptnutzen
+- Kernfunktionen und Anforderungen
+- Gewünschtes Datenbankschema (grob)
+- Technische Rahmenbedingungen</p>
+<h3>Ablage in OneDrive</h3>
+<p>Das fertige Anforderungsdokument wird in <strong>OneDrive</strong> abgelegt:</p>
+<pre><code>OneDrive / Welle [Nummer] / [App-Name] / Anforderungsdokument_[App-Name].docx
+</code></pre>
+<p><strong>Wichtig:</strong> Die Entwicklung beginnt <strong>erst nach Freigabe</strong> des Anforderungsdokuments.</p>
+<hr />
+<h2>2. Nach Freigabe: Infrastruktur beantragen</h2>
+<p>Direkt nach der Freigabe des Anforderungsdokuments — damit keine Wartezeit beim Go-live entsteht:</p>
+<h3>Supabase Cloud Projekt beantragen</h3>
+<p>Das Supabase Cloud Projekt wird <strong>per E-Mail beantragt</strong> (kein Self-Service).</p>
+<p>Angaben in der E-Mail:
+- App-Name (identisch mit dem geplanten Repo-Namen)
+- Kurzbeschreibung / Zweck der App
+- Gewünschte Region (z. B. <code>eu-central-1</code>)</p>
+<p>Details zur Einrichtung nach Freigabe → <strong>Kapitel 10 – Supabase Cloud Projekt</strong></p>
+<h3>Strato-Domain beantragen</h3>
+<p>Die Domain für die App wird <strong>per E-Mail bei Strato beantragt</strong>.</p>
+<ul>
+<li>Domain-Name angeben (z. B. <code>app-name.de</code> oder <code>app-name.wamocon.de</code>)</li>
+<li>Nach Zuteilung wird die Domain in Vercel konfiguriert → <strong>Kapitel 11 – Vercel Deployment</strong></li>
+</ul>
+<hr />
+<h2>3. Entwicklungsstart: Template Repo &amp; GitHub Copilot</h2>
+<h3>Repository anlegen</h3>
+<ol>
+<li>Auf GitHub: <a href="https://github.com/Wamocon/template_repo"><code>Wamocon/template_repo</code></a> → <strong>„Use this template"</strong> → <strong>„Create a new repository"</strong></li>
+<li>Repository in der <code>Wamocon</code>-Organisation anlegen</li>
+<li>Name nach Naming Convention setzen (→ <strong>Kapitel 06</strong>)</li>
+<li>Sichtbarkeit: <strong>Internal</strong></li>
+<li><code>dev</code>-Branch anlegen — <code>main</code> bleibt geschützt</li>
+</ol>
+<h3>Anforderungsdokument in GitHub Copilot laden</h3>
+<p>Das freigegebene Anforderungsdokument als Kontext in GitHub Copilot laden und Copilot anweisen, einen vollständigen Entwicklungsplan zu erstellen:</p>
+<pre><code>Lade das Anforderungsdokument aus OneDrive und erstelle auf Basis dieses Dokuments
+einen vollständigen Entwicklungsplan für die App [App-Name]:
 
-      <section class="chapter" id="kap15">
-        <div class="chapter-header">
-          <span class="chapter-num">KAP 15</span>
-          <h2>Glossar &amp; Referenzen</h2>
-        </div>
-        <p class="chapter-desc">
-          Nachschlagewerk mit WAMOCON-Begriffen, Tooling-Referenz und allen relevanten Links.
-        </p>
-        <ul class="chapter-topics">
-          <li>WAMOCON-Begriffe: Welle, Anforderungsdokument, LP, EHB, Huawei-Laptop</li>
-          <li>Technisches Glossar: App Router, CI/CD, MCP, RLS, SSR, Zod ...</li>
-          <li>Tool-Referenz: GitHub, Vercel, Supabase, Strato, Jira, OneDrive, n8n</li>
-          <li>Externe Docs: Next.js, Supabase, Vercel, Tailwind, TypeScript</li>
-          <li>Interne Links: standard_prozessablauf, template_repo, github_workflow</li>
-        </ul>
-        <a class="btn-chapter" href="./chapters/15_glossar-referenzen.md">Kapitel lesen &#8594;</a>
-      </section>
+- Datenbankschema &amp; Migrationen (Tabellen, Spalten, RLS-Policies)
+- Komponentenstruktur (Seiten, UI-Komponenten, Layouts)
+- API-Endpunkte und Server Actions
+- Meilensteine &amp; Aufgabenpakete in sinnvoller Reihenfolge
+</code></pre>
+<h3>Entwicklung mit Copilot durchführen</h3>
+<p>Copilot übernimmt:
+- Datenbankmigrationen erstellen und ausführen
+- Komponenten und Seiten implementieren
+- API-Routen und Server Actions schreiben
+- Konfigurationsdateien anpassen
+- Deployment-Workflows konfigurieren</p>
+<p><strong>Entwickler-Rolle:</strong> Anforderungen definieren, Copilot steuern, Output reviewen und freigeben.</p>
+<p>Die Entwicklung läuft <strong>iterativ entlang des Copilot-Plans</strong>:
+1. Plan-Schritt lesen
+2. Copilot anweisen diesen Schritt umzusetzen
+3. Output lokal testen
+4. Bei Problemen: Copilot korrigieren
+5. Nächsten Schritt</p>
+<hr />
+<h2>4. Lokale Entwicklung &amp; Datenbankmigrationen</h2>
+<h3>Umgebung einrichten</h3>
+<pre><code class="language-bash"># Repository klonen
+git clone https://github.com/Wamocon/&lt;repo-name&gt;.git
+cd &lt;repo-name&gt;
 
-      <!-- ── Quick Reference ── -->
-      <div class="quickref">
-        <h2>Schnellzugriff</h2>
-        <div class="quickref-grid">
-          <div class="qr-item">
-            <strong>Neue App starten</strong>
-            <a href="./chapters/08_entwicklungsprozess.md">Kap. 08 &#8211; Entwicklungsprozess &#8594;</a>
-          </div>
-          <div class="qr-item">
-            <strong>Supabase einrichten</strong>
-            <a href="./chapters/10_supabase.md">Kap. 10 &#8211; Supabase &#8594;</a>
-          </div>
-          <div class="qr-item">
-            <strong>App deployen</strong>
-            <a href="./chapters/11_vercel-deployment.md">Kap. 11 &#8211; Vercel &#8594;</a>
-          </div>
-          <div class="qr-item">
-            <strong>Copilot nutzen</strong>
-            <a href="./chapters/13_ki-entwicklung-copilot.md">Kap. 13 &#8211; KI &amp; Copilot &#8594;</a>
-          </div>
-        </div>
-      </div>
-    </main>
+# Auf dev-Branch wechseln
+git checkout dev
+
+# Abhängigkeiten installieren
+npm install
+
+# Umgebungsvariablen einrichten
+cp .env.example .env.local
+# Supabase-Credentials in .env.local eintragen (→ Kapitel 10)
+
+# Entwicklungsserver starten
+npm run dev
+</code></pre>
+<h3>Supabase-Fallback: Lokale Instanz</h3>
+<p>Solange das Supabase Cloud Projekt noch <strong>in Beantragung</strong> ist, lokale Instanz nutzen:
+→ <strong>Kapitel 10.5 – Lokale Supabase Instanz</strong></p>
+<h3>Datenbankmigrationen</h3>
+<p>GitHub Copilot erstellt und führt Migrationen direkt aus der App heraus in Supabase Cloud durch:</p>
+<pre><code class="language-bash"># Migration erstellen (Copilot generiert den SQL-Inhalt)
+npx supabase migration new &lt;migrations-name&gt;
+
+# Migration lokal anwenden (Fallback auf lokaler Instanz)
+npx supabase db reset
+
+# Migration in Supabase Cloud anwenden
+npx supabase db push
+</code></pre>
+<p>Migrationshistorie wird im Repo unter <code>/supabase/migrations/</code> versioniert.</p>
+<h3>Lokale Qualitätsprüfung vor Commit</h3>
+<pre><code class="language-bash">npm run typecheck   # TypeScript-Fehler
+npm run lint        # Lint-Probleme
+npm run dev         # Manuell testen
+</code></pre>
+<hr />
+<h2>5. CI/CD-Pipeline (automatisch)</h2>
+<h3>Bei Push auf <code>dev</code>: Preview-Deployment</h3>
+<pre><code>Push auf dev
+  └─→ pr-autofix: ESLint --fix (committet zurück)
+  └─→ pr-checks: TypeScript + ESLint validieren
+  └─→ Vercel: Preview-Deployment
+</code></pre>
+<h3>Bei Merge auf <code>main</code>: Produktions-Deployment</h3>
+<pre><code>PR von dev → main gemergt
+  └─→ Vercel: Produktions-Deployment
+</code></pre>
+<p>Details → <strong>Kapitel 11 – Vercel Deployment</strong></p>
+<hr />
+<h2>6. Landing Page generieren</h2>
+<p>Jede App bekommt ein eigenes Landing-Page-Repository: <code>[app-name]_lp</code></p>
+<p>Landing Pages werden <strong>nicht manuell gebaut</strong>, sondern über den <strong>KI-Generierungs-Workflow</strong> erstellt:</p>
+<h3>Prozess</h3>
+<ol>
+<li>App-Beschreibung und Key Features als Prompt aufbereiten</li>
+<li>KI-Workflow triggern (GitHub Actions / n8n-basiert)</li>
+<li>KI generiert vollständige HTML-Landing-Page</li>
+<li>Entwickler reviewed Output und mergt nach <code>main</code></li>
+<li>Automatisches Deployment</li>
+</ol>
+<h3>Deployment</h3>
+<ul>
+<li><strong>Bevorzugt:</strong> GitHub Pages (kostenlos, kein Build-Step, direkt über GitHub)</li>
+<li><strong>Optional:</strong> Vercel (für erweiterte Deployment-Features)</li>
+</ul>
+<p>Standard: reines HTML, kein Framework-Overhead — direkt deploybar ohne Build-Prozess.</p>
+<hr />
+<h2>7. Schnellreferenz-Befehle</h2>
+<pre><code class="language-bash"># Development
+npm run dev
+npm run typecheck
+npm run lint
+
+# Supabase
+npx supabase migration new &lt;name&gt;   # Migration erstellen
+npx supabase db push                # In Supabase Cloud deployen
+npx supabase db reset               # Lokal zurücksetzen
+
+# Git-Workflow
+git checkout dev                    # Auf dev-Branch
+git checkout -b feature/xyz         # Themenspezifischer Branch (von dev)
+git push origin dev                 # Auf dev pushen → Preview Deploy
+</code></pre>
+</section>
+
+<section class="chapter" id="kap04">
+<h1>Kapitel 09 – Jira &amp; Aufgabenmanagement</h1>
+<h2>Einsatz: Wann ist Jira verpflichtend?</h2>
+<table>
+<thead>
+<tr>
+<th>Projekttyp</th>
+<th>Jira-Nutzung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wellen-Appentwicklung</strong> (kleine, schnelle Apps im Wellen-Rhythmus)</td>
+<td><strong>Optional</strong> — empfohlen, aber nicht verpflichtend</td>
+</tr>
+<tr>
+<td><strong>Große Projekte</strong> (nicht im Wellen-Rhythmus, längere Laufzeit)</td>
+<td><strong>Verpflichtend</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Bei Wellen-Apps kann die Aufgabenverwaltung auch über GitHub Issues oder direkt über Copilot-Pläne erfolgen.</p>
+<h2>Jira-Ticket-Erstellung</h2>
+<p>Automatisierte Ticket-Erstellung via <a href="https://github.com/Wamocon/wamocon_Jira_Ticket_Creation"><code>wamocon_Jira_Ticket_Creation</code></a> (Python).</p>
+<h3>Ticket-Typen</h3>
+<table>
+<thead>
+<tr>
+<th>Typ</th>
+<th>Verwendung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Story</strong></td>
+<td>Neue Funktion aus Nutzersicht beschrieben</td>
+</tr>
+<tr>
+<td><strong>Task</strong></td>
+<td>Technische Aufgabe ohne direkten Nutzernutzen</td>
+</tr>
+<tr>
+<td><strong>Bug</strong></td>
+<td>Fehlverhalten in einer bestehenden Funktion</td>
+</tr>
+<tr>
+<td><strong>Sub-Task</strong></td>
+<td>Teilaufgabe einer Story oder Task</td>
+</tr>
+<tr>
+<td><strong>Hotfix</strong></td>
+<td>Kritischer Produktionsfehler, sofort beheben</td>
+</tr>
+</tbody>
+</table>
+<h3>Verlinkung mit GitHub</h3>
+<p>Ticket-Nummer im Branch-Namen oder PR-Titel angeben:</p>
+<pre><code>feature/WMC-123-login-seite
+fix/WMC-456-berechnung-korrigieren
+</code></pre>
+<h2>Status-Workflow</h2>
+<pre><code>Backlog → To Do → In Progress → In Review → Done
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Backlog</strong></td>
+<td>Idee/Anforderung, noch nicht priorisiert</td>
+</tr>
+<tr>
+<td><strong>To Do</strong></td>
+<td>Priorisiert, wartet auf Bearbeitung</td>
+</tr>
+<tr>
+<td><strong>In Progress</strong></td>
+<td>Entwickler arbeitet aktiv daran</td>
+</tr>
+<tr>
+<td><strong>In Review</strong></td>
+<td>PR ist offen, Code-Review läuft</td>
+</tr>
+<tr>
+<td><strong>Done</strong></td>
+<td>PR gemergt, Feature ist live</td>
+</tr>
+</tbody>
+</table>
+<h2>ARGUS Review Pipeline</h2>
+<p>Die <a href="https://github.com/Wamocon/ARGUS">ARGUS Review Pipeline</a> ist ein Multi-Agenten-Review-System für Inhalte und Anforderungen.</p>
+<p>Einsatz:
+- Qualitätskontrolle vor Freigabe von Entwicklungsartefakten
+- Review von Anforderungsdokumenten
+- Prüfung von KI-generierten Outputs</p>
+<h2>Standard-Prozessablauf</h2>
+<p>Verbindliche Vorlage für alle Entwicklungsprojekte:</p>
+<p>🔗 <strong><a href="https://wamocon.github.io/standard_prozessablauf/">wamocon.github.io/standard_prozessablauf/</a></strong></p>
+<p>Repo: <a href="https://github.com/Wamocon/standard_prozessablauf"><code>Wamocon/standard_prozessablauf</code></a></p>
+<h2>Prioritäten</h2>
+<table>
+<thead>
+<tr>
+<th>Priorität</th>
+<th>Reaktionszeit</th>
+<th>Beschreibung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Kritisch</strong></td>
+<td>Sofort</td>
+<td>Produktionsausfall oder Datenverlust</td>
+</tr>
+<tr>
+<td><strong>Hoch</strong></td>
+<td>Innerhalb 24h</td>
+<td>Wichtige Funktion defekt, kein Workaround</td>
+</tr>
+<tr>
+<td><strong>Mittel</strong></td>
+<td>Nächster Sprint</td>
+<td>Einschränkung mit Workaround</td>
+</tr>
+<tr>
+<td><strong>Niedrig</strong></td>
+<td>Nach Kapazität</td>
+<td>Nice-to-have, kein Nutzerimpact</td>
+</tr>
+</tbody>
+</table>
+<h2>Sprint-Planung (bei großen Projekten)</h2>
+<p>Entwicklung in zweiwöchigen Sprints:</p>
+<ol>
+<li><strong>Sprint Planning</strong> — Tickets aus dem Backlog in den Sprint ziehen, Aufwände schätzen</li>
+<li><strong>Daily Standup</strong> — Kurzes Update: Was wurde gemacht? Was kommt? Gibt es Hindernisse?</li>
+<li><strong>Sprint Review</strong> — Fertige Features präsentieren</li>
+<li><strong>Retrospektive</strong> — Was lief gut? Was kann verbessert werden?</li>
+</ol>
+</section>
+
+<section class="chapter" id="kap05">
+<h1>Kapitel 10 – Supabase Cloud Projekt</h1>
+<h2>Was ist Supabase?</h2>
+<p>WAMOCON nutzt <strong>Supabase Pro</strong> als primären Backend-as-a-Service für alle Apps. Es stellt bereit:</p>
+<ul>
+<li><strong>PostgreSQL-Datenbank</strong> mit vollem SQL-Zugriff</li>
+<li><strong>Auth</strong> — Benutzerauthentifizierung (E-Mail, OAuth, Magic Links)</li>
+<li><strong>Row Level Security (RLS)</strong> — feingranulare Zugriffssteuerung auf Datenbankebene</li>
+<li><strong>Storage</strong> — Dateispeicherung (Bilder, Dokumente)</li>
+<li><strong>Edge Functions</strong> — Serverless-Funktionen (bei Bedarf)</li>
+<li><strong>REST &amp; Realtime API</strong> — automatisch generiert aus dem Datenbankschema</li>
+</ul>
+<h2>1. Beantragung (Pflicht vor Entwicklungsstart)</h2>
+<p>Das Supabase Cloud Projekt wird <strong>per E-Mail beantragt</strong> — kein Self-Service.</p>
+<p><strong>Zeitpunkt:</strong> Direkt nach Freigabe des Anforderungsdokuments (→ <strong>Kapitel 08, Abschnitt 2</strong>)</p>
+<p><strong>Angaben in der E-Mail:</strong></p>
+<ul>
+<li>App-Name (identisch mit dem GitHub-Repo-Namen)</li>
+<li>Kurzbeschreibung und Zweck der App</li>
+<li>Gewünschte Region (z. B. <code>eu-central-1</code> für Deutschland)</li>
+</ul>
+<blockquote>
+<p>Durch frühzeitige Beantragung entsteht keine Wartezeit kurz vor dem Go-live.</p>
+</blockquote>
+<h2>2. Einrichtung (env.local)</h2>
+<p>Nach Projekterstellung im Supabase Dashboard folgende Credentials unter <strong>Project Settings → API</strong> abrufen und in <code>.env.local</code> eintragen:</p>
+<pre><code class="language-env"># Supabase Cloud
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=xxxx
+SUPABASE_SERVICE_ROLE_KEY=xxxx
+DATABASE_URL=postgresql://postgres:xxxx@db.xxxx.supabase.co:5432/postgres
+
+# Schema (Standard: public)
+SUPABASE_DB_SCHEMA=public
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Quelle in Supabase</th>
+<th>Verwendung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NEXT_PUBLIC_SUPABASE_URL</code></td>
+<td>Project Settings → API → Project URL</td>
+<td>Verbindungsendpunkt</td>
+</tr>
+<tr>
+<td><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></td>
+<td>Project Settings → API → anon public</td>
+<td>Client-seitiger Zugriff (eingeschränkt)</td>
+</tr>
+<tr>
+<td><code>SUPABASE_SERVICE_ROLE_KEY</code></td>
+<td>Project Settings → API → service_role</td>
+<td>Server-seitiger Vollzugriff</td>
+</tr>
+<tr>
+<td><code>DATABASE_URL</code></td>
+<td>Project Settings → Database → Connection string</td>
+<td>Direkte Datenbankverbindung (CLI, MCP)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Sicherheit:</strong> <code>.env.local</code> niemals ins Repository committen (<code>.gitignore</code> prüfen).
+<code>SUPABASE_SERVICE_ROLE_KEY</code> <strong>niemals</strong> mit <code>NEXT_PUBLIC_</code>-Prefix versehen.</p>
+</blockquote>
+<h2>3. Schemas</h2>
+<h3>Empfohlene Schema-Struktur</h3>
+<table>
+<thead>
+<tr>
+<th>Schema</th>
+<th>Zweck</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>public</code></td>
+<td>Standard-Schema (Supabase-Default)</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>Entwicklungs- und Testdaten</td>
+</tr>
+<tr>
+<td><code>prod</code></td>
+<td>Produktionsdaten (Trennung von Testdaten)</td>
+</tr>
+</tbody>
+</table>
+<h3>Schema erstellen und Berechtigungen setzen</h3>
+<pre><code class="language-sql">CREATE SCHEMA IF NOT EXISTS test;
+CREATE SCHEMA IF NOT EXISTS prod;
+
+GRANT USAGE ON SCHEMA test TO anon, authenticated, service_role;
+GRANT USAGE ON SCHEMA prod TO anon, authenticated, service_role;
+
+GRANT ALL ON ALL TABLES IN SCHEMA test TO anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA test
+  GRANT ALL ON TABLES TO anon, authenticated, service_role;
+
+GRANT ALL ON ALL TABLES IN SCHEMA prod TO anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA prod
+  GRANT ALL ON TABLES TO anon, authenticated, service_role;
+</code></pre>
+<p>Schemas über die API zugänglich machen: <strong>Project Settings → API → Exposed schemas</strong> → Schema-Namen hinzufügen.</p>
+<h2>4. Datenbankmigrationen</h2>
+<p>Schema-Änderungen werden <strong>ausschließlich über Migrations-Dateien</strong> vorgenommen — niemals direkt über das Supabase-Dashboard.</p>
+<p><strong>GitHub Copilot übernimmt die Erstellung und Ausführung der Migrationen</strong> auf Basis des Anforderungsdokuments.</p>
+<pre><code class="language-bash"># Migration erstellen (Copilot generiert den SQL-Inhalt)
+npx supabase migration new &lt;migrations-name&gt;
+# Erstellt: supabase/migrations/&lt;timestamp&gt;_&lt;name&gt;.sql
+
+# Migrationen lokal anwenden
+npx supabase db reset
+
+# Migrationen in Supabase Cloud anwenden
+npx supabase db push
+
+# Migrations-Status prüfen
+npx supabase migration list
+</code></pre>
+<p><strong>Wichtig:</strong> Migrations-Dateien in <code>supabase/migrations/</code> immer in Git committen. Bestehende Migrations-Dateien niemals nachträglich ändern.</p>
+<h2>5. Row Level Security (RLS)</h2>
+<p>RLS muss für <strong>jede Tabelle</strong> aktiviert sein — Copilot wird mit der Anweisung gesteuert, RLS immer zu aktivieren und niemals deaktiviert zu lassen.</p>
+<pre><code class="language-sql">-- RLS aktivieren
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+
+-- Policy: Nutzer sehen nur ihre eigenen Daten
+CREATE POLICY &quot;Eigene Daten lesen&quot;
+  ON public.profiles FOR SELECT
+  USING (auth.uid() = user_id);
+</code></pre>
+<p>RLS-Policies werden als Teil der Migrationen versioniert.</p>
+<h2>6. Supabase Auth</h2>
+<p>Auth-Konfiguration über das Supabase Dashboard:
+- E-Mail / Passwort aktivieren/deaktivieren
+- OAuth-Provider konfigurieren (Google, GitHub, etc.)
+- E-Mail-Templates anpassen</p>
+<p>In der App wird <code>@supabase/ssr</code> für serverseitige Auth-Integration genutzt (Details → <strong>Kapitel 07 – Tech Stack</strong>).</p>
+<h2>7. Lokale Supabase Instanz (Fallback &amp; Entwicklungsphase)</h2>
+<h3>Wann nutzen?</h3>
+<ul>
+<li>Supabase Cloud Projekt noch in Beantragung (→ Kapitel 08, Abschnitt 1)</li>
+<li>Offline-Entwicklung und schnelles Prototyping ohne Cloud-Anbindung</li>
+</ul>
+<h3>Lokale Instanzen via localSupabaseDB</h3>
+<p>Das Repo <a href="https://github.com/Wamocon/localSupabaseDB"><code>Wamocon/localSupabaseDB</code></a> ermöglicht das parallele Hochfahren mehrerer lokaler Supabase-Instanzen für verschiedene App-Entwicklungen:</p>
+<ul>
+<li>Jede App bekommt eine eigene isolierte Instanz</li>
+<li>Setup gemäß der <a href="https://github.com/Wamocon/localSupabaseDB/blob/main/README.md">README.md im localSupabaseDB-Repo</a></li>
+<li><code>.env.local</code> auf die lokale Instanz-URL zeigen lassen statt auf Supabase Cloud</li>
+</ul>
+<pre><code class="language-bash"># Lokale Instanz starten
+npx supabase start
+
+# Status und lokale Credentials anzeigen
+npx supabase status
+</code></pre>
+<p>Lokale Credentials in <code>.env.local</code> eintragen:</p>
+<pre><code class="language-env">NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
+NEXT_PUBLIC_SUPABASE_ANON_KEY=&lt;aus npx supabase status&gt;
+SUPABASE_SERVICE_ROLE_KEY=&lt;aus npx supabase status&gt;
+</code></pre>
+<h3>⚠️ Hardware-Limit: Huawei-Laptop RAM</h3>
+<p>Bei mehr als <strong>2 parallelen lokalen Supabase-Instanzen</strong> und <strong>2 gleichzeitig laufenden Apps</strong> stößt der Huawei-Laptop an seine RAM-Grenzen.</p>
+<p>Symptome: Verlangsamte Response-Zeiten, App-Freezes, Instanz-Abstürze.</p>
+<p><strong>Empfehlung:</strong> Maximal 2 lokale Supabase-Instanzen + 2 aktive Apps gleichzeitig betreiben. Nicht benötigte Instanzen aktiv stoppen.</p>
+<h3>Wechsel lokal → Supabase Cloud</h3>
+<p>Sobald das Supabase Cloud Projekt genehmigt ist:</p>
+<ol>
+<li><code>.env.local</code> Variablen auf die Cloud-Werte aktualisieren</li>
+<li>Lokal entwickelte Migrationen in Supabase Cloud anwenden: <code>npx supabase db push</code></li>
+<li>Lokale Instanz stoppen: <code>npx supabase stop</code></li>
+<li>Ressourcen freigeben</li>
+</ol>
+<h2>8. Supabase MCP für GitHub Copilot</h2>
+<p>Der Supabase MCP (Model Context Protocol) Server gibt Copilot Zugriff auf das echte Datenbankschema.</p>
+<p>Details zur Konfiguration → <strong>Kapitel 13 – KI-Entwicklung &amp; Copilot-Workflows</strong></p>
+<h2>9. Checkliste: Supabase-Setup</h2>
+<ul>
+<li>[ ] Supabase Cloud Projekt per E-Mail beantragt (direkt nach Anforderungsfreigabe)</li>
+<li>[ ] Projekt erstellt und Status „Healthy"</li>
+<li>[ ] <code>NEXT_PUBLIC_SUPABASE_URL</code>, <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, <code>SUPABASE_SERVICE_ROLE_KEY</code>, <code>DATABASE_URL</code> in <code>.env.local</code> eingetragen</li>
+<li>[ ] Alle Variablen als Vercel Environment Variables hinterlegt (→ Kapitel 11)</li>
+<li>[ ] <code>SUPABASE_SERVICE_ROLE_KEY</code> <strong>kein</strong> <code>NEXT_PUBLIC_</code>-Prefix</li>
+<li>[ ] <code>.env.local</code> in <code>.gitignore</code> vorhanden</li>
+<li>[ ] RLS für alle Tabellen aktiviert</li>
+<li>[ ] Erste Migration erstellt und in <code>supabase/migrations/</code> committed</li>
+<li>[ ] MCP für lokale Copilot-Tools konfiguriert (→ Kapitel 13)</li>
+</ul>
+</section>
+
+<section class="chapter" id="kap06">
+<h1>Kapitel 11 – Vercel Deployment</h1>
+<h2>Überblick</h2>
+<p>Alle WAMOCON-TypeScript-Apps werden über <strong>Vercel</strong> deployed. WAMOCON nutzt den <strong>Vercel Hobby Plan</strong>. Das Deployment ist vollständig über den GitHub Actions Workflow aus dem <a href="https://github.com/Wamocon/template_repo"><code>template_repo</code></a> automatisiert.</p>
+<p><strong>Landing Pages</strong> werden bevorzugt über <strong>GitHub Pages</strong> veröffentlicht (Vercel ist optional).</p>
+<h2>Deployment-Typen</h2>
+<table>
+<thead>
+<tr>
+<th>Auslöser</th>
+<th>Deployment-Typ</th>
+<th>Ergebnis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Push auf <code>dev</code>-Branch</td>
+<td><strong>Preview</strong></td>
+<td>Einzigartige Preview-URL pro Branch</td>
+</tr>
+<tr>
+<td>Merge / Push auf <code>main</code></td>
+<td><strong>Produktion</strong></td>
+<td>Live unter der konfigurierten Domain</td>
+</tr>
+</tbody>
+</table>
+<h2>Zentraler CI/CD-Workflow</h2>
+<p>Aus dem <a href="https://github.com/Wamocon/github_workflow"><code>Wamocon/github_workflow</code></a> Repository:</p>
+<pre><code>Push auf dev
+  └─→ pr-autofix.yml   → Lint-Fehler automatisch committen
+  └─→ pr-checks.yml    → TypeScript + ESLint validieren
+  └─→ deploy-preview.yml → Vercel Preview deployen
+
+Merge auf main
+  └─→ deploy-production.yml → Vercel Produktions-Deploy
+</code></pre>
+<h2>Erforderliche Secrets &amp; Variablen</h2>
+<h3>GitHub-Organisationsebene (bereits konfiguriert — nichts zu tun)</h3>
+<table>
+<thead>
+<tr>
+<th>Secret</th>
+<th>Beschreibung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VERCEL_TOKEN</code></td>
+<td>Vercel API-Token der Organisation</td>
+</tr>
+<tr>
+<td><code>VERCEL_ORG_ID</code></td>
+<td>Vercel Organisations-ID</td>
+</tr>
+</tbody>
+</table>
+<h3>GitHub-Repository-Ebene (einmalig pro App)</h3>
+<table>
+<thead>
+<tr>
+<th>Secret</th>
+<th>Beschreibung</th>
+<th>Quelle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VERCEL_PROJECT_ID</code></td>
+<td>Vercel-Projekt-ID der App</td>
+<td>Vercel → Project Settings → General → Project ID</td>
+</tr>
+</tbody>
+</table>
+<h2>Erstmaliges Setup (einmalig pro App)</h2>
+<p>Da Vercel bei internen GitHub-Repos keinen direkten Lesezugriff hat, ist folgender einmaliger Workaround notwendig:</p>
+<h3>Schritt-für-Schritt</h3>
+<ol>
+<li><strong>Repo temporär öffentlich machen</strong></li>
+<li>
+<p><code>Repository → Settings → General → Change visibility → Public</code></p>
+</li>
+<li>
+<p><strong>Vercel-Projekt importieren</strong></p>
+</li>
+<li><a href="https://vercel.com">vercel.com</a> → <strong>Add New Project</strong> → <strong>Import</strong> → Repo auswählen</li>
+<li>Framework wird automatisch erkannt (Next.js)</li>
+<li>
+<p>Erstes Deployment durchführen</p>
+</li>
+<li>
+<p><strong>Vercel Project ID kopieren</strong></p>
+</li>
+<li>
+<p><code>Vercel Project → Settings → General → Project ID</code></p>
+</li>
+<li>
+<p><strong>GitHub Secret anlegen</strong></p>
+</li>
+<li><code>Repository → Settings → Secrets and variables → Actions → New repository secret</code></li>
+<li>Name: <code>VERCEL_PROJECT_ID</code></li>
+<li>
+<p>Wert: die kopierte Project ID</p>
+</li>
+<li>
+<p><strong>Repo auf intern zurücksetzen</strong></p>
+</li>
+<li>
+<p><code>Repository → Settings → General → Change visibility → Internal</code></p>
+</li>
+<li>
+<p><strong>Umgebungsvariablen in Vercel eintragen</strong></p>
+</li>
+<li><code>Vercel Project → Settings → Environment Variables</code></li>
+<li>Alle Variablen aus <code>.env.local</code> eintragen (Supabase URL, Keys etc.)</li>
+</ol>
+<blockquote>
+<p><strong>Wichtig:</strong> Ohne die Umgebungsvariablen schlägt jeder Build fehl.</p>
+</blockquote>
+<h2>Umgebungsvariablen in Vercel</h2>
+<p>Für jede Variable den korrekten Scope setzen:</p>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Verwendung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Production</strong></td>
+<td>Live-Deployment (main-Branch)</td>
+</tr>
+<tr>
+<td><strong>Preview</strong></td>
+<td>Dev-Branch-Deployments</td>
+</tr>
+<tr>
+<td><strong>Development</strong></td>
+<td><code>vercel env pull</code> für lokale Entwicklung</td>
+</tr>
+</tbody>
+</table>
+<h2>Domain-Verwaltung</h2>
+<ol>
+<li>Domain bei <a href="https://www.strato.de">Strato</a> per E-Mail beantragen (→ <strong>Kapitel 08, Abschnitt 2</strong>)</li>
+<li>In Vercel: <code>Project → Settings → Domains → Add</code></li>
+<li>DNS-Einträge bei Strato konfigurieren:</li>
+<li><strong>A-Record</strong> für Root-Domain (<code>@</code>)</li>
+<li><strong>CNAME-Record</strong> für Subdomain (<code>www</code>)</li>
+<li>SSL-Zertifikat wird von Vercel automatisch ausgestellt (Let's Encrypt)</li>
+</ol>
+<h2>Landing Pages: GitHub Pages (bevorzugt) vs. Vercel</h2>
+<p>Landing Pages (<code>[app-name]_lp</code>) werden bevorzugt über <strong>GitHub Pages</strong> veröffentlicht:</p>
+<h3>GitHub Pages Setup für Landing Pages</h3>
+<ol>
+<li>Im Repo: <code>Settings → Pages → Source: Deploy from a branch</code></li>
+<li>Branch: <code>main</code>, Verzeichnis: <code>/ (root)</code> oder <code>/docs</code></li>
+<li>GitHub Pages URL: <code>https://wamocon.github.io/[repo-name]/</code></li>
+</ol>
+<p><strong>Vorteile GitHub Pages:</strong>
+- Kostenlos, kein Build-Step nötig
+- Reines HTML — direkt deploybar
+- Kein Vercel-Projekt nötig</p>
+<p><strong>Optional Vercel:</strong> Wenn erweiterte Deployment-Features oder Custom Domain mit SSL-Handling über Vercel gewünscht sind.</p>
+<h2>Hobby Plan: Limits &amp; Besonderheiten</h2>
+<table>
+<thead>
+<tr>
+<th>Limit</th>
+<th>Wert</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bandbreite pro Monat</td>
+<td>100 GB</td>
+</tr>
+<tr>
+<td>Serverless Functions</td>
+<td>100.000 Invocations/Monat</td>
+</tr>
+<tr>
+<td>Team-Sharing</td>
+<td>Nicht ohne Upgrade möglich</td>
+</tr>
+<tr>
+<td>Deploy-Dauer</td>
+<td>Max. 45 Minuten</td>
+</tr>
+</tbody>
+</table>
+<p>Bei Annäherung an Limits: Koordination mit dem Verantwortlichen für den Vercel-Account.</p>
+<h2>Fehlerbehebung bei Deployment-Failures</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Lösung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TypeScript-Fehler im Build</td>
+<td><code>npm run typecheck</code> lokal ausführen</td>
+</tr>
+<tr>
+<td>Lint-Fehler im Build</td>
+<td><code>npm run lint</code> lokal ausführen</td>
+</tr>
+<tr>
+<td>Fehlende Umgebungsvariable</td>
+<td>Vercel → Environment Variables prüfen</td>
+</tr>
+<tr>
+<td>Supabase-Verbindungsfehler</td>
+<td>Supabase-URL und Keys in Vercel prüfen</td>
+</tr>
+<tr>
+<td>Deploy startet nicht</td>
+<td><code>VERCEL_PROJECT_ID</code> Secret und Workflow-Referenz prüfen</td>
+</tr>
+</tbody>
+</table>
+<h2>Checkliste: Vercel-Setup</h2>
+<ul>
+<li>[ ] Repo temporär öffentlich gemacht für initialen Import</li>
+<li>[ ] Vercel-Projekt importiert und erstmals deployed</li>
+<li>[ ] <code>VERCEL_PROJECT_ID</code> als GitHub Repository Secret eingetragen</li>
+<li>[ ] Repo auf intern zurückgesetzt</li>
+<li>[ ] Alle <code>.env.local</code>-Variablen in Vercel Environment Variables eingetragen</li>
+<li>[ ] Scopes (Production/Preview/Development) für alle Variablen gesetzt</li>
+<li>[ ] Domain in Vercel hinzugefügt (nach Strato-Beantragung)</li>
+<li>[ ] DNS bei Strato konfiguriert</li>
+<li>[ ] Automatischer Deploy nach Merge auf <code>main</code> getestet</li>
+</ul>
+</section>
+
+<section class="chapter" id="kap07">
+<h1>Kapitel 12 – Sicherheit &amp; Code-Qualität</h1>
+<h2>Grundsätze</h2>
+<p>Sicherheit wird nicht nachträglich ergänzt, sondern von Anfang an eingebaut. Jede neue App muss die folgenden Mindeststandards erfüllen, bevor sie in Produktion geht.</p>
+<h2>Supabase-Sicherheit</h2>
+<h3>Row Level Security (RLS) — Pflicht</h3>
+<p>RLS muss für <strong>jede Tabelle</strong> aktiviert sein. Ohne RLS hat jeder authentifizierte Nutzer uneingeschränkten Zugriff.</p>
+<pre><code class="language-sql">-- RLS aktivieren
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+
+-- Policy: Nutzer sehen nur ihre eigenen Daten
+CREATE POLICY &quot;Eigene Daten lesen&quot;
+  ON public.profiles FOR SELECT
+  USING (auth.uid() = user_id);
+</code></pre>
+<h3>Service Role Key</h3>
+<ul>
+<li><code>SUPABASE_SERVICE_ROLE_KEY</code> <strong>niemals</strong> im Browser-Code verwenden</li>
+<li>Niemals mit <code>NEXT_PUBLIC_</code>-Prefix versehen</li>
+<li>Nur in Server Components, Server Actions oder API-Routes nutzen</li>
+</ul>
+<h3>Parameterisierte Abfragen</h3>
+<p>Alle Datenbankzugriffe laufen über den Supabase-JavaScript-Client, der Parameterisierung automatisch übernimmt. Niemals SQL-Strings durch String-Konkatenation mit User-Input aufbauen.</p>
+<h2>Input-Validierung</h2>
+<h3>Zod für API-Grenzen</h3>
+<p>Alle Benutzereingaben an API-Routes und Server Actions mit Zod-Schemas validieren:</p>
+<pre><code class="language-typescript">import { z } from 'zod';
+
+const createOrderSchema = z.object({
+  productId: z.string().uuid(),
+  quantity: z.number().int().min(1).max(100),
+});
+
+// In der Server Action
+const result = createOrderSchema.safeParse(formData);
+if (!result.success) {
+  return { error: result.error.flatten() };
+}
+</code></pre>
+<ul>
+<li>Client-seitige Validierung gibt schnelles Feedback</li>
+<li>Server-seitige Validierung ist Pflicht (Client-Validierung kann umgangen werden)</li>
+</ul>
+<h2>Umgebungsvariablen</h2>
+<table>
+<thead>
+<tr>
+<th>Regel</th>
+<th>Begründung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keine Secrets in Code oder Git</td>
+<td><code>.env.local</code> ist in <code>.gitignore</code></td>
+</tr>
+<tr>
+<td><code>NEXT_PUBLIC_</code>-Prefix nur für öffentliche Werte</td>
+<td>Alles mit diesem Prefix ist im Browser sichtbar</td>
+</tr>
+<tr>
+<td>Service Role Key niemals mit <code>NEXT_PUBLIC_</code></td>
+<td>Würde in den Browser-Bundle gelangen</td>
+</tr>
+<tr>
+<td>CORS korrekt für die eigene Domain konfigurieren</td>
+<td>Verhindert unerwünschte Cross-Origin-Requests</td>
+</tr>
+</tbody>
+</table>
+<h2>Auth &amp; Session</h2>
+<ul>
+<li>Auth-Tokens in <strong>httpOnly-Cookies</strong> speichern — niemals in <code>localStorage</code></li>
+<li><code>@supabase/ssr</code> übernimmt das Cookie-Management korrekt</li>
+<li>Session auf Server-Seite immer verifizieren, nicht nur im Client</li>
+</ul>
+<h2>TypeScript als Sicherheitsnetz</h2>
+<p>Strict Mode verhindert eine ganze Klasse von Bugs zur Laufzeit:</p>
+<pre><code class="language-json">{
+  &quot;compilerOptions&quot;: {
+    &quot;strict&quot;: true
+  }
+}
+</code></pre>
+<ul>
+<li><code>any</code> vermeiden — erzwingt explizite Typen</li>
+<li><code>unknown</code> statt <code>any</code> bei unbekannten Werten — Typ muss vor Nutzung eingeschränkt werden</li>
+<li>Generierte Supabase-Typen nutzen — keine falsch getippten Spaltennamen</li>
+</ul>
+<h2>Sicherheits-Checkliste vor dem Produktions-Deploy</h2>
+<ul>
+<li>[ ] RLS auf <strong>allen</strong> Supabase-Tabellen aktiviert</li>
+<li>[ ] Für jede Tabelle existieren passende RLS-Policies</li>
+<li>[ ] Zod-Validierung an allen API-Eingangspunkten</li>
+<li>[ ] <code>SUPABASE_SERVICE_ROLE_KEY</code> kein <code>NEXT_PUBLIC_</code>-Prefix</li>
+<li>[ ] Kein Secret in Git-History (<code>.env.local</code> in <code>.gitignore</code> geprüft)</li>
+<li>[ ] Auth-Tokens in httpOnly-Cookies</li>
+<li>[ ] CORS korrekt konfiguriert</li>
+<li>[ ] Keine unbeschränkten Datenbankabfragen (immer <code>WHERE</code>- oder <code>LIMIT</code>-Klauseln)</li>
+</ul>
+<h2>Code-Qualität</h2>
+<h3>ESLint</h3>
+<p>ESLint läuft automatisch in der CI-Pipeline. Vor jedem Push lokal ausführen:</p>
+<pre><code class="language-bash">npm run lint
+</code></pre>
+<p>Die ESLint-Konfiguration (<code>eslint.config.mjs</code>) basiert auf <code>eslint-config-next</code> und deckt Next.js-spezifische Regeln ab.</p>
+<h3>TypeScript</h3>
+<p>TypeScript-Typprüfung vor jedem Push:</p>
+<pre><code class="language-bash">npm run typecheck
+</code></pre>
+<p>Typfehler blockieren den CI-Build. Lokal reproduzieren mit:</p>
+<pre><code class="language-bash">npx tsc --noEmit
+</code></pre>
+<h3>Code-Review (Vier-Augen-Prinzip)</h3>
+<p>Jeder Code-Merge auf <code>main</code> muss über einen Pull Request erfolgen. Direkte Pushes auf <code>main</code> sind nicht erlaubt. Vor dem PR-Erstellen den <code>@reviewer</code>-Copilot-Agent nutzen (Details in Kapitel 13).</p>
+<h3>Performance-Grundregeln</h3>
+<p><strong>Datenbankabfragen:</strong></p>
+<ul>
+<li>Nur benötigte Spalten selektieren — kein <code>select('*')</code> in Produktionscode</li>
+<li>Indizes für Spalten in <code>WHERE</code>, <code>ORDER BY</code> und <code>JOIN</code> anlegen</li>
+<li>Paginierung verwenden — niemals unbegrenzte Listen laden</li>
+<li>Datenbank-Views für häufig genutzte komplexe Abfragen</li>
+</ul>
+<p><strong>Next.js:</strong></p>
+<ul>
+<li><code>next/image</code> für alle Bilder (automatische Optimierung, Lazy Loading)</li>
+<li><code>next/font</code> für Schriften (kein FOUT/CLS)</li>
+<li>Schwere Komponenten mit <code>dynamic()</code> lazy-loaden</li>
+<li><code>Suspense</code>-Grenzen für Streaming nutzen</li>
+<li>Nach jedem Build: <code>next build</code>-Output auf große Chunks prüfen</li>
+</ul>
+<h2>Abhängigkeits-Sicherheit</h2>
+<pre><code class="language-bash"># Veraltete Pakete prüfen
+npm outdated
+
+# Sicherheitslücken prüfen
+npm audit
+
+# Sicherheitslücken automatisch beheben (minor/patch)
+npm audit fix
+</code></pre>
+<p>Bei Major-Updates: manuell testen, da Breaking Changes möglich.</p>
+</section>
+
+<section class="chapter" id="kap08">
+<h1>Kapitel 13 – KI-Entwicklung &amp; Copilot-Workflows</h1>
+<h2>Überblick</h2>
+<p>Alle WAMOCON-Projekte sind für KI-gestützte Entwicklung mit <strong>GitHub Copilot</strong> optimiert.
+Jedes App-Repository enthält vorkonfigurierte Agents, Instructions und globale Copilot-Regeln.</p>
+<h2>Copilot-Konfigurationsstruktur</h2>
+<pre><code>.github/
+├── copilot-instructions.md        # Globale Regeln (für jede Copilot-Interaktion)
+├── instructions/
+│   ├── nextjs.instructions.md     # Next.js 16 App Router Regeln
+│   ├── tailwind.instructions.md   # Tailwind CSS v4 Regeln
+│   ├── typescript.instructions.md # TypeScript Strict Mode Regeln
+│   └── supabase.instructions.md   # Supabase Client, RLS, Migrations
+└── agents/
+    ├── planner.agent.md           # @planner – Planung ohne Code
+    ├── developer.agent.md         # @developer – Implementierung mit Verifikation
+    └── reviewer.agent.md          # @reviewer – Code-Review vor dem PR
+</code></pre>
+<h2>Die drei Copilot-Agents</h2>
+<h3><code>@planner</code> — Technische Planung</h3>
+<p><strong>Wann verwenden:</strong>
+- Vor dem Start eines neuen Features
+- Wenn Anforderungen unklar sind
+- Vor Refactoring oder Migrations-Aufgaben</p>
+<p><strong>Was er tut:</strong>
+- Codebase erkunden und Kontext sammeln
+- Betroffene Dateien und Module identifizieren
+- Nummerierten Implementierungsplan erstellen
+- <strong>Schreibt keinen Code</strong></p>
+<p><strong>Beispiel:</strong></p>
+<pre><code>@planner Analysiere, was für eine Authentifizierungsseite mit Supabase
+benötigt wird. Erstelle einen nummerierten Implementierungsplan.
+</code></pre>
+<hr />
+<h3><code>@developer</code> — Strukturierte Implementierung</h3>
+<p><strong>Wann verwenden:</strong>
+- Nach der Planung mit <code>@planner</code>
+- Zur Implementierung von Features, Seiten, API-Routes
+- Für Datenbankänderungen und Migrationen</p>
+<p><strong>Vierphasiger Prozess:</strong></p>
+<ol>
+<li><strong>Vorbereitung</strong> — Plan lesen, Codebase verstehen</li>
+<li><strong>Implementierung</strong> — Schrittweise, Fehler sofort beheben</li>
+<li><strong>Verifikation (Pflicht)</strong> — <code>typecheck</code> → <code>lint</code> → <code>build</code> → lokal testen</li>
+<li><strong>Dokumentation</strong> — Handbuch bei Bedarf aktualisieren</li>
+</ol>
+<p><strong>Beispiel:</strong></p>
+<pre><code>@developer Implementiere diesen Plan: [Plan aus @planner einfügen]
+</code></pre>
+<hr />
+<h3><code>@reviewer</code> — Code-Review vor dem PR</h3>
+<p><strong>Wann verwenden:</strong>
+- Bevor ein PR erstellt wird
+- Nach einer Implementierung zur Qualitätsprüfung
+- Zur Sicherheits- und Performance-Analyse</p>
+<p><strong>Was er tut:</strong>
+- Strukturierte Checkliste (Code-Qualität, Next.js 16, Supabase-Sicherheit, Styling)
+- Alle Checks ausführen (<code>typecheck</code>, <code>lint</code>, <code>build</code>)
+- Review-Bericht mit Status (✅ / ⚠️ / ❌)</p>
+<p><strong>Beispiel:</strong></p>
+<pre><code>@reviewer Überprüfe die Änderungen in src/app/dashboard/ vor dem PR.
+</code></pre>
+<hr />
+<h2>Empfohlener Workflow</h2>
+<pre><code>@planner  →  @developer  →  @reviewer  →  PR erstellen
+</code></pre>
+<ol>
+<li><code>@planner</code>: Aufgabe analysieren und Implementierungsplan erstellen lassen</li>
+<li><code>@developer</code>: Plan übergeben und implementieren lassen</li>
+<li><code>@reviewer</code>: Code prüfen lassen, Review-Bericht lesen</li>
+<li>PR erstellen (erst wenn @reviewer keine kritischen Probleme meldet)</li>
+</ol>
+<h2>Instructions — Datei-spezifische Regeln</h2>
+<p>Instructions werden automatisch geladen, wenn Copilot an Dateien arbeitet, die dem <code>applyTo</code>-Glob-Muster entsprechen:</p>
+<table>
+<thead>
+<tr>
+<th>Datei</th>
+<th>Gilt für</th>
+<th>Inhalt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nextjs.instructions.md</code></td>
+<td><code>**/*.tsx, **/*.ts</code></td>
+<td>Next.js 16 App Router Patterns, async APIs, Server/Client Components</td>
+</tr>
+<tr>
+<td><code>tailwind.instructions.md</code></td>
+<td><code>**/*.tsx, **/*.css</code></td>
+<td>Tailwind CSS v4 Utility-First, Responsive Design</td>
+</tr>
+<tr>
+<td><code>typescript.instructions.md</code></td>
+<td><code>**/*.ts, **/*.tsx</code></td>
+<td>Strict Mode, Naming Conventions, Type Safety</td>
+</tr>
+<tr>
+<td><code>supabase.instructions.md</code></td>
+<td><code>**/supabase/**, **/*supabase*</code></td>
+<td>Client Setup, RLS, Migrations, Schema</td>
+</tr>
+</tbody>
+</table>
+<h3>Eigene Instruction erstellen</h3>
+<pre><code class="language-markdown">---
+applyTo: &quot;**/*.tsx&quot;
+---
+# Deine projektspezifischen Regeln hier
+</code></pre>
+<h2>Supabase MCP — Datenbankkontext für Copilot</h2>
+<p>Der <strong>Supabase MCP (Model Context Protocol) Server</strong> gibt Copilot Zugriff auf das echte Datenbankschema. Damit generiert Copilot akkuraten Code statt Tabellenstrukturen zu raten.</p>
+<h3>VS Code Setup (Workspace-Ebene)</h3>
+<p><code>.vscode/mcp.json</code> anlegen:</p>
+<pre><code class="language-json">{
+  &quot;servers&quot;: {
+    &quot;supabase&quot;: {
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [
+        &quot;-y&quot;,
+        &quot;@supabase/mcp-server-supabase@latest&quot;,
+        &quot;--read-only&quot;,
+        &quot;--project-ref&quot;,
+        &quot;dein-project-ref&quot;
+      ],
+      &quot;env&quot;: {
+        &quot;SUPABASE_ACCESS_TOKEN&quot;: &quot;dein-access-token&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<h3>VS Code Setup (Benutzer-Ebene, gilt für alle Repos)</h3>
+<p>In VS Code User Settings (<code>settings.json</code>) unter <code>"mcp"</code> eintragen — Struktur wie oben.</p>
+<h3>Access Token generieren</h3>
+<ol>
+<li><a href="https://supabase.com/dashboard/account/tokens">supabase.com/dashboard/account/tokens</a></li>
+<li><strong>Generate new token</strong> → Name vergeben (z. B. „MCP - Local Dev")</li>
+<li>Token kopieren (wird nur einmal angezeigt)</li>
+</ol>
+<h3>MCP-Verbindung testen</h3>
+<p>Im Copilot-Chat:</p>
+<pre><code>Nutze MCP für Datenbank &lt;project-ref&gt;. Liste alle Schemas und Tabellen auf.
+</code></pre>
+<p>MCP aktiviert folgende Fähigkeiten in Copilot:</p>
+<table>
+<thead>
+<tr>
+<th>Fähigkeit</th>
+<th>Beispiel-Prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tabellen auflisten</td>
+<td>„Welche Tabellen gibt es im test-Schema?"</td>
+</tr>
+<tr>
+<td>Tabelle beschreiben</td>
+<td>„Zeig mir die Spalten der orders-Tabelle"</td>
+</tr>
+<tr>
+<td>SQL generieren</td>
+<td>„Schreib eine Abfrage für alle offenen Bestellungen mit Nutzerinfo"</td>
+</tr>
+<tr>
+<td>Server Action scaffolden</td>
+<td>„Erstelle eine Server Action, die das Nutzerprofil per ID lädt"</td>
+</tr>
+<tr>
+<td>RLS-Policy generieren</td>
+<td>„Erstelle eine RLS-Policy, sodass Nutzer nur ihre eigenen Daten sehen"</td>
+</tr>
+</tbody>
+</table>
+<h3>Sicherheitsregeln für MCP</h3>
+<ul>
+<li>Immer <code>--read-only</code> verwenden (außer wenn Schreibzugriff explizit benötigt)</li>
+<li>Token nie committen — in User-Level-Settings oder Umgebungsvariablen ablegen</li>
+<li><code>test</code>-Schema für KI-unterstützte Entwicklung verwenden, nicht <code>prod</code></li>
+<li>Alle generierten SQL-Statements vor der Ausführung prüfen</li>
+<li>Tokens regelmäßig rotieren</li>
+</ul>
+<h2>Copilot-Instruktionen auf Benutzerebene</h2>
+<p>Jeder Entwickler kann persönliche Copilot-Instructions definieren, die für alle Repos gelten:</p>
+<p><strong>Windows-Pfad:</strong></p>
+<pre><code>C:\Users\&lt;user&gt;\AppData\Roaming\Code\User\prompts\my-default.instructions.md
+</code></pre>
+<p><strong>Beispiel-Inhalt:</strong></p>
+<pre><code class="language-markdown">---
+description: &quot;Gilt für alle Repos&quot;
+---
+- Immer TypeScript strict mode einhalten
+- Für Datenbankaufgaben MCP mit dem korrekten project-ref nutzen
+- Minimale, sichere Änderungen bevorzugen
+- Annahmen kommentieren
+</code></pre>
+<h2>Fehlerbehebung bei Copilot-Problemen</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Lösung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent ignoriert Instructions</td>
+<td><code>applyTo</code>-Glob-Muster prüfen — ggf. breiter setzen (<code>**/*.ts</code> statt <code>src/**/*.ts</code>)</td>
+</tr>
+<tr>
+<td>Agent überspringt typecheck/lint</td>
+<td>In <code>.agent.md</code> die Anweisung verschärfen: „muss" statt „sollte"</td>
+</tr>
+<tr>
+<td>Agent schreibt schlechten Next.js-Code</td>
+<td>Konkretes Code-Beispiel in <code>nextjs.instructions.md</code> hinzufügen</td>
+</tr>
+<tr>
+<td>Agent „vergisst" Kontext</td>
+<td>Neues Chat-Fenster öffnen, Plan explizit übergeben</td>
+</tr>
+<tr>
+<td>Agent antwortet auf Englisch</td>
+<td>In <code>copilot-instructions.md</code> hinzufügen: „Antworte immer auf Deutsch."</td>
+</tr>
+<tr>
+<td>Agent macht ungebetene Änderungen</td>
+<td>In <code>.agent.md</code> unter „Rules": „Ändere nur Dateien, die explizit im Plan stehen."</td>
+</tr>
+</tbody>
+</table>
+<h2>Referenzen</h2>
+<ul>
+<li><a href="https://docs.github.com/en/copilot/customizing-copilot">GitHub Copilot Customization Docs</a></li>
+<li><a href="https://github.com/github/awesome-copilot">awesome-copilot</a> — Beispiele und Best Practices</li>
+<li><code>Wamocon/github_workflow</code> → <code>docs/github-copilot-guide.md</code></li>
+<li><code>Wamocon/github_workflow</code> → <code>docs/mcp-setup.md</code></li>
+</ul>
+</section>
+
+<section class="chapter" id="kap09">
+<h1>Kapitel 14 – Produkt-Ökosystem (App-Katalog)</h1>
+<p>Alle bestehenden WAMOCON-Repositories alphabetisch aufgelistet.</p>
+<h2>App-Katalog</h2>
+<table>
+<thead>
+<tr>
+<th>App-Repo</th>
+<th>Beschreibung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/Wamocon/accessCheck">accessCheck</a></td>
+<td>Zugriffskontrollüberprüfung für Apps</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/ai_safeguard">ai_safeguard</a></td>
+<td>Sicherheitsprüfung für KI-generierte Inhalte</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/AppMonitor">AppMonitor</a></td>
+<td>Monitoring-Dashboard über alle Wamocon-Apps</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/ARIA">ARIA</a></td>
+<td>Interner KI-Assistent</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/auktivo">auktivo</a></td>
+<td>Auktions-Plattform</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/away">away</a></td>
+<td>Urlaubsplanungs-App</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/backofficeassistent">backofficeassistent</a></td>
+<td>KI-gestützter Backoffice-Assistent</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/backup_planner">backup_planner</a></td>
+<td>Backup-Planungstool</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/bedarfspilot">bedarfspilot</a></td>
+<td>Bedarfssteuerung für Unternehmen</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/belegbox">belegbox</a></td>
+<td>BelegBox – Belege immer dabei</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/buyright-ai">buyright-ai</a></td>
+<td>KI-gestützte Kaufentscheidungs-App</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/cardscan">cardscan</a></td>
+<td>Visitenkarten-Scanner &amp; -Manager</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/carman">carman</a></td>
+<td>Auto-Manager für alle Fahrzeugdaten</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/daily_echo">daily_echo</a></td>
+<td>Tägliche Zusammenfassungs-App</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/energy">energy</a></td>
+<td>Energieverbrauchs-Tracker</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/ghostaccounts">ghostaccounts</a></td>
+<td>Verwaltung inaktiver Konten</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/github_workflow">github_workflow</a></td>
+<td>Zentrale CI/CD-Workflows der Organisation</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/grundsteuerPruefer">grundsteuerPruefer</a></td>
+<td>Grundsteuer-Prüf-App</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/ki-prufungstrainer">ki-prufungstrainer</a></td>
+<td>KI-gestützter Prüfungstrainer</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/KI-Manager-LMS">KI-Manager-LMS</a></td>
+<td>KI-Manager Lernmanagementsystem</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/kinderpartyplaner">kinderpartyplaner</a></td>
+<td>Kindergeburtstags-Planer</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/kitaradar">kitaradar</a></td>
+<td>Kita-Verfügbarkeits-Radar</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/KLAR">KLAR</a></td>
+<td>Aufgaben- &amp; Klarheits-Management-Tool</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/ladeKompass">ladeKompass</a></td>
+<td>Ladestation-Kompass für E-Autos</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/localforge">localforge</a></td>
+<td>Lokale Entwicklungsumgebung mit KI</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/localSupabaseDB">localSupabaseDB</a></td>
+<td>Template für lokale Supabase-Instanzen</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/makeartalanya-app">makeartalanya-app</a></td>
+<td>Make Art Studio Alanya – Buchungssystem (TR/EN/RU)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/marketing_powerhouse">marketing_powerhouse</a></td>
+<td>Zentrale Marketing-Plattform</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/meine_wohnung">meine_wohnung</a></td>
+<td>Wohnungs-Management-App</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/meinezielcollage">meinezielcollage</a></td>
+<td>Digitale Zielcollage &amp; Vision Board</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/parzella">parzella</a></td>
+<td>KI-Plattform für Kleingarten-Bewerbungen in Deutschland</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/plan-it">plan-it</a></td>
+<td>Architekturplaner – planen, analysieren, dokumentieren</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/realityCheck">realityCheck</a></td>
+<td>Systemüberprüfungs-Tool</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/rideproof">rideproof</a></td>
+<td>Fahrrad-/Fahrzeug-Dokumentations-App</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/schufacleaner">schufacleaner</a></td>
+<td>Schufa-Optimierungs-Assistent</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/Sirin">Sirin</a></td>
+<td>Zeitmanagement-App – „Hör auf deine Zeit"</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/skillmapper">skillmapper</a></td>
+<td>Kompetenzkompass für Teams</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/stammfeuer">stammfeuer</a></td>
+<td>Stammfeuer App</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/TeamRadar">TeamRadar</a></td>
+<td>Mitarbeiterverfügbarkeit visualisieren</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/template_repo">template_repo</a></td>
+<td>Basis-Template für alle neuen Apps</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/treffpunkt">treffpunkt</a></td>
+<td>Gemeinsames Event-Planungs-Tool</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/Universal_Inventory_Manager">Universal_Inventory_Manager</a></td>
+<td>Universeller Inventar-Manager</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/Universal-AI-Testing">Universal-AI-Testing</a></td>
+<td>Framework für KI-Output-Testing</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/ustafix.app">ustafix.app</a></td>
+<td>Handwerker-Vermittlungsplattform</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/vereinsping">vereinsping</a></td>
+<td>Vereins-Kommunikations-Tool</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/vertragsmanager">vertragsmanager</a></td>
+<td>Vertrags- &amp; Kostenverwaltung</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/wamocon_homepage">wamocon_homepage</a></td>
+<td>Offizielle WAMOCON-Homepage</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/Wamocon_FIAE">Wamocon_FIAE</a></td>
+<td>FIAE-Ausbildungsrepository</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/wamohub">wamohub</a></td>
+<td>WAMOCON Hub – zentrales internes Dashboard &amp; App-Template</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/wartezeit-waechter">wartezeit-waechter</a></td>
+<td>Wartezeit-Tracking &amp; Alerting</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/wedbudget">wedbudget</a></td>
+<td>Hochzeitsbudget-Planer</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/wg-planer">wg-planer</a></td>
+<td>WG-Organisations- &amp; Planungs-App</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/WMC-Anforderungsportal">WMC-Anforderungsportal</a></td>
+<td>Anforderungs-Sammler für neue App-Projekte</td>
+</tr>
+</tbody>
+</table>
+<h2>Landing Page Repositories</h2>
+<p>Jede App hat ein eigenes Landing-Page-Repository (<code>[app-name]_lp</code>), generiert über den KI-Workflow (→ <strong>Kapitel 08, Abschnitt 6</strong>):</p>
+<table>
+<thead>
+<tr>
+<th>Landing Page Repo</th>
+<th>Zugehörige App</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/Wamocon/away_lp">away_lp</a></td>
+<td>away</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/auktivo_lp">auktivo_lp</a></td>
+<td>auktivo</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/backofficeassistent_lp">backofficeassistent_lp</a></td>
+<td>backofficeassistent</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/carman_lp">carman_lp</a></td>
+<td>carman</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/dailyecho_lp">dailyecho_lp</a></td>
+<td>daily_echo</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/ghostaccounts_lp">ghostaccounts_lp</a></td>
+<td>ghostaccounts</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/grundsteuerpruefer_lp">grundsteuerpruefer_lp</a></td>
+<td>grundsteuerPruefer</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/kitaradar_lp">kitaradar_lp</a></td>
+<td>kitaradar</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/KI-Prufungstrainer_lp">KI-Prufungstrainer_lp</a></td>
+<td>ki-prufungstrainer</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/ladeKompass_lp">ladeKompass_lp</a></td>
+<td>ladeKompass</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/lfa_landing_page">lfa_landing_page</a></td>
+<td>FIAE Landing Page</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/LocalForge_lp">LocalForge_lp</a></td>
+<td>localforge</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/parzella_lp">parzella_lp</a></td>
+<td>parzella</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/plan-it_lp">plan-it_lp</a></td>
+<td>plan-it</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/rideproof_lp">rideproof_lp</a></td>
+<td>rideproof</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/schufacleaner_lp">schufacleaner_lp</a></td>
+<td>schufacleaner</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/Sirin_lp">Sirin_lp</a></td>
+<td>Sirin</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/TeamRadar_lp">TeamRadar_lp</a></td>
+<td>TeamRadar</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/trace_lp">trace_lp</a></td>
+<td>trace</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/treffpunkt_lp">treffpunkt_lp</a></td>
+<td>treffpunkt</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/vereinsping_lp">vereinsping_lp</a></td>
+<td>vereinsping</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/vertragsmanager_lp">vertragsmanager_lp</a></td>
+<td>vertragsmanager</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/wartezeit-waechter_lp">wartezeit-waechter_lp</a></td>
+<td>wartezeit-waechter</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/wg-planer_lp">wg-planer_lp</a></td>
+<td>wg-planer</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section class="chapter" id="kap10">
+<h1>Kapitel 15 – Glossar &amp; Referenzen</h1>
+<h2>WAMOCON-spezifische Begriffe</h2>
+<table>
+<thead>
+<tr>
+<th>Begriff</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Welle</strong></td>
+<td>Zeitlich gebündelter Release-Zyklus, in dem mehrere Apps parallel entwickelt und veröffentlicht werden</td>
+</tr>
+<tr>
+<td><strong>Anforderungsdokument</strong></td>
+<td>Strukturiertes Dokument, das eine neue App beschreibt (Zweck, Funktionen, Datenbankschema) — Basis für die Copilot-gestützte Entwicklung</td>
+</tr>
+<tr>
+<td><strong>LP</strong></td>
+<td>Landing Page — statische HTML-Seite zur Vorstellung einer App</td>
+</tr>
+<tr>
+<td><strong>EHB</strong></td>
+<td>Entwicklerhandbuch (dieses Dokument)</td>
+</tr>
+<tr>
+<td><strong>WMC-Standard</strong></td>
+<td>Interne WAMOCON-Konventionen für Benennung, Prozesse und Qualität</td>
+</tr>
+<tr>
+<td><strong>Huawei-Laptop</strong></td>
+<td>Der lokale Entwicklungs-Laptop, der bei mehr als 2 parallelen Supabase-Instanzen an RAM-Grenzen stößt</td>
+</tr>
+<tr>
+<td><strong>template_repo</strong></td>
+<td>Basis-Repository für alle neuen WAMOCON-Apps — enthält vollständige Konfiguration</td>
+</tr>
+</tbody>
+</table>
+<h2>Technisches Glossar</h2>
+<table>
+<thead>
+<tr>
+<th>Begriff</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>App Router</strong></td>
+<td>Next.js-Routing-System basierend auf dem <code>src/app/</code>-Verzeichnis (ab Next.js 13)</td>
+</tr>
+<tr>
+<td><strong>CI/CD</strong></td>
+<td>Continuous Integration / Continuous Deployment — automatisierte Build-, Test- und Deploy-Pipeline</td>
+</tr>
+<tr>
+<td><strong>CNAME</strong></td>
+<td>DNS-Eintrag (Canonical Name) für Subdomain-Weiterleitung</td>
+</tr>
+<tr>
+<td><strong>Conventional Commits</strong></td>
+<td>Standard für Commit-Nachrichten: <code>feat:</code>, <code>fix:</code>, <code>chore:</code> etc.</td>
+</tr>
+<tr>
+<td><strong>Edge Function</strong></td>
+<td>Serverless-Funktion die an Netzwerk-Edges (nahe dem Nutzer) ausgeführt wird</td>
+</tr>
+<tr>
+<td><strong>ESLint</strong></td>
+<td>JavaScript/TypeScript Linting-Tool zur Code-Qualitätssicherung</td>
+</tr>
+<tr>
+<td><strong>GitHub Pages</strong></td>
+<td>Kostenloses Hosting für statische Seiten direkt aus einem GitHub-Repository</td>
+</tr>
+<tr>
+<td><strong>MCP</strong></td>
+<td>Model Context Protocol — Standard für die Verbindung von KI-Tools mit externen Datenquellen</td>
+</tr>
+<tr>
+<td><strong>Migration</strong></td>
+<td>Versionierte SQL-Datei, die Datenbankschema-Änderungen beschreibt</td>
+</tr>
+<tr>
+<td><strong>npm</strong></td>
+<td>Node Package Manager — Paket-Manager für Node.js/JavaScript</td>
+</tr>
+<tr>
+<td><strong>PostgREST</strong></td>
+<td>Automatisch generierte REST API auf Basis von PostgreSQL-Schemas (Teil von Supabase)</td>
+</tr>
+<tr>
+<td><strong>PR</strong></td>
+<td>Pull Request — Anfrage zum Zusammenführen von Branches</td>
+</tr>
+<tr>
+<td><strong>RLS</strong></td>
+<td>Row Level Security — feingranulare Zugriffssteuerung in PostgreSQL auf Zeilenebene</td>
+</tr>
+<tr>
+<td><strong>SSR</strong></td>
+<td>Server-Side Rendering — HTML wird auf dem Server generiert</td>
+</tr>
+<tr>
+<td><strong>Tailwind CSS</strong></td>
+<td>Utility-First CSS-Framework</td>
+</tr>
+<tr>
+<td><strong>Turbopack</strong></td>
+<td>Schneller JavaScript-Bundler (Next.js Dev-Server)</td>
+</tr>
+<tr>
+<td><strong>TypeScript</strong></td>
+<td>Typisiertes JavaScript — verhindert Laufzeitfehler durch statische Typprüfung</td>
+</tr>
+<tr>
+<td><strong>Zod</strong></td>
+<td>TypeScript-Schema-Validierungsbibliothek für Runtime-Validierung</td>
+</tr>
+</tbody>
+</table>
+<h2>Tool-Referenz</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Zweck</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GitHub</strong></td>
+<td>Repository-Hosting, CI/CD, Issues</td>
+<td><a href="https://github.com/Wamocon">github.com/Wamocon</a></td>
+</tr>
+<tr>
+<td><strong>GitHub Copilot</strong></td>
+<td>Primäres Entwicklungswerkzeug (KI-Code-Assistent)</td>
+<td><a href="https://github.com/features/copilot">github.com/features/copilot</a></td>
+</tr>
+<tr>
+<td><strong>Vercel</strong></td>
+<td>App-Deployment und Hosting</td>
+<td><a href="https://vercel.com">vercel.com</a></td>
+</tr>
+<tr>
+<td><strong>Supabase</strong></td>
+<td>Backend-as-a-Service (PostgreSQL, Auth, Storage) — Pro-Version</td>
+<td><a href="https://supabase.com">supabase.com</a></td>
+</tr>
+<tr>
+<td><strong>Strato</strong></td>
+<td>Domain-Registrar für WAMOCON-Domains</td>
+<td><a href="https://www.strato.de">strato.de</a></td>
+</tr>
+<tr>
+<td><strong>Jira</strong></td>
+<td>Projektmanagement und Aufgabenverwaltung (optional bei Wellen)</td>
+<td>intern</td>
+</tr>
+<tr>
+<td><strong>OneDrive</strong></td>
+<td>Ablage von Anforderungsdokumenten</td>
+<td>intern</td>
+</tr>
+<tr>
+<td><strong>n8n</strong></td>
+<td>Workflow-Automatisierung (Landing-Page-Generierung, Marketing)</td>
+<td>intern</td>
+</tr>
+</tbody>
+</table>
+<h2>Externe Dokumentationen</h2>
+<table>
+<thead>
+<tr>
+<th>Technologie</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Next.js Docs</td>
+<td><a href="https://nextjs.org/docs">nextjs.org/docs</a></td>
+</tr>
+<tr>
+<td>Supabase Docs</td>
+<td><a href="https://supabase.com/docs">supabase.com/docs</a></td>
+</tr>
+<tr>
+<td>Vercel Docs</td>
+<td><a href="https://vercel.com/docs">vercel.com/docs</a></td>
+</tr>
+<tr>
+<td>Tailwind CSS v4 Docs</td>
+<td><a href="https://tailwindcss.com/docs">tailwindcss.com/docs</a></td>
+</tr>
+<tr>
+<td>TypeScript Docs</td>
+<td><a href="https://www.typescriptlang.org/docs/">typescriptlang.org/docs</a></td>
+</tr>
+<tr>
+<td>Supabase MCP</td>
+<td><a href="https://github.com/supabase-community/supabase-mcp">github.com/supabase-community/supabase-mcp</a></td>
+</tr>
+<tr>
+<td>GitHub Copilot Customization</td>
+<td><a href="https://docs.github.com/en/copilot/customizing-copilot">docs.github.com/en/copilot/customizing-copilot</a></td>
+</tr>
+<tr>
+<td>Conventional Commits</td>
+<td><a href="https://www.conventionalcommits.org/">conventionalcommits.org</a></td>
+</tr>
+<tr>
+<td>awesome-copilot</td>
+<td><a href="https://github.com/github/awesome-copilot">github.com/github/awesome-copilot</a></td>
+</tr>
+</tbody>
+</table>
+<h2>Interne Referenzen</h2>
+<table>
+<thead>
+<tr>
+<th>Ressource</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard-Prozessablauf</td>
+<td><a href="https://wamocon.github.io/standard_prozessablauf/">wamocon.github.io/standard_prozessablauf/</a></td>
+</tr>
+<tr>
+<td>template_repo (Basis für alle neuen Apps)</td>
+<td><a href="https://github.com/Wamocon/template_repo">github.com/Wamocon/template_repo</a></td>
+</tr>
+<tr>
+<td>github_workflow (CI/CD-Standards)</td>
+<td><a href="https://github.com/Wamocon/github_workflow">github.com/Wamocon/github_workflow</a></td>
+</tr>
+<tr>
+<td>localSupabaseDB (lokale Datenbankinstanzen)</td>
+<td><a href="https://github.com/Wamocon/localSupabaseDB">github.com/Wamocon/localSupabaseDB</a></td>
+</tr>
+<tr>
+<td>WMC-Anforderungsportal</td>
+<td><a href="https://github.com/Wamocon/WMC-Anforderungsportal">github.com/Wamocon/WMC-Anforderungsportal</a></td>
+</tr>
+<tr>
+<td>wamohub (App-Template &amp; Hub)</td>
+<td><a href="https://github.com/Wamocon/wamohub">github.com/Wamocon/wamohub</a></td>
+</tr>
+<tr>
+<td>github_workflow → Workflow Guide</td>
+<td><a href="https://github.com/Wamocon/github_workflow/blob/main/docs/workflow-guide.md">github.com/Wamocon/github_workflow/blob/main/docs/workflow-guide.md</a></td>
+</tr>
+<tr>
+<td>github_workflow → Supabase &amp; Vercel Linking</td>
+<td><a href="https://github.com/Wamocon/github_workflow/blob/main/docs/supabase-vercel-linking.md">github.com/Wamocon/github_workflow/blob/main/docs/supabase-vercel-linking.md</a></td>
+</tr>
+<tr>
+<td>github_workflow → MCP Setup</td>
+<td><a href="https://github.com/Wamocon/github_workflow/blob/main/docs/mcp-setup.md">github.com/Wamocon/github_workflow/blob/main/docs/mcp-setup.md</a></td>
+</tr>
+<tr>
+<td>github_workflow → Tips &amp; Best Practices</td>
+<td><a href="https://github.com/Wamocon/github_workflow/blob/main/docs/tips-and-best-practices.md">github.com/Wamocon/github_workflow/blob/main/docs/tips-and-best-practices.md</a></td>
+</tr>
+<tr>
+<td>Entwicklerhandbuch GitHub Pages</td>
+<td><a href="https://wamocon.github.io/wamocon_entwicklerhandbuch/">wamocon.github.io/wamocon_entwicklerhandbuch/</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+      </main>
+    </div>
 
     <footer>
       WAMOCON GmbH &middot; Mergenthalerallee 79-81 &middot; 65760 Eschborn &middot;
       <a href="https://wamocon.github.io/wamocon_entwicklerhandbuch/">wamocon.github.io/wamocon_entwicklerhandbuch/</a>
     </footer>
+
+    <script>
+      // Highlight active TOC item on scroll
+      (function () {
+        const sections = document.querySelectorAll('.chapter');
+        const links = document.querySelectorAll('.sidebar nav ol li');
+        const headerH = document.querySelector('header').offsetHeight + 6 + 20;
+
+        function update() {
+          let active = null;
+          sections.forEach(function (s) {
+            if (s.getBoundingClientRect().top <= headerH) {
+              active = s.id;
+            }
+          });
+          links.forEach(function (li) {
+            const a = li.querySelector('a');
+            if (a && a.getAttribute('href') === '#' + active) {
+              li.classList.add('active');
+            } else {
+              li.classList.remove('active');
+            }
+          });
+        }
+
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+      })();
+    </script>
   </body>
 </html>
