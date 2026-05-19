@@ -1,0 +1,58 @@
+name: Validate handbook
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: HTML, Markdown & internal links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 1. HTML lint ─────────────────────────────────────────────────────────
+      - name: Install htmlhint
+        run: npm install --global htmlhint
+
+      - name: Lint index.html
+        run: htmlhint index.html
+
+      # ── 2. Markdown lint ─────────────────────────────────────────────────────
+      - name: Install markdownlint-cli
+        run: npm install --global markdownlint-cli
+
+      - name: Lint Markdown files
+        run: markdownlint "**/*.md" --ignore node_modules
+
+      # ── 3. Internal link check ────────────────────────────────────────────────
+      - name: Check internal links in index.html
+        run: |
+          python - <<'PYEOF'
+          import re
+          import sys
+          from pathlib import Path
+
+          root = Path('.')
+          html = (root / 'index.html').read_text(encoding='utf-8')
+
+          # extract every href that is a relative local path
+          hrefs = re.findall(r'href=["\'](\./[^"\'#?]+)', html)
+          missing = []
+          for href in hrefs:
+              target = (root / href).resolve()
+              if not target.exists():
+                  missing.append(href)
+
+          if missing:
+              print('FAIL – the following local links in index.html are broken:')
+              for m in missing:
+                  print(f'  {m}')
+              sys.exit(1)
+          else:
+              print(f'OK – all {len(hrefs)} local links resolve correctly.')
+          PYEOF

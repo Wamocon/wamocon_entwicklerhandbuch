@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WAMOCON Entwicklerhandbuch</title>
+    <style>
+      :root {
+        --bg: #06131f;
+        --panel: #0f2437;
+        --panel-alt: #13304a;
+        --text: #f4f8fb;
+        --muted: #b7c7d8;
+        --accent: #1fd0b0;
+        --accent-soft: rgba(31, 208, 176, 0.14);
+        --border: rgba(183, 199, 216, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(180deg, #071521 0%, #0b1e2f 100%);
+        color: var(--text);
+      }
+
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 48px 20px 80px;
+      }
+
+      .hero,
+      .panel {
+        background: rgba(15, 36, 55, 0.92);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+      }
+
+      .hero {
+        padding: 32px;
+        margin-bottom: 24px;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2 {
+        margin: 0 0 16px;
+      }
+
+      p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .status-grid,
+      .chapter-grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .status-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        margin-top: 24px;
+      }
+
+      .chapter-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+
+      .card {
+        background: var(--panel-alt);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+      }
+
+      .card strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .panel {
+        padding: 28px;
+        margin-top: 24px;
+      }
+
+      a {
+        color: #8feedd;
+      }
+
+      ul {
+        color: var(--muted);
+        padding-left: 20px;
+      }
+
+      .timestamp {
+        font-weight: bold;
+        color: var(--text);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <span class="eyebrow">WAMOCON Entwicklerhandbuch</span>
+        <h1>Fortschrittsstand, Kapitelstruktur und GitHub-Pages-Startseite</h1>
+        <p>
+          Diese Seite bündelt den aktuellen Arbeitsstand des Entwicklerhandbuchs inklusive
+          Index, Markdown-Kapiteln, WAMOCON-Design, Pages-Workflow und Linkmanagement.
+        </p>
+        <p class="timestamp">Letzter dokumentierter Stand: 2026-05-19 09:02 UTC</p>
+
+        <div class="status-grid">
+          <article class="card">
+            <strong>Index.html</strong>
+            Startseite steht bereit und verlinkt die Kernbereiche des Handbuchs.
+          </article>
+          <article class="card">
+            <strong>Markdown-Kapitel</strong>
+            Kapitel liegen im Ordner <code>chapters/</code> und sind direkt referenziert.
+          </article>
+          <article class="card">
+            <strong>Pages-Workflow</strong>
+            Deployment erfolgt über GitHub Actions nach GitHub Pages.
+          </article>
+          <article class="card">
+            <strong>Live-Updates</strong>
+            Dauerhafte Chat-Autoupdates sind nicht möglich; Statusabruf erfolgt manuell.
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Status- und Kapitelübersicht</h2>
+        <div class="chapter-grid">
+          <article class="card">
+            <strong><a href="./STATUS.md">STATUS.md</a></strong>
+            Sofortiger Status-Report mit Ablaufplan, Timestamp und To-do-Status.
+          </article>
+          <article class="card">
+            <strong><a href="./chapters/01_komplettplan.md">Kapitel 01 – Kompletter Plan</a></strong>
+            Gesamtplan des Entwicklerhandbuchs mit Supabase-Ergänzung.
+          </article>
+          <article class="card">
+            <strong><a href="./chapters/02_fortschrittsbericht.md">Kapitel 02 – Fortschrittsbericht</a></strong>
+            Regeln für laufende Statusberichte und manuelle Abrufe.
+          </article>
+          <article class="card">
+            <strong><a href="./chapters/03_pages-workflow.md">Kapitel 03 – Pages-Workflow</a></strong>
+            Deployment-Ablauf für die statische Dokumentationsseite.
+          </article>
+          <article class="card">
+            <strong><a href="./chapters/04_linkmanagement.md">Kapitel 04 – Linkmanagement</a></strong>
+            Richtlinien für interne und externe Verlinkungen.
+          </article>
+          <article class="card">
+            <strong><a href="./chapters/05_wamocon-design.md">Kapitel 05 – WAMOCON-Design</a></strong>
+            Farbwelt, Kartenlayout und visuelle Grundregeln der Startseite.
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Manueller Update-Ablauf</h2>
+        <ul>
+          <li>Im Chat nach einer Aktualisierung des EHB-Fortschrittsberichts fragen.</li>
+          <li><a href="./STATUS.md">STATUS.md</a> für den letzten dokumentierten Stand prüfen.</li>
+          <li>Nach Deployments die GitHub-Pages-Seite neu laden.</li>
+          <li>
+            Den Workflow unter
+            <a href="https://github.com/Wamocon/wamocon_entwicklerhandbuch/blob/main/.github/workflows/pages.yml"><code>.github/workflows/pages.yml</code></a>
+            kontrollieren.
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
