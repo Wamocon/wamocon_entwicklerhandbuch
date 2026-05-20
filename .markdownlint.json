@@ -5,5 +5,7 @@
   "MD032": false,
   "MD031": false,
   "MD049": false,
+  "MD055": false,
+  "table-column-style": false,
   "MD024": { "siblings_only": true }
 }

@@ -111,6 +111,10 @@ Schema-Änderungen können auch direkt im SQL Editor des Supabase Dashboards vor
 
 Schema-Änderungen können auch direkt im SQL Editor des Supabase Dashboards vorgenommen werden. In diesem Fall sollte die Änderung nachträglich als Migrations-Datei dokumentiert werden.
 
+**Option 2: SQL Editor** (für schnelle Anpassungen)
+
+Schema-Änderungen können auch direkt im SQL Editor des Supabase Dashboards vorgenommen werden. In diesem Fall sollte die Änderung nachträglich als Migrations-Datei dokumentiert werden.
+
 **Wichtig:** Migrations-Dateien in `supabase/migrations/` immer in Git committen. Bestehende Migrations-Dateien niemals nachträglich ändern.
 
 ## 5. Row Level Security (RLS)

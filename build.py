@@ -446,7 +446,7 @@ def write_file(path, content):
 
 def fix_dashes(text):
     """Ersetzt Gedankenstriche (– und —) im Fließtext durch Kommas oder Punkte.
-    Ausnahmen: Code-Blöcke, Tabellen-Trennzeichen, Pfeile."""
+    Ausnahmen: Code-Blöcke, Tabellen-Zeilen, Pfeile."""
     lines = text.split('\n')
     result = []
     in_code = False
@@ -455,6 +455,10 @@ def fix_dashes(text):
         if re.match(r'^```', line):
             in_code = not in_code
         if in_code or line.startswith('    '):
+            result.append(line)
+            continue
+        # Skip table rows – pipe characters must not be altered
+        if line.startswith('|'):
             result.append(line)
             continue
         # Replace em-dash and en-dash used as parenthetical in prose

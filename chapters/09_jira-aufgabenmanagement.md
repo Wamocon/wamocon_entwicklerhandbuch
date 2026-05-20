@@ -4,7 +4,7 @@
 
 | Projekttyp | Jira-Nutzung |
 | --- | --- |
-| **Wellen-Appentwicklung** (kleine, schnelle Apps im Wellen-Rhythmus) | **Optional**, empfohlen, aber nicht verpflichtend |
+| **Wellen-Appentwicklung** (kleine, schnelle Apps im Wellen-Rhythmus) | **Optional** — empfohlen, aber nicht verpflichtend |
 | **Große Projekte** (nicht im Wellen-Rhythmus, längere Laufzeit) | **Verpflichtend** |
 
 Bei Wellen-Apps kann die Aufgabenverwaltung auch über GitHub Issues oder direkt über Copilot-Pläne erfolgen.

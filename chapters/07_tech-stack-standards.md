@@ -11,11 +11,11 @@ Dieser Tech Stack ist der Standard für alle neuen Apps. Abweichungen sind mögl
 | Sprache | TypeScript (strict mode) | 5.x |
 | Styling | Tailwind CSS | v4 |
 | Backend & Datenbank | Supabase (PostgreSQL, Auth, RLS) | 2.x |
-| Deployment | Vercel |, |
-| Package Manager | npm |, |
+| Deployment | Vercel | – |
+| Package Manager | npm | – |
 | Linter | ESLint | 9.x |
-| Dev-Server | Next.js mit Turbopack |, |
-| E2E-Tests | Playwright |, |
+| Dev-Server | Next.js mit Turbopack | – |
+| E2E-Tests | Playwright | – |
 
 ## Next.js 16, App Router
 

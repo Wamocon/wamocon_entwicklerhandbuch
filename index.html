@@ -1159,12 +1159,12 @@ Dieser Tech Stack ist der Standard für alle neuen Apps. Abweichungen sind mögl
 <tr>
 <td>Deployment</td>
 <td>Vercel</td>
-<td>,</td>
+<td>–</td>
 </tr>
 <tr>
 <td>Package Manager</td>
 <td>npm</td>
-<td>,</td>
+<td>–</td>
 </tr>
 <tr>
 <td>Linter</td>
@@ -1174,12 +1174,12 @@ Dieser Tech Stack ist der Standard für alle neuen Apps. Abweichungen sind mögl
 <tr>
 <td>Dev-Server</td>
 <td>Next.js mit Turbopack</td>
-<td>,</td>
+<td>–</td>
 </tr>
 <tr>
 <td>E2E-Tests</td>
 <td>Playwright</td>
-<td>,</td>
+<td>–</td>
 </tr>
 </tbody>
 </table>
@@ -2119,7 +2119,7 @@ requirements document. The landing page should include:
 <tbody>
 <tr>
 <td><strong>Wellen-Appentwicklung</strong> (kleine, schnelle Apps im Wellen-Rhythmus)</td>
-<td><strong>Optional</strong>, empfohlen, aber nicht verpflichtend</td>
+<td><strong>Optional</strong> — empfohlen, aber nicht verpflichtend</td>
 </tr>
 <tr>
 <td><strong>Große Projekte</strong> (nicht im Wellen-Rhythmus, längere Laufzeit)</td>
@@ -2477,6 +2477,8 @@ npx supabase db push
 # Migrations-Status prüfen
 npx supabase migration list
 </code></pre>
+<p><strong>Option 2: SQL Editor</strong> (für schnelle Anpassungen)</p>
+<p>Schema-Änderungen können auch direkt im SQL Editor des Supabase Dashboards vorgenommen werden. In diesem Fall sollte die Änderung nachträglich als Migrations-Datei dokumentiert werden.</p>
 <p><strong>Option 2: SQL Editor</strong> (für schnelle Anpassungen)</p>
 <p>Schema-Änderungen können auch direkt im SQL Editor des Supabase Dashboards vorgenommen werden. In diesem Fall sollte die Änderung nachträglich als Migrations-Datei dokumentiert werden.</p>
 <p><strong>Option 2: SQL Editor</strong> (für schnelle Anpassungen)</p>
@@ -5221,6 +5223,7 @@ description: &quot;Applies to all repos&quot;
 </table>
 </div>
 </section>
+
 
 
 
