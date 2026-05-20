@@ -428,10 +428,11 @@
         <nav>
           <ol>
             <li><a href="#kap00"><span class="kap-num">00</span> Einleitung</a></li>
-            <li><a href="#kap01"><span class="kap-num">01</span> GitHub & Repository-Struktur</a></li>
-            <li><a href="#kap02"><span class="kap-num">02</span> Tech Stack & Standards</a></li>
+            <li><a href="#kapQS"><span class="kap-num">QS</span> Quickstart</a></li>
+            <li><a href="#kap01"><span class="kap-num">01</span> GitHub &amp; Repository-Struktur</a></li>
+            <li><a href="#kap02"><span class="kap-num">02</span> Tech Stack &amp; Standards</a></li>
             <li><a href="#kap03"><span class="kap-num">03</span> Entwicklungsprozess</a></li>
-            <li><a href="#kap04"><span class="kap-num">04</span> Jira & Aufgabenmanagement</a></li>
+            <li><a href="#kap04"><span class="kap-num">04</span> Jira &amp; Aufgabenmanagement</a></li>
             <li><a href="#kap05"><span class="kap-num">05</span> Supabase Cloud Projekt</a></li>
             <li><a href="#kap06"><span class="kap-num">06</span> Vercel Deployment</a></li>
             <li><a href="#kap07"><span class="kap-num">07</span> Sicherheit &amp; Code-Qualität</a></li>
@@ -454,8 +455,8 @@
 <h2>Was ist das WAMOCON Entwicklerhandbuch?</h2>
 <p>Das WAMOCON Entwicklerhandbuch ist die zentrale Referenz für alle Entwickler, die Apps,
 Landing Pages oder Infrastruktur-Projekte innerhalb der WAMOCON Organisation erstellen
-und betreiben. Es beschreibt verbindliche Standards, Prozesse und Werkzeuge, die bei
-jeder Entwicklung einzuhalten sind.</p>
+und betreiben. Es beschreibt Standards, Prozesse und Werkzeuge, die bei der Entwicklung
+empfohlen werden.</p>
 <h2>Zielgruppe</h2>
 <p>Dieses Handbuch richtet sich an:</p>
 <ul>
@@ -473,6 +474,10 @@ jeder Entwicklung einzuhalten sind.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>QS</td>
+<td>Quickstart</td>
+</tr>
 <tr>
 <td>1</td>
 <td>GitHub &amp; Repository-Struktur</td>
@@ -517,23 +522,39 @@ jeder Entwicklung einzuhalten sind.</p>
 </table>
 <h2>Entwicklungsphilosophie</h2>
 <p>Die gesamte App-Entwicklung bei WAMOCON wird vollständig mit <strong>GitHub Copilot</strong>
-durchgeführt. Copilot ist das primäre Entwicklungswerkzeug – von der Planung über
+durchgeführt. Copilot ist das primäre Entwicklungswerkzeug, von der Planung über
 die Implementierung bis hin zu Migrationen und Deployment-Konfigurationen.</p>
-<p>Der empfohlene Workflow lautet:</p>
-<ol>
-<li><strong>@planner</strong> – Entwicklungsplan aus dem Anforderungsdokument ableiten</li>
-<li><strong>@developer</strong> – Plan iterativ mit Copilot umsetzen</li>
-<li><strong>@reviewer</strong> – Code-Review und ARGUS-Pipeline durchlaufen</li>
-<li><strong>PR erstellen</strong> und auf <code>main</code> mergen → automatisches Produktions-Deployment</li>
-</ol>
 <h2>Verbindlichkeit</h2>
-<p>Alle in diesem Handbuch beschriebenen Standards sind verbindlich für jede WAMOCON-App.
-Abweichungen bedürfen einer expliziten Entscheidung und Dokumentation im jeweiligen
-Projekt-Repository.</p>
+<p>Alle in diesem Handbuch beschriebenen Standards sind der empfohlene Ansatz für
+WAMOCON-Apps. Abweichungen sind möglich und können im jeweiligen Projekt-Repository
+dokumentiert werden.</p>
+</section>
+
+<section class="chapter" id="kapQS">
+<h1>Quickstart</h1>
+<p>Eine Kurzübersicht des Standardprozesses von der Idee bis zur Produktion.
+Detaillierte Beschreibung jedes Schritts im <strong><a href="https://wamocon.github.io/standard_prozessablauf/">Standard-Prozessablauf</a></strong>.</p>
+<h2>Schritt-für-Schritt</h2>
+<ol>
+<li>Produktidee formulieren und Anforderungsdokument erstellen.</li>
+<li>Anforderungsdokument in OneDrive ablegen und zur Freigabe einreichen.</li>
+<li>Freigabe abwarten.</li>
+<li>Supabase Cloud Projekt per E-Mail beantragen (→ Kapitel 5).</li>
+<li>Domain bei Strato per E-Mail beantragen (→ Kapitel 6).</li>
+<li>Neues GitHub-Repository aus <code>template_repo</code> erstellen, <code>dev</code>-Branch anlegen.</li>
+<li>Anforderungsdokument in GitHub Copilot laden, Entwicklungsplan erstellen lassen.</li>
+<li>Iterative Implementierung mit Copilot entlang des Plans durchführen.</li>
+<li>Lokal testen: <code>npm run typecheck</code>, <code>npm run lint</code>, <code>npm run dev</code>.</li>
+<li>PR von <code>dev</code> nach <code>main</code> erstellen, Review abwarten, mergen.</li>
+<li>Vercel Produktions-Deployment läuft automatisch nach dem Merge.</li>
+<li>Landing Page generieren und über GitHub Pages veröffentlichen.</li>
+</ol>
+<hr />
+<p>Vollständiger Prozess: <strong><a href="https://wamocon.github.io/standard_prozessablauf/">wamocon.github.io/standard_prozessablauf/</a></strong></p>
 </section>
 
 <section class="chapter" id="kap01">
-<h1>Kapitel 06 – GitHub &amp; Repository-Struktur</h1>
+<h1>Kapitel 1, GitHub &amp; Repository-Struktur</h1>
 <h2>Organisation</h2>
 <p>Alle WAMOCON-Projekte sind unter der GitHub-Organisation <strong><a href="https://github.com/Wamocon">Wamocon</a></strong> zusammengefasst.
 Die Organisation enthält aktuell über 90 Repositories, die sich in drei Hauptkategorien unterteilen:</p>
@@ -542,27 +563,103 @@ Die Organisation enthält aktuell über 90 Repositories, die sich in drei Hauptk
 <tr>
 <th>Kategorie</th>
 <th>Beschreibung</th>
-<th>Beispiele</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Apps</strong></td>
 <td>TypeScript/Next.js-Webanwendungen</td>
-<td><code>wamohub</code>, <code>carman</code>, <code>TeamRadar</code>, <code>belegbox</code></td>
 </tr>
 <tr>
 <td><strong>Landing Pages</strong></td>
 <td>Statische HTML-Seiten für Apps</td>
-<td><code>carman_lp</code>, <code>trace_lp</code>, <code>away_lp</code></td>
 </tr>
 <tr>
 <td><strong>Infrastruktur</strong></td>
 <td>Shared Workflows, Templates, Docs</td>
-<td><a href="https://github.com/Wamocon/github_workflow"><code>github_workflow</code></a>, <a href="https://github.com/Wamocon/localSupabaseDB"><code>localSupabaseDB</code></a>, <a href="https://github.com/Wamocon/template_repo"><code>template_repo</code></a></td>
 </tr>
 </tbody>
 </table>
+<h3>Apps</h3>
+<p><a href="https://github.com/Wamocon/accessCheck">accessCheck</a>,
+<a href="https://github.com/Wamocon/ai_safeguard">ai_safeguard</a>,
+<a href="https://github.com/Wamocon/AppMonitor">AppMonitor</a>,
+<a href="https://github.com/Wamocon/ARIA">ARIA</a>,
+<a href="https://github.com/Wamocon/auktivo">auktivo</a>,
+<a href="https://github.com/Wamocon/away">away</a>,
+<a href="https://github.com/Wamocon/backofficeassistent">backofficeassistent</a>,
+<a href="https://github.com/Wamocon/backup_planner">backup_planner</a>,
+<a href="https://github.com/Wamocon/bedarfspilot">bedarfspilot</a>,
+<a href="https://github.com/Wamocon/belegbox">belegbox</a>,
+<a href="https://github.com/Wamocon/buyright-ai">buyright-ai</a>,
+<a href="https://github.com/Wamocon/cardscan">cardscan</a>,
+<a href="https://github.com/Wamocon/carman">carman</a>,
+<a href="https://github.com/Wamocon/daily_echo">daily_echo</a>,
+<a href="https://github.com/Wamocon/energy">energy</a>,
+<a href="https://github.com/Wamocon/ghostaccounts">ghostaccounts</a>,
+<a href="https://github.com/Wamocon/grundsteuerPruefer">grundsteuerPruefer</a>,
+<a href="https://github.com/Wamocon/ki-prufungstrainer">ki-prufungstrainer</a>,
+<a href="https://github.com/Wamocon/KI-Manager-LMS">KI-Manager-LMS</a>,
+<a href="https://github.com/Wamocon/kinderpartyplaner">kinderpartyplaner</a>,
+<a href="https://github.com/Wamocon/kitaradar">kitaradar</a>,
+<a href="https://github.com/Wamocon/KLAR">KLAR</a>,
+<a href="https://github.com/Wamocon/ladeKompass">ladeKompass</a>,
+<a href="https://github.com/Wamocon/localforge">localforge</a>,
+<a href="https://github.com/Wamocon/makeartalanya-app">makeartalanya-app</a>,
+<a href="https://github.com/Wamocon/marketing_powerhouse">marketing_powerhouse</a>,
+<a href="https://github.com/Wamocon/meine_wohnung">meine_wohnung</a>,
+<a href="https://github.com/Wamocon/meinezielcollage">meinezielcollage</a>,
+<a href="https://github.com/Wamocon/parzella">parzella</a>,
+<a href="https://github.com/Wamocon/plan-it">plan-it</a>,
+<a href="https://github.com/Wamocon/realityCheck">realityCheck</a>,
+<a href="https://github.com/Wamocon/rideproof">rideproof</a>,
+<a href="https://github.com/Wamocon/schufacleaner">schufacleaner</a>,
+<a href="https://github.com/Wamocon/Sirin">Sirin</a>,
+<a href="https://github.com/Wamocon/skillmapper">skillmapper</a>,
+<a href="https://github.com/Wamocon/stammfeuer">stammfeuer</a>,
+<a href="https://github.com/Wamocon/TeamRadar">TeamRadar</a>,
+<a href="https://github.com/Wamocon/treffpunkt">treffpunkt</a>,
+<a href="https://github.com/Wamocon/Universal_Inventory_Manager">Universal_Inventory_Manager</a>,
+<a href="https://github.com/Wamocon/Universal-AI-Testing">Universal-AI-Testing</a>,
+<a href="https://github.com/Wamocon/ustafix.app">ustafix.app</a>,
+<a href="https://github.com/Wamocon/vereinsping">vereinsping</a>,
+<a href="https://github.com/Wamocon/vertragsmanager">vertragsmanager</a>,
+<a href="https://github.com/Wamocon/wamocon_homepage">wamocon_homepage</a>,
+<a href="https://github.com/Wamocon/Wamocon_FIAE">Wamocon_FIAE</a>,
+<a href="https://github.com/Wamocon/wamohub">wamohub</a>,
+<a href="https://github.com/Wamocon/wartezeit-waechter">wartezeit-waechter</a>,
+<a href="https://github.com/Wamocon/wedbudget">wedbudget</a>,
+<a href="https://github.com/Wamocon/wg-planer">wg-planer</a>,
+<a href="https://github.com/Wamocon/WMC-Anforderungsportal">WMC-Anforderungsportal</a></p>
+<h3>Landing Pages</h3>
+<p><a href="https://github.com/Wamocon/away_lp">away_lp</a>,
+<a href="https://github.com/Wamocon/auktivo_lp">auktivo_lp</a>,
+<a href="https://github.com/Wamocon/backofficeassistent_lp">backofficeassistent_lp</a>,
+<a href="https://github.com/Wamocon/carman_lp">carman_lp</a>,
+<a href="https://github.com/Wamocon/dailyecho_lp">dailyecho_lp</a>,
+<a href="https://github.com/Wamocon/ghostaccounts_lp">ghostaccounts_lp</a>,
+<a href="https://github.com/Wamocon/grundsteuerpruefer_lp">grundsteuerpruefer_lp</a>,
+<a href="https://github.com/Wamocon/kitaradar_lp">kitaradar_lp</a>,
+<a href="https://github.com/Wamocon/KI-Prufungstrainer_lp">KI-Prufungstrainer_lp</a>,
+<a href="https://github.com/Wamocon/ladeKompass_lp">ladeKompass_lp</a>,
+<a href="https://github.com/Wamocon/lfa_landing_page">lfa_landing_page</a>,
+<a href="https://github.com/Wamocon/LocalForge_lp">LocalForge_lp</a>,
+<a href="https://github.com/Wamocon/parzella_lp">parzella_lp</a>,
+<a href="https://github.com/Wamocon/plan-it_lp">plan-it_lp</a>,
+<a href="https://github.com/Wamocon/rideproof_lp">rideproof_lp</a>,
+<a href="https://github.com/Wamocon/schufacleaner_lp">schufacleaner_lp</a>,
+<a href="https://github.com/Wamocon/Sirin_lp">Sirin_lp</a>,
+<a href="https://github.com/Wamocon/TeamRadar_lp">TeamRadar_lp</a>,
+<a href="https://github.com/Wamocon/trace_lp">trace_lp</a>,
+<a href="https://github.com/Wamocon/treffpunkt_lp">treffpunkt_lp</a>,
+<a href="https://github.com/Wamocon/vereinsping_lp">vereinsping_lp</a>,
+<a href="https://github.com/Wamocon/vertragsmanager_lp">vertragsmanager_lp</a>,
+<a href="https://github.com/Wamocon/wartezeit-waechter_lp">wartezeit-waechter_lp</a>,
+<a href="https://github.com/Wamocon/wg-planer_lp">wg-planer_lp</a></p>
+<h3>Infrastruktur</h3>
+<p><a href="https://github.com/Wamocon/github_workflow">github_workflow</a>,
+<a href="https://github.com/Wamocon/localSupabaseDB">localSupabaseDB</a>,
+<a href="https://github.com/Wamocon/template_repo">template_repo</a></p>
 <h2>Infrastruktur-Repositories</h2>
 <h3><code>Wamocon/github_workflow</code></h3>
 <p>Das zentrale CI/CD-Repository der Organisation. Enthält wiederverwendbare GitHub Actions Workflows, die alle Projekte einbinden:</p>
@@ -586,12 +683,14 @@ Die Organisation enthält aktuell über 90 Repositories, die sich in drei Hauptk
 <h3><code>Wamocon/localSupabaseDB</code></h3>
 <p>Template-Repository für lokale Supabase-Entwicklungsumgebungen.
 Jede Next.js-App bekommt bei Bedarf eine eigene Kopie, um lokal ohne Supabase Cloud entwickeln zu können.</p>
-<h3><code>Wamocon/wamohub</code></h3>
-<p>Das Haupt-App-Template der Organisation (intern „relda" genannt). Dient als Ausgangspunkt für alle neuen Next.js-Apps. Enthält vollständige Konfiguration für:
-- Next.js 16 App Router
-- Supabase-Integration
-- GitHub Actions CI/CD
-- Copilot-Agents und -Instructions</p>
+<h3><code>Wamocon/template_repo</code></h3>
+<p>Das Basis-Template für alle neuen WAMOCON-Apps. Enthält vollständige Konfiguration für:</p>
+<ul>
+<li>Next.js 16 App Router</li>
+<li>Supabase-Integration</li>
+<li>GitHub Actions CI/CD</li>
+<li>Copilot-Agents und Instructions</li>
+</ul>
 <h2>Sichtbarkeit und Zugriff</h2>
 <ul>
 <li>Alle App-Repositories sind standardmäßig <strong>intern</strong> (nur für Org-Mitglieder sichtbar)</li>
@@ -606,7 +705,7 @@ dev    ← Entwicklungs-Branch, aktive Arbeit
 </code></pre>
 <ul>
 <li>Entwicklung geschieht auf <code>dev</code></li>
-<li>PRs laufen von <code>dev</code> → <code>main</code> nach Review &amp; Tests</li>
+<li>PRs laufen von <code>dev</code> nach <code>main</code> nach Review und Tests</li>
 <li>Direkte Commits auf <code>main</code> sind nicht erlaubt</li>
 </ul>
 <h3>Themenspezifisches Branching (vereinzelt)</h3>
@@ -616,47 +715,16 @@ fix/bugname        ← Fehlerbehebung
 hotfix/kritisch    ← Dringender Produktionsfehler
 </code></pre>
 <p>Diese Branches werden von <code>dev</code> abgezweigt und zurück nach <code>dev</code> gemergt.</p>
-<p><strong>Grundregel:</strong> Niemals direkt auf <code>main</code> commiten — immer über <code>dev</code> und dann PR.</p>
+<p><strong>Grundregel:</strong> Niemals direkt auf <code>main</code> commiten, immer über <code>dev</code> und dann PR.</p>
 <h2>Naming Conventions</h2>
-<table>
-<thead>
-<tr>
-<th>Typ</th>
-<th>Konvention</th>
-<th>Beispiele</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>App-Repos</strong></td>
-<td><code>snake_case</code>, kleingeschrieben</td>
-<td><code>backup_planner</code>, <code>carman</code>, <code>daily_echo</code></td>
-</tr>
-<tr>
-<td><strong>Landing-Page-Repos</strong></td>
-<td><code>[appname]_lp</code>, kleingeschrieben</td>
-<td><code>carman_lp</code>, <code>trace_lp</code>, <code>away_lp</code></td>
-</tr>
-<tr>
-<td><strong>Infrastruktur-Repos</strong></td>
-<td><code>camelCase</code></td>
-<td><code>AppMonitor</code>, <code>TeamRadar</code>, <code>localSupabaseDB</code></td>
-</tr>
-</tbody>
-</table>
-<p>Sonderfälle und Ausnahmen sind im App-Katalog (Kapitel 14) dokumentiert.</p>
-<h2>Commit-Konventionen</h2>
-<p>WAMOCON folgt dem <a href="https://www.conventionalcommits.org/">Conventional Commits</a> Standard:</p>
-<pre><code>feat(auth): Login-Seite hinzufügen
-fix(orders): Gesamtberechnung bei Rabatten korrigieren
-chore(deps): supabase-js auf v2.45 aktualisieren
-db(migration): Tabelle notifications erstellen
-ci(workflow): Node.js-Version auf 20 aktualisieren
-docs(readme): Deployment-Anleitung ergänzen
-style(lint): Formatierungsfehler automatisch behoben
-</code></pre>
+<p>WAMOCON-Repositories verwenden zwei Schreibweisen:</p>
+<ul>
+<li><strong><code>snake_case</code></strong> (kleingeschrieben, Wörter mit Unterstrich): z.B. <code>backup_planner</code>, <code>carman_lp</code>, <code>daily_echo</code></li>
+<li><strong><code>camelCase</code></strong> (Großbuchstabe am Wortanfang): z.B. <code>localSupabaseDB</code>, <code>AppMonitor</code>, <code>TeamRadar</code></li>
+</ul>
+<p>Sonderfälle und Ausnahmen sind im App-Katalog (Kapitel 9) dokumentiert.</p>
 <h2>Repository-Struktur (Standard-App)</h2>
-<p>Alle App-Repos basieren auf dem <code>wamohub</code>-Template und haben diese Struktur:</p>
+<p>Alle App-Repos basieren auf dem <code>template_repo</code>-Template und haben diese Struktur:</p>
 <pre><code>&lt;app-name&gt;/
 ├── .github/
 │   ├── agents/                 # KI-Personas (@planner, @developer, @reviewer)
@@ -679,16 +747,6 @@ style(lint): Formatierungsfehler automatisch behoben
 ├── next.config.ts
 └── eslint.config.mjs
 </code></pre>
-<h2>Pull Requests</h2>
-<p>Richtlinien für jeden PR:</p>
-<ol>
-<li>PRs klein halten — angestrebt unter 400 geänderte Zeilen</li>
-<li>Einen Fokus pro PR — keine Mischung von Feature und Refactoring</li>
-<li>Klare Beschreibung: Was wurde geändert und warum?</li>
-<li>Screenshots bei UI-Änderungen beifügen</li>
-<li>Erst alle Änderungen pushen, dann den PR öffnen (jeder Push auf offenen PR triggert CI)</li>
-<li>Immer nur einen offenen PR gleichzeitig haben</li>
-</ol>
 <h2>Secrets-Management</h2>
 <table>
 <thead>
@@ -709,21 +767,15 @@ style(lint): Formatierungsfehler automatisch behoben
 <td>Organisation</td>
 <td>Vercel Organisations-ID (org-weit konfiguriert)</td>
 </tr>
-<tr>
-<td><code>VERCEL_PROJECT_ID</code></td>
-<td>Repository</td>
-<td>Vercel Projekt-ID (pro Repo in Repo-Secrets)</td>
-</tr>
 </tbody>
 </table>
-<p>Supabase-Credentials (URL, Anon Key, Service Role Key) werden als Vercel Environment Variables konfiguriert, nicht als GitHub Secrets.</p>
 </section>
 
 <section class="chapter" id="kap02">
-<h1>Kapitel 07 – Tech Stack &amp; Standards</h1>
+<h1>Kapitel 2, Tech Stack &amp; Standards</h1>
 <h2>Übersicht</h2>
 <p>Alle WAMOCON-Webanwendungen basieren auf einem einheitlichen Tech Stack.
-Dieser Standard gilt für alle neuen Apps und sollte nicht ohne Absprache abgewichen werden.</p>
+Dieser Tech Stack ist der Standard für alle neuen Apps. Abweichungen sind möglich und können themenspezifisch begründet werden.</p>
 <table>
 <thead>
 <tr>
@@ -756,12 +808,12 @@ Dieser Standard gilt für alle neuen Apps und sollte nicht ohne Absprache abgewi
 <tr>
 <td>Deployment</td>
 <td>Vercel</td>
-<td>–</td>
+<td>,</td>
 </tr>
 <tr>
 <td>Package Manager</td>
 <td>npm</td>
-<td>–</td>
+<td>,</td>
 </tr>
 <tr>
 <td>Linter</td>
@@ -771,20 +823,20 @@ Dieser Standard gilt für alle neuen Apps und sollte nicht ohne Absprache abgewi
 <tr>
 <td>Dev-Server</td>
 <td>Next.js mit Turbopack</td>
-<td>–</td>
+<td>,</td>
 </tr>
 <tr>
 <td>E2E-Tests</td>
 <td>Playwright</td>
-<td>–</td>
+<td>,</td>
 </tr>
 </tbody>
 </table>
-<h2>Next.js 16 – App Router</h2>
+<h2>Next.js 16, App Router</h2>
 <p>Alle Apps verwenden den <strong>App Router</strong> (<code>src/app/</code>). Der Pages Router wird nicht verwendet.</p>
 <h3>Wichtigste Regeln</h3>
 <ul>
-<li><strong>Server Components sind der Standard</strong> — <code>"use client"</code> nur hinzufügen, wenn Interaktivität benötigt wird</li>
+<li><strong>Server Components sind der Standard</strong>, <code>"use client"</code> nur hinzufügen, wenn Interaktivität benötigt wird</li>
 <li>Server Actions in eigene Dateien auslagern (<code>actions.ts</code> im Feature-Ordner)</li>
 <li><code>loading.tsx</code> und <code>error.tsx</code> für jedes Route-Segment anlegen</li>
 <li>Formulareingaben auf Client- und Server-Seite validieren</li>
@@ -843,7 +895,7 @@ Dieser Standard gilt für alle neuen Apps und sollte nicht ohne Absprache abgewi
 <p>Alle Projekte nutzen TypeScript im <strong>Strict Mode</strong> (<code>strict: true</code> in <code>tsconfig.json</code>).</p>
 <h3>Konventionen</h3>
 <ul>
-<li><strong><code>any</code> vermeiden</strong> — <code>unknown</code> verwenden und den Typ einschränken</li>
+<li><strong><code>any</code> vermeiden</strong>, <code>unknown</code> verwenden und den Typ einschränken</li>
 <li><strong>Zod für Runtime-Validierung</strong> an API-Grenzen einsetzen</li>
 <li><strong>Interfaces bevorzugen</strong> gegenüber <code>type</code> für Objektformen (bessere Fehlermeldungen)</li>
 <li><strong>Typen zentral exportieren</strong> pro Feature in <code>types.ts</code></li>
@@ -856,14 +908,14 @@ const supabase = createServerClient&lt;Database&gt;(...);
 <p>Alle Apps verwenden Tailwind CSS v4 mit dem PostCSS-Plugin (<code>@tailwindcss/postcss</code>).</p>
 <h3>Grundregeln</h3>
 <ul>
-<li>Utility-First-Ansatz — keine separaten CSS-Dateien außer für globale Styles</li>
+<li>Utility-First-Ansatz, keine separaten CSS-Dateien außer für globale Styles</li>
 <li>Responsive Design mit den Standard-Breakpoints von Tailwind</li>
-<li>Keine magischen Zahlen — Tailwind-Scale-Werte verwenden</li>
+<li>Keine magischen Zahlen, Tailwind-Scale-Werte verwenden</li>
 <li>Das WAMOCON-Design-System (dunkler Blauverlauf, Akzentfarbe <code>#1fd0b0</code>) aus Kapitel 05 beachten</li>
 </ul>
 <h2>Supabase</h2>
 <p>Supabase stellt PostgreSQL-Datenbank, Authentifizierung und Row Level Security bereit.
-Details zur Konfiguration und Nutzung in <strong>Kapitel 10 – Supabase Cloud Projekt</strong>.</p>
+Details zur Konfiguration und Nutzung in <strong>Kapitel 5, Supabase Cloud Projekt</strong>.</p>
 <h3>Supabase-Client-Regeln</h3>
 <ul>
 <li><strong><code>createServerClient</code></strong> in Server Components und Server Actions verwenden</li>
@@ -1035,12 +1087,12 @@ npm install -g supabase
 </section>
 
 <section class="chapter" id="kap03">
-<h1>Kapitel 08 – Entwicklungsprozess</h1>
+<h1>Kapitel 3, Entwicklungsprozess</h1>
 <blockquote>
-<p><strong>Wichtig:</strong> Die gesamte App-Entwicklung bei WAMOCON wird vollständig mit <strong>GitHub Copilot</strong> durchgeführt. Copilot ist nicht nur ein Hilfsmittel, sondern das primäre Entwicklungswerkzeug – von der Planung über die Implementierung bis hin zu Migrationen und Deployment-Konfigurationen.</p>
+<p><strong>Wichtig:</strong> Die gesamte App-Entwicklung bei WAMOCON wird vollständig mit <strong>GitHub Copilot</strong> durchgeführt. Copilot ist nicht nur ein Hilfsmittel, sondern das primäre Entwicklungswerkzeug, von der Planung über die Implementierung bis hin zu Migrationen und Deployment-Konfigurationen.</p>
 </blockquote>
 <h2>Überblick: Von der Idee bis zur Produktion</h2>
-<pre><code>Produktidee &amp; Anforderungserstellung (manuell)
+<pre><code class="language-text">Produktidee &amp; Anforderungserstellung (manuell)
        │
        ▼
 Anforderungsdokument in OneDrive ablegen &amp; einreichen
@@ -1052,7 +1104,7 @@ Freigabe abwarten
        └─→ Strato-Domain per E-Mail beantragen (→ Kapitel 11)
                 │
                 ▼
-Template Repo klonen → dev-Branch → Anforderungsdokument in Copilot laden
+Neues GitHub-Repository aus template_repo erstellen, dev-Branch anlegen, Anforderungsdokument in Copilot laden
        │
        ▼
 Copilot erstellt Entwicklungsplan → iterative Implementierung
@@ -1077,24 +1129,22 @@ Landing Page generieren (bevorzugt GitHub Pages, optional Vercel)
 - Technische Rahmenbedingungen</p>
 <h3>Ablage in OneDrive</h3>
 <p>Das fertige Anforderungsdokument wird in <strong>OneDrive</strong> abgelegt:</p>
-<pre><code>OneDrive / Welle [Nummer] / [App-Name] / Anforderungsdokument_[App-Name].docx
+<pre><code class="language-text">OneDrive / Welle [Nummer] / [App-Name] / Anforderungsdokument_[App-Name].docx
 </code></pre>
 <p><strong>Wichtig:</strong> Die Entwicklung beginnt <strong>erst nach Freigabe</strong> des Anforderungsdokuments.</p>
 <hr />
 <h2>2. Nach Freigabe: Infrastruktur beantragen</h2>
-<p>Direkt nach der Freigabe des Anforderungsdokuments — damit keine Wartezeit beim Go-live entsteht:</p>
+<p>Direkt nach der Freigabe des Anforderungsdokuments, damit keine Wartezeit beim Go-live entsteht:</p>
 <h3>Supabase Cloud Projekt beantragen</h3>
 <p>Das Supabase Cloud Projekt wird <strong>per E-Mail beantragt</strong> (kein Self-Service).</p>
 <p>Angaben in der E-Mail:
-- App-Name (identisch mit dem geplanten Repo-Namen)
-- Kurzbeschreibung / Zweck der App
-- Gewünschte Region (z. B. <code>eu-central-1</code>)</p>
-<p>Details zur Einrichtung nach Freigabe → <strong>Kapitel 10 – Supabase Cloud Projekt</strong></p>
+- App-Name (identisch mit dem geplanten Repo-Namen)</p>
+<p>Details zur Einrichtung nach Freigabe → <strong>Kapitel 5, Supabase Cloud Projekt</strong></p>
 <h3>Strato-Domain beantragen</h3>
 <p>Die Domain für die App wird <strong>per E-Mail bei Strato beantragt</strong>.</p>
 <ul>
 <li>Domain-Name angeben (z. B. <code>app-name.de</code> oder <code>app-name.wamocon.de</code>)</li>
-<li>Nach Zuteilung wird die Domain in Vercel konfiguriert → <strong>Kapitel 11 – Vercel Deployment</strong></li>
+<li>Nach Zuteilung wird die Domain in Vercel konfiguriert → <strong>Kapitel 6, Vercel Deployment</strong></li>
 </ul>
 <hr />
 <h2>3. Entwicklungsstart: Template Repo &amp; GitHub Copilot</h2>
@@ -1102,13 +1152,13 @@ Landing Page generieren (bevorzugt GitHub Pages, optional Vercel)
 <ol>
 <li>Auf GitHub: <a href="https://github.com/Wamocon/template_repo"><code>Wamocon/template_repo</code></a> → <strong>„Use this template"</strong> → <strong>„Create a new repository"</strong></li>
 <li>Repository in der <code>Wamocon</code>-Organisation anlegen</li>
-<li>Name nach Naming Convention setzen (→ <strong>Kapitel 06</strong>)</li>
+<li>Name nach Naming Convention setzen (→ <strong>Kapitel 1</strong>)</li>
 <li>Sichtbarkeit: <strong>Internal</strong></li>
-<li><code>dev</code>-Branch anlegen — <code>main</code> bleibt geschützt</li>
+<li><code>dev</code>-Branch anlegen, <code>main</code> bleibt geschützt</li>
 </ol>
 <h3>Anforderungsdokument in GitHub Copilot laden</h3>
 <p>Das freigegebene Anforderungsdokument als Kontext in GitHub Copilot laden und Copilot anweisen, einen vollständigen Entwicklungsplan zu erstellen:</p>
-<pre><code>Lade das Anforderungsdokument aus OneDrive und erstelle auf Basis dieses Dokuments
+<pre><code class="language-text">Lade das Anforderungsdokument aus OneDrive und erstelle auf Basis dieses Dokuments
 einen vollständigen Entwicklungsplan für die App [App-Name]:
 
 - Datenbankschema &amp; Migrationen (Tabellen, Spalten, RLS-Policies)
@@ -1152,7 +1202,7 @@ npm run dev
 </code></pre>
 <h3>Supabase-Fallback: Lokale Instanz</h3>
 <p>Solange das Supabase Cloud Projekt noch <strong>in Beantragung</strong> ist, lokale Instanz nutzen:
-→ <strong>Kapitel 10.5 – Lokale Supabase Instanz</strong></p>
+→ <strong>Kapitel 5.7, Lokale Supabase Instanz</strong></p>
 <h3>Datenbankmigrationen</h3>
 <p>GitHub Copilot erstellt und führt Migrationen direkt aus der App heraus in Supabase Cloud durch:</p>
 <pre><code class="language-bash"># Migration erstellen (Copilot generiert den SQL-Inhalt)
@@ -1173,16 +1223,16 @@ npm run dev         # Manuell testen
 <hr />
 <h2>5. CI/CD-Pipeline (automatisch)</h2>
 <h3>Bei Push auf <code>dev</code>: Preview-Deployment</h3>
-<pre><code>Push auf dev
+<pre><code class="language-text">Push auf dev
   └─→ pr-autofix: ESLint --fix (committet zurück)
   └─→ pr-checks: TypeScript + ESLint validieren
   └─→ Vercel: Preview-Deployment
 </code></pre>
 <h3>Bei Merge auf <code>main</code>: Produktions-Deployment</h3>
-<pre><code>PR von dev → main gemergt
+<pre><code class="language-text">PR von dev → main gemergt
   └─→ Vercel: Produktions-Deployment
 </code></pre>
-<p>Details → <strong>Kapitel 11 – Vercel Deployment</strong></p>
+<p>Details → <strong>Kapitel 6, Vercel Deployment</strong></p>
 <hr />
 <h2>6. Landing Page generieren</h2>
 <p>Jede App bekommt ein eigenes Landing-Page-Repository: <code>[app-name]_lp</code></p>
@@ -1200,7 +1250,7 @@ npm run dev         # Manuell testen
 <li><strong>Bevorzugt:</strong> GitHub Pages (kostenlos, kein Build-Step, direkt über GitHub)</li>
 <li><strong>Optional:</strong> Vercel (für erweiterte Deployment-Features)</li>
 </ul>
-<p>Standard: reines HTML, kein Framework-Overhead — direkt deploybar ohne Build-Prozess.</p>
+<p>Standard: reines HTML, kein Framework-Overhead, direkt deploybar ohne Build-Prozess.</p>
 <hr />
 <h2>7. Schnellreferenz-Befehle</h2>
 <pre><code class="language-bash"># Development
@@ -1221,7 +1271,7 @@ git push origin dev                 # Auf dev pushen → Preview Deploy
 </section>
 
 <section class="chapter" id="kap04">
-<h1>Kapitel 09 – Jira &amp; Aufgabenmanagement</h1>
+<h1>Kapitel 4, Jira &amp; Aufgabenmanagement</h1>
 <h2>Einsatz: Wann ist Jira verpflichtend?</h2>
 <table>
 <thead>
@@ -1233,7 +1283,7 @@ git push origin dev                 # Auf dev pushen → Preview Deploy
 <tbody>
 <tr>
 <td><strong>Wellen-Appentwicklung</strong> (kleine, schnelle Apps im Wellen-Rhythmus)</td>
-<td><strong>Optional</strong> — empfohlen, aber nicht verpflichtend</td>
+<td><strong>Optional</strong>, empfohlen, aber nicht verpflichtend</td>
 </tr>
 <tr>
 <td><strong>Große Projekte</strong> (nicht im Wellen-Rhythmus, längere Laufzeit)</td>
@@ -1244,7 +1294,7 @@ git push origin dev                 # Auf dev pushen → Preview Deploy
 <p>Bei Wellen-Apps kann die Aufgabenverwaltung auch über GitHub Issues oder direkt über Copilot-Pläne erfolgen.</p>
 <h2>Jira-Ticket-Erstellung</h2>
 <p>Automatisierte Ticket-Erstellung via <a href="https://github.com/Wamocon/wamocon_Jira_Ticket_Creation"><code>wamocon_Jira_Ticket_Creation</code></a> (Python).</p>
-<h3>Ticket-Typen</h3>
+<h3>Ticket-Typen (optional, empfohlener Standard)</h3>
 <table>
 <thead>
 <tr>
@@ -1269,17 +1319,9 @@ git push origin dev                 # Auf dev pushen → Preview Deploy
 <td><strong>Sub-Task</strong></td>
 <td>Teilaufgabe einer Story oder Task</td>
 </tr>
-<tr>
-<td><strong>Hotfix</strong></td>
-<td>Kritischer Produktionsfehler, sofort beheben</td>
-</tr>
 </tbody>
 </table>
-<h3>Verlinkung mit GitHub</h3>
-<p>Ticket-Nummer im Branch-Namen oder PR-Titel angeben:</p>
-<pre><code>feature/WMC-123-login-seite
-fix/WMC-456-berechnung-korrigieren
-</code></pre>
+<p>Die Ticket-Typen sind ein empfohlener Standard. Abweichungen sind projektspezifisch möglich.</p>
 <h2>Status-Workflow</h2>
 <pre><code>Backlog → To Do → In Progress → In Review → Done
 </code></pre>
@@ -1313,78 +1355,62 @@ fix/WMC-456-berechnung-korrigieren
 </tr>
 </tbody>
 </table>
-<h2>ARGUS Review Pipeline</h2>
-<p>Die <a href="https://github.com/Wamocon/ARGUS">ARGUS Review Pipeline</a> ist ein Multi-Agenten-Review-System für Inhalte und Anforderungen.</p>
-<p>Einsatz:
-- Qualitätskontrolle vor Freigabe von Entwicklungsartefakten
-- Review von Anforderungsdokumenten
-- Prüfung von KI-generierten Outputs</p>
-<h2>Standard-Prozessablauf</h2>
-<p>Verbindliche Vorlage für alle Entwicklungsprojekte:</p>
-<p>🔗 <strong><a href="https://wamocon.github.io/standard_prozessablauf/">wamocon.github.io/standard_prozessablauf/</a></strong></p>
-<p>Repo: <a href="https://github.com/Wamocon/standard_prozessablauf"><code>Wamocon/standard_prozessablauf</code></a></p>
-<h2>Prioritäten</h2>
+<h2>Jira GitHub Integration</h2>
+<p>Durch die Verlinkung von GitHub und Jira werden Jira-Tickets automatisch aktualisiert,
+sobald ein Branch oder Pull Request erstellt wird.</p>
+<h3>Branch-Name und Ticket-Nummer</h3>
+<p>Um die automatische Verknüpfung zu aktivieren, muss die Jira-Ticket-Nummer im Branch-Namen enthalten sein:</p>
+<pre><code>feature/WMC-123-login-seite
+fix/WMC-456-berechnung-korrigieren
+</code></pre>
+<h3>Jira Automation: Automatische Statusübergänge</h3>
 <table>
 <thead>
 <tr>
-<th>Priorität</th>
-<th>Reaktionszeit</th>
-<th>Beschreibung</th>
+<th>Aktion in GitHub</th>
+<th>Ticket-Status in Jira</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Kritisch</strong></td>
-<td>Sofort</td>
-<td>Produktionsausfall oder Datenverlust</td>
+<td>Branch mit Ticket-Nummer erstellt</td>
+<td><strong>In Arbeit</strong></td>
 </tr>
 <tr>
-<td><strong>Hoch</strong></td>
-<td>Innerhalb 24h</td>
-<td>Wichtige Funktion defekt, kein Workaround</td>
+<td>Pull Request geöffnet</td>
+<td><strong>In Review</strong></td>
 </tr>
 <tr>
-<td><strong>Mittel</strong></td>
-<td>Nächster Sprint</td>
-<td>Einschränkung mit Workaround</td>
-</tr>
-<tr>
-<td><strong>Niedrig</strong></td>
-<td>Nach Kapazität</td>
-<td>Nice-to-have, kein Nutzerimpact</td>
+<td>Pull Request gemergt</td>
+<td><strong>Fertig</strong></td>
 </tr>
 </tbody>
 </table>
-<h2>Sprint-Planung (bei großen Projekten)</h2>
-<p>Entwicklung in zweiwöchigen Sprints:</p>
-<ol>
-<li><strong>Sprint Planning</strong> — Tickets aus dem Backlog in den Sprint ziehen, Aufwände schätzen</li>
-<li><strong>Daily Standup</strong> — Kurzes Update: Was wurde gemacht? Was kommt? Gibt es Hindernisse?</li>
-<li><strong>Sprint Review</strong> — Fertige Features präsentieren</li>
-<li><strong>Retrospektive</strong> — Was lief gut? Was kann verbessert werden?</li>
-</ol>
+<p>Die Statusübergänge sind über Jira Automation konfiguriert und laufen automatisch ohne manuellen Eingriff.</p>
+<h2>Standard-Prozessablauf</h2>
+<p>Verbindliche Vorlage für alle Entwicklungsprojekte:</p>
+<p><strong><a href="https://wamocon.github.io/standard_prozessablauf/">wamocon.github.io/standard_prozessablauf/</a></strong></p>
+<p>Repo: <a href="https://github.com/Wamocon/standard_prozessablauf"><code>Wamocon/standard_prozessablauf</code></a></p>
 </section>
 
 <section class="chapter" id="kap05">
-<h1>Kapitel 10 – Supabase Cloud Projekt</h1>
+<h1>Kapitel 5, Supabase Cloud Projekt</h1>
 <h2>Was ist Supabase?</h2>
 <p>WAMOCON nutzt <strong>Supabase Pro</strong> als primären Backend-as-a-Service für alle Apps. Es stellt bereit:</p>
 <ul>
 <li><strong>PostgreSQL-Datenbank</strong> mit vollem SQL-Zugriff</li>
-<li><strong>Auth</strong> — Benutzerauthentifizierung (E-Mail, OAuth, Magic Links)</li>
-<li><strong>Row Level Security (RLS)</strong> — feingranulare Zugriffssteuerung auf Datenbankebene</li>
-<li><strong>Storage</strong> — Dateispeicherung (Bilder, Dokumente)</li>
-<li><strong>Edge Functions</strong> — Serverless-Funktionen (bei Bedarf)</li>
-<li><strong>REST &amp; Realtime API</strong> — automatisch generiert aus dem Datenbankschema</li>
+<li><strong>Auth</strong>, Benutzerauthentifizierung (E-Mail, OAuth, Magic Links)</li>
+<li><strong>Row Level Security (RLS)</strong>, feingranulare Zugriffssteuerung auf Datenbankebene</li>
+<li><strong>Storage</strong>, Dateispeicherung (Bilder, Dokumente)</li>
+<li><strong>Edge Functions</strong>, Serverless-Funktionen (bei Bedarf)</li>
+<li><strong>REST &amp; Realtime API</strong>, automatisch generiert aus dem Datenbankschema</li>
 </ul>
 <h2>1. Beantragung (Pflicht vor Entwicklungsstart)</h2>
-<p>Das Supabase Cloud Projekt wird <strong>per E-Mail beantragt</strong> — kein Self-Service.</p>
-<p><strong>Zeitpunkt:</strong> Direkt nach Freigabe des Anforderungsdokuments (→ <strong>Kapitel 08, Abschnitt 2</strong>)</p>
+<p>Das Supabase Cloud Projekt wird <strong>per E-Mail beantragt</strong>, kein Self-Service.</p>
+<p><strong>Zeitpunkt:</strong> Direkt nach Freigabe des Anforderungsdokuments (→ <strong>Kapitel 3, Abschnitt 2</strong>)</p>
 <p><strong>Angaben in der E-Mail:</strong></p>
 <ul>
 <li>App-Name (identisch mit dem GitHub-Repo-Namen)</li>
-<li>Kurzbeschreibung und Zweck der App</li>
-<li>Gewünschte Region (z. B. <code>eu-central-1</code> für Deutschland)</li>
 </ul>
 <blockquote>
 <p>Durch frühzeitige Beantragung entsteht keine Wartezeit kurz vor dem Go-live.</p>
@@ -1446,37 +1472,38 @@ SUPABASE_DB_SCHEMA=public
 </thead>
 <tbody>
 <tr>
-<td><code>public</code></td>
-<td>Standard-Schema (Supabase-Default)</td>
+<td><code>[appname]_dev</code></td>
+<td>Entwicklungs- und Testdaten (ersetzt <code>public</code>)</td>
 </tr>
 <tr>
-<td><code>test</code></td>
-<td>Entwicklungs- und Testdaten</td>
+<td><code>[appname]_test</code></td>
+<td>Separates Test-Schema</td>
 </tr>
 <tr>
-<td><code>prod</code></td>
+<td><code>[appname]_prod</code></td>
 <td>Produktionsdaten (Trennung von Testdaten)</td>
 </tr>
 </tbody>
 </table>
+<p>Die Schema-Struktur ist empfohlen und kann projektspezifisch angepasst werden.</p>
 <h3>Schema erstellen und Berechtigungen setzen</h3>
-<pre><code class="language-sql">CREATE SCHEMA IF NOT EXISTS test;
-CREATE SCHEMA IF NOT EXISTS prod;
+<pre><code class="language-sql">-- Beispiel für App &quot;carman&quot;
+CREATE SCHEMA IF NOT EXISTS carman_dev;
+CREATE SCHEMA IF NOT EXISTS carman_test;
+CREATE SCHEMA IF NOT EXISTS carman_prod;
 
-GRANT USAGE ON SCHEMA test TO anon, authenticated, service_role;
-GRANT USAGE ON SCHEMA prod TO anon, authenticated, service_role;
+GRANT USAGE ON SCHEMA carman_dev TO anon, authenticated, service_role;
+GRANT USAGE ON SCHEMA carman_test TO anon, authenticated, service_role;
+GRANT USAGE ON SCHEMA carman_prod TO anon, authenticated, service_role;
 
-GRANT ALL ON ALL TABLES IN SCHEMA test TO anon, authenticated, service_role;
-ALTER DEFAULT PRIVILEGES IN SCHEMA test
-  GRANT ALL ON TABLES TO anon, authenticated, service_role;
-
-GRANT ALL ON ALL TABLES IN SCHEMA prod TO anon, authenticated, service_role;
-ALTER DEFAULT PRIVILEGES IN SCHEMA prod
-  GRANT ALL ON TABLES TO anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA carman_dev TO anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA carman_test TO anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA carman_prod TO anon, authenticated, service_role;
 </code></pre>
 <p>Schemas über die API zugänglich machen: <strong>Project Settings → API → Exposed schemas</strong> → Schema-Namen hinzufügen.</p>
 <h2>4. Datenbankmigrationen</h2>
-<p>Schema-Änderungen werden <strong>ausschließlich über Migrations-Dateien</strong> vorgenommen — niemals direkt über das Supabase-Dashboard.</p>
+<p>Schema-Änderungen können auf zwei Wegen vorgenommen werden.</p>
+<p><strong>Option 1: Migrations-Dateien</strong> (empfohlen, versionierbar)</p>
 <p><strong>GitHub Copilot übernimmt die Erstellung und Ausführung der Migrationen</strong> auf Basis des Anforderungsdokuments.</p>
 <pre><code class="language-bash"># Migration erstellen (Copilot generiert den SQL-Inhalt)
 npx supabase migration new &lt;migrations-name&gt;
@@ -1491,9 +1518,11 @@ npx supabase db push
 # Migrations-Status prüfen
 npx supabase migration list
 </code></pre>
+<p><strong>Option 2: SQL Editor</strong> (für schnelle Anpassungen)</p>
+<p>Schema-Änderungen können auch direkt im SQL Editor des Supabase Dashboards vorgenommen werden. In diesem Fall sollte die Änderung nachträglich als Migrations-Datei dokumentiert werden.</p>
 <p><strong>Wichtig:</strong> Migrations-Dateien in <code>supabase/migrations/</code> immer in Git committen. Bestehende Migrations-Dateien niemals nachträglich ändern.</p>
 <h2>5. Row Level Security (RLS)</h2>
-<p>RLS muss für <strong>jede Tabelle</strong> aktiviert sein — Copilot wird mit der Anweisung gesteuert, RLS immer zu aktivieren und niemals deaktiviert zu lassen.</p>
+<p>RLS muss für <strong>jede Tabelle</strong> aktiviert sein, Copilot wird mit der Anweisung gesteuert, RLS immer zu aktivieren und niemals deaktiviert zu lassen.</p>
 <pre><code class="language-sql">-- RLS aktivieren
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
@@ -1508,11 +1537,11 @@ CREATE POLICY &quot;Eigene Daten lesen&quot;
 - E-Mail / Passwort aktivieren/deaktivieren
 - OAuth-Provider konfigurieren (Google, GitHub, etc.)
 - E-Mail-Templates anpassen</p>
-<p>In der App wird <code>@supabase/ssr</code> für serverseitige Auth-Integration genutzt (Details → <strong>Kapitel 07 – Tech Stack</strong>).</p>
+<p>In der App wird <code>@supabase/ssr</code> für serverseitige Auth-Integration genutzt (Details → <strong>Kapitel 2, Tech Stack</strong>).</p>
 <h2>7. Lokale Supabase Instanz (Fallback &amp; Entwicklungsphase)</h2>
 <h3>Wann nutzen?</h3>
 <ul>
-<li>Supabase Cloud Projekt noch in Beantragung (→ Kapitel 08, Abschnitt 1)</li>
+<li>Supabase Cloud Projekt noch in Beantragung (→ Kapitel 3, Abschnitt 1)</li>
 <li>Offline-Entwicklung und schnelles Prototyping ohne Cloud-Anbindung</li>
 </ul>
 <h3>Lokale Instanzen via localSupabaseDB</h3>
@@ -1547,23 +1576,23 @@ SUPABASE_SERVICE_ROLE_KEY=&lt;aus npx supabase status&gt;
 </ol>
 <h2>8. Supabase MCP für GitHub Copilot</h2>
 <p>Der Supabase MCP (Model Context Protocol) Server gibt Copilot Zugriff auf das echte Datenbankschema.</p>
-<p>Details zur Konfiguration → <strong>Kapitel 13 – KI-Entwicklung &amp; Copilot-Workflows</strong></p>
+<p>Details zur Konfiguration → <strong>Kapitel 8, KI-Entwicklung &amp; Copilot-Workflows</strong></p>
 <h2>9. Checkliste: Supabase-Setup</h2>
 <ul>
 <li>[ ] Supabase Cloud Projekt per E-Mail beantragt (direkt nach Anforderungsfreigabe)</li>
 <li>[ ] Projekt erstellt und Status „Healthy"</li>
 <li>[ ] <code>NEXT_PUBLIC_SUPABASE_URL</code>, <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, <code>SUPABASE_SERVICE_ROLE_KEY</code>, <code>DATABASE_URL</code> in <code>.env.local</code> eingetragen</li>
-<li>[ ] Alle Variablen als Vercel Environment Variables hinterlegt (→ Kapitel 11)</li>
+<li>[ ] Alle Variablen als Vercel Environment Variables hinterlegt (→ Kapitel 6)</li>
 <li>[ ] <code>SUPABASE_SERVICE_ROLE_KEY</code> <strong>kein</strong> <code>NEXT_PUBLIC_</code>-Prefix</li>
 <li>[ ] <code>.env.local</code> in <code>.gitignore</code> vorhanden</li>
 <li>[ ] RLS für alle Tabellen aktiviert</li>
 <li>[ ] Erste Migration erstellt und in <code>supabase/migrations/</code> committed</li>
-<li>[ ] MCP für lokale Copilot-Tools konfiguriert (→ Kapitel 13)</li>
+<li>[ ] MCP für lokale Copilot-Tools konfiguriert (→ Kapitel 8)</li>
 </ul>
 </section>
 
 <section class="chapter" id="kap06">
-<h1>Kapitel 11 – Vercel Deployment</h1>
+<h1>Kapitel 6, Vercel Deployment</h1>
 <h2>Überblick</h2>
 <p>Alle WAMOCON-TypeScript-Apps werden über <strong>Vercel</strong> deployed. WAMOCON nutzt den <strong>Vercel Hobby Plan</strong>. Das Deployment ist vollständig über den GitHub Actions Workflow aus dem <a href="https://github.com/Wamocon/template_repo"><code>template_repo</code></a> automatisiert.</p>
 <p><strong>Landing Pages</strong> werden bevorzugt über <strong>GitHub Pages</strong> veröffentlicht (Vercel ist optional).</p>
@@ -1591,7 +1620,7 @@ SUPABASE_SERVICE_ROLE_KEY=&lt;aus npx supabase status&gt;
 </table>
 <h2>Zentraler CI/CD-Workflow</h2>
 <p>Aus dem <a href="https://github.com/Wamocon/github_workflow"><code>Wamocon/github_workflow</code></a> Repository:</p>
-<pre><code>Push auf dev
+<pre><code class="language-text">Push auf dev
   └─→ pr-autofix.yml   → Lint-Fehler automatisch committen
   └─→ pr-checks.yml    → TypeScript + ESLint validieren
   └─→ deploy-preview.yml → Vercel Preview deployen
@@ -1600,7 +1629,7 @@ Merge auf main
   └─→ deploy-production.yml → Vercel Produktions-Deploy
 </code></pre>
 <h2>Erforderliche Secrets &amp; Variablen</h2>
-<h3>GitHub-Organisationsebene (bereits konfiguriert — nichts zu tun)</h3>
+<h3>GitHub-Organisationsebene (bereits konfiguriert, nichts zu tun)</h3>
 <table>
 <thead>
 <tr>
@@ -1707,7 +1736,7 @@ Merge auf main
 </table>
 <h2>Domain-Verwaltung</h2>
 <ol>
-<li>Domain bei <a href="https://www.strato.de">Strato</a> per E-Mail beantragen (→ <strong>Kapitel 08, Abschnitt 2</strong>)</li>
+<li>Domain bei <a href="https://www.strato.de">Strato</a> per E-Mail beantragen (→ <strong>Kapitel 3, Abschnitt 2</strong>)</li>
 <li>In Vercel: <code>Project → Settings → Domains → Add</code></li>
 <li>DNS-Einträge bei Strato konfigurieren:</li>
 <li><strong>A-Record</strong> für Root-Domain (<code>@</code>)</li>
@@ -1724,7 +1753,7 @@ Merge auf main
 </ol>
 <p><strong>Vorteile GitHub Pages:</strong>
 - Kostenlos, kein Build-Step nötig
-- Reines HTML — direkt deploybar
+- Reines HTML, direkt deploybar
 - Kein Vercel-Projekt nötig</p>
 <p><strong>Optional Vercel:</strong> Wenn erweiterte Deployment-Features oder Custom Domain mit SSL-Handling über Vercel gewünscht sind.</p>
 <h2>Hobby Plan: Limits &amp; Besonderheiten</h2>
@@ -1801,11 +1830,11 @@ Merge auf main
 </section>
 
 <section class="chapter" id="kap07">
-<h1>Kapitel 12 – Sicherheit &amp; Code-Qualität</h1>
+<h1>Kapitel 7, Sicherheit &amp; Code-Qualität</h1>
 <h2>Grundsätze</h2>
 <p>Sicherheit wird nicht nachträglich ergänzt, sondern von Anfang an eingebaut. Jede neue App muss die folgenden Mindeststandards erfüllen, bevor sie in Produktion geht.</p>
 <h2>Supabase-Sicherheit</h2>
-<h3>Row Level Security (RLS) — Pflicht</h3>
+<h3>Row Level Security (RLS), Pflicht</h3>
 <p>RLS muss für <strong>jede Tabelle</strong> aktiviert sein. Ohne RLS hat jeder authentifizierte Nutzer uneingeschränkten Zugriff.</p>
 <pre><code class="language-sql">-- RLS aktivieren
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
@@ -1872,7 +1901,7 @@ if (!result.success) {
 </table>
 <h2>Auth &amp; Session</h2>
 <ul>
-<li>Auth-Tokens in <strong>httpOnly-Cookies</strong> speichern — niemals in <code>localStorage</code></li>
+<li>Auth-Tokens in <strong>httpOnly-Cookies</strong> speichern, niemals in <code>localStorage</code></li>
 <li><code>@supabase/ssr</code> übernimmt das Cookie-Management korrekt</li>
 <li>Session auf Server-Seite immer verifizieren, nicht nur im Client</li>
 </ul>
@@ -1885,9 +1914,9 @@ if (!result.success) {
 }
 </code></pre>
 <ul>
-<li><code>any</code> vermeiden — erzwingt explizite Typen</li>
-<li><code>unknown</code> statt <code>any</code> bei unbekannten Werten — Typ muss vor Nutzung eingeschränkt werden</li>
-<li>Generierte Supabase-Typen nutzen — keine falsch getippten Spaltennamen</li>
+<li><code>any</code> vermeiden, erzwingt explizite Typen</li>
+<li><code>unknown</code> statt <code>any</code> bei unbekannten Werten, Typ muss vor Nutzung eingeschränkt werden</li>
+<li>Generierte Supabase-Typen nutzen, keine falsch getippten Spaltennamen</li>
 </ul>
 <h2>Sicherheits-Checkliste vor dem Produktions-Deploy</h2>
 <ul>
@@ -1914,13 +1943,13 @@ if (!result.success) {
 <pre><code class="language-bash">npx tsc --noEmit
 </code></pre>
 <h3>Code-Review (Vier-Augen-Prinzip)</h3>
-<p>Jeder Code-Merge auf <code>main</code> muss über einen Pull Request erfolgen. Direkte Pushes auf <code>main</code> sind nicht erlaubt. Vor dem PR-Erstellen den <code>@reviewer</code>-Copilot-Agent nutzen (Details in Kapitel 13).</p>
+<p>Jeder Code-Merge auf <code>main</code> muss über einen Pull Request erfolgen. Direkte Pushes auf <code>main</code> sind nicht erlaubt. Vor dem PR-Erstellen den <code>@reviewer</code>-Copilot-Agent nutzen (Details in Kapitel 8).</p>
 <h3>Performance-Grundregeln</h3>
 <p><strong>Datenbankabfragen:</strong></p>
 <ul>
-<li>Nur benötigte Spalten selektieren — kein <code>select('*')</code> in Produktionscode</li>
+<li>Nur benötigte Spalten selektieren, kein <code>select('*')</code> in Produktionscode</li>
 <li>Indizes für Spalten in <code>WHERE</code>, <code>ORDER BY</code> und <code>JOIN</code> anlegen</li>
-<li>Paginierung verwenden — niemals unbegrenzte Listen laden</li>
+<li>Paginierung verwenden, niemals unbegrenzte Listen laden</li>
 <li>Datenbank-Views für häufig genutzte komplexe Abfragen</li>
 </ul>
 <p><strong>Next.js:</strong></p>
@@ -1945,12 +1974,12 @@ npm audit fix
 </section>
 
 <section class="chapter" id="kap08">
-<h1>Kapitel 13 – KI-Entwicklung &amp; Copilot-Workflows</h1>
+<h1>Kapitel 8, KI-Entwicklung &amp; Copilot-Workflows</h1>
 <h2>Überblick</h2>
 <p>Alle WAMOCON-Projekte sind für KI-gestützte Entwicklung mit <strong>GitHub Copilot</strong> optimiert.
 Jedes App-Repository enthält vorkonfigurierte Agents, Instructions und globale Copilot-Regeln.</p>
 <h2>Copilot-Konfigurationsstruktur</h2>
-<pre><code>.github/
+<pre><code class="language-text">.github/
 ├── copilot-instructions.md        # Globale Regeln (für jede Copilot-Interaktion)
 ├── instructions/
 │   ├── nextjs.instructions.md     # Next.js 16 App Router Regeln
@@ -1963,7 +1992,7 @@ Jedes App-Repository enthält vorkonfigurierte Agents, Instructions und globale 
     └── reviewer.agent.md          # @reviewer – Code-Review vor dem PR
 </code></pre>
 <h2>Die drei Copilot-Agents</h2>
-<h3><code>@planner</code> — Technische Planung</h3>
+<h3><code>@planner</code>, Technische Planung</h3>
 <p><strong>Wann verwenden:</strong>
 - Vor dem Start eines neuen Features
 - Wenn Anforderungen unklar sind
@@ -1974,27 +2003,27 @@ Jedes App-Repository enthält vorkonfigurierte Agents, Instructions und globale 
 - Nummerierten Implementierungsplan erstellen
 - <strong>Schreibt keinen Code</strong></p>
 <p><strong>Beispiel:</strong></p>
-<pre><code>@planner Analysiere, was für eine Authentifizierungsseite mit Supabase
+<pre><code class="language-text">@planner Analysiere, was für eine Authentifizierungsseite mit Supabase
 benötigt wird. Erstelle einen nummerierten Implementierungsplan.
 </code></pre>
 <hr />
-<h3><code>@developer</code> — Strukturierte Implementierung</h3>
+<h3><code>@developer</code>, Strukturierte Implementierung</h3>
 <p><strong>Wann verwenden:</strong>
 - Nach der Planung mit <code>@planner</code>
 - Zur Implementierung von Features, Seiten, API-Routes
 - Für Datenbankänderungen und Migrationen</p>
 <p><strong>Vierphasiger Prozess:</strong></p>
 <ol>
-<li><strong>Vorbereitung</strong> — Plan lesen, Codebase verstehen</li>
-<li><strong>Implementierung</strong> — Schrittweise, Fehler sofort beheben</li>
-<li><strong>Verifikation (Pflicht)</strong> — <code>typecheck</code> → <code>lint</code> → <code>build</code> → lokal testen</li>
-<li><strong>Dokumentation</strong> — Handbuch bei Bedarf aktualisieren</li>
+<li><strong>Vorbereitung</strong>, Plan lesen, Codebase verstehen</li>
+<li><strong>Implementierung</strong>, Schrittweise, Fehler sofort beheben</li>
+<li><strong>Verifikation (Pflicht)</strong>, <code>typecheck</code> → <code>lint</code> → <code>build</code> → lokal testen</li>
+<li><strong>Dokumentation</strong>, Handbuch bei Bedarf aktualisieren</li>
 </ol>
 <p><strong>Beispiel:</strong></p>
-<pre><code>@developer Implementiere diesen Plan: [Plan aus @planner einfügen]
+<pre><code class="language-text">@developer Implementiere diesen Plan: [Plan aus @planner einfügen]
 </code></pre>
 <hr />
-<h3><code>@reviewer</code> — Code-Review vor dem PR</h3>
+<h3><code>@reviewer</code>, Code-Review vor dem PR</h3>
 <p><strong>Wann verwenden:</strong>
 - Bevor ein PR erstellt wird
 - Nach einer Implementierung zur Qualitätsprüfung
@@ -2004,11 +2033,11 @@ benötigt wird. Erstelle einen nummerierten Implementierungsplan.
 - Alle Checks ausführen (<code>typecheck</code>, <code>lint</code>, <code>build</code>)
 - Review-Bericht mit Status (✅ / ⚠️ / ❌)</p>
 <p><strong>Beispiel:</strong></p>
-<pre><code>@reviewer Überprüfe die Änderungen in src/app/dashboard/ vor dem PR.
+<pre><code class="language-text">@reviewer Überprüfe die Änderungen in src/app/dashboard/ vor dem PR.
 </code></pre>
 <hr />
 <h2>Empfohlener Workflow</h2>
-<pre><code>@planner  →  @developer  →  @reviewer  →  PR erstellen
+<pre><code class="language-text">@planner  →  @developer  →  @reviewer  →  PR erstellen
 </code></pre>
 <ol>
 <li><code>@planner</code>: Aufgabe analysieren und Implementierungsplan erstellen lassen</li>
@@ -2016,7 +2045,7 @@ benötigt wird. Erstelle einen nummerierten Implementierungsplan.
 <li><code>@reviewer</code>: Code prüfen lassen, Review-Bericht lesen</li>
 <li>PR erstellen (erst wenn @reviewer keine kritischen Probleme meldet)</li>
 </ol>
-<h2>Instructions — Datei-spezifische Regeln</h2>
+<h2>Instructions, Datei-spezifische Regeln</h2>
 <p>Instructions werden automatisch geladen, wenn Copilot an Dateien arbeitet, die dem <code>applyTo</code>-Glob-Muster entsprechen:</p>
 <table>
 <thead>
@@ -2055,7 +2084,7 @@ applyTo: &quot;**/*.tsx&quot;
 ---
 # Deine projektspezifischen Regeln hier
 </code></pre>
-<h2>Supabase MCP — Datenbankkontext für Copilot</h2>
+<h2>Supabase MCP, Datenbankkontext für Copilot</h2>
 <p>Der <strong>Supabase MCP (Model Context Protocol) Server</strong> gibt Copilot Zugriff auf das echte Datenbankschema. Damit generiert Copilot akkuraten Code statt Tabellenstrukturen zu raten.</p>
 <h3>VS Code Setup (Workspace-Ebene)</h3>
 <p><code>.vscode/mcp.json</code> anlegen:</p>
@@ -2078,7 +2107,7 @@ applyTo: &quot;**/*.tsx&quot;
 }
 </code></pre>
 <h3>VS Code Setup (Benutzer-Ebene, gilt für alle Repos)</h3>
-<p>In VS Code User Settings (<code>settings.json</code>) unter <code>"mcp"</code> eintragen — Struktur wie oben.</p>
+<p>In VS Code User Settings (<code>settings.json</code>) unter <code>"mcp"</code> eintragen, Struktur wie oben.</p>
 <h3>Access Token generieren</h3>
 <ol>
 <li><a href="https://supabase.com/dashboard/account/tokens">supabase.com/dashboard/account/tokens</a></li>
@@ -2087,7 +2116,7 @@ applyTo: &quot;**/*.tsx&quot;
 </ol>
 <h3>MCP-Verbindung testen</h3>
 <p>Im Copilot-Chat:</p>
-<pre><code>Nutze MCP für Datenbank &lt;project-ref&gt;. Liste alle Schemas und Tabellen auf.
+<pre><code class="language-text">Nutze MCP für Datenbank &lt;project-ref&gt;. Liste alle Schemas und Tabellen auf.
 </code></pre>
 <p>MCP aktiviert folgende Fähigkeiten in Copilot:</p>
 <table>
@@ -2123,7 +2152,7 @@ applyTo: &quot;**/*.tsx&quot;
 <h3>Sicherheitsregeln für MCP</h3>
 <ul>
 <li>Immer <code>--read-only</code> verwenden (außer wenn Schreibzugriff explizit benötigt)</li>
-<li>Token nie committen — in User-Level-Settings oder Umgebungsvariablen ablegen</li>
+<li>Token nie committen, in User-Level-Settings oder Umgebungsvariablen ablegen</li>
 <li><code>test</code>-Schema für KI-unterstützte Entwicklung verwenden, nicht <code>prod</code></li>
 <li>Alle generierten SQL-Statements vor der Ausführung prüfen</li>
 <li>Tokens regelmäßig rotieren</li>
@@ -2131,7 +2160,7 @@ applyTo: &quot;**/*.tsx&quot;
 <h2>Copilot-Instruktionen auf Benutzerebene</h2>
 <p>Jeder Entwickler kann persönliche Copilot-Instructions definieren, die für alle Repos gelten:</p>
 <p><strong>Windows-Pfad:</strong></p>
-<pre><code>C:\Users\&lt;user&gt;\AppData\Roaming\Code\User\prompts\my-default.instructions.md
+<pre><code class="language-text">C:\Users\&lt;user&gt;\AppData\Roaming\Code\User\prompts\my-default.instructions.md
 </code></pre>
 <p><strong>Beispiel-Inhalt:</strong></p>
 <pre><code class="language-markdown">---
@@ -2153,7 +2182,7 @@ description: &quot;Gilt für alle Repos&quot;
 <tbody>
 <tr>
 <td>Agent ignoriert Instructions</td>
-<td><code>applyTo</code>-Glob-Muster prüfen — ggf. breiter setzen (<code>**/*.ts</code> statt <code>src/**/*.ts</code>)</td>
+<td><code>applyTo</code>-Glob-Muster prüfen, ggf. breiter setzen (<code>**/*.ts</code> statt <code>src/**/*.ts</code>)</td>
 </tr>
 <tr>
 <td>Agent überspringt typecheck/lint</td>
@@ -2180,14 +2209,14 @@ description: &quot;Gilt für alle Repos&quot;
 <h2>Referenzen</h2>
 <ul>
 <li><a href="https://docs.github.com/en/copilot/customizing-copilot">GitHub Copilot Customization Docs</a></li>
-<li><a href="https://github.com/github/awesome-copilot">awesome-copilot</a> — Beispiele und Best Practices</li>
+<li><a href="https://github.com/github/awesome-copilot">awesome-copilot</a>, Beispiele und Best Practices</li>
 <li><code>Wamocon/github_workflow</code> → <code>docs/github-copilot-guide.md</code></li>
 <li><code>Wamocon/github_workflow</code> → <code>docs/mcp-setup.md</code></li>
 </ul>
 </section>
 
 <section class="chapter" id="kap09">
-<h1>Kapitel 14 – Produkt-Ökosystem (App-Katalog)</h1>
+<h1>Kapitel 9, Produkt-Ökosystem (App-Katalog)</h1>
 <p>Alle bestehenden WAMOCON-Repositories alphabetisch aufgelistet.</p>
 <h2>App-Katalog</h2>
 <table>
@@ -2236,7 +2265,7 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><a href="https://github.com/Wamocon/belegbox">belegbox</a></td>
-<td>BelegBox – Belege immer dabei</td>
+<td>BelegBox, Belege immer dabei</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Wamocon/buyright-ai">buyright-ai</a></td>
@@ -2261,10 +2290,6 @@ description: &quot;Gilt für alle Repos&quot;
 <tr>
 <td><a href="https://github.com/Wamocon/ghostaccounts">ghostaccounts</a></td>
 <td>Verwaltung inaktiver Konten</td>
-</tr>
-<tr>
-<td><a href="https://github.com/Wamocon/github_workflow">github_workflow</a></td>
-<td>Zentrale CI/CD-Workflows der Organisation</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Wamocon/grundsteuerPruefer">grundsteuerPruefer</a></td>
@@ -2299,12 +2324,8 @@ description: &quot;Gilt für alle Repos&quot;
 <td>Lokale Entwicklungsumgebung mit KI</td>
 </tr>
 <tr>
-<td><a href="https://github.com/Wamocon/localSupabaseDB">localSupabaseDB</a></td>
-<td>Template für lokale Supabase-Instanzen</td>
-</tr>
-<tr>
 <td><a href="https://github.com/Wamocon/makeartalanya-app">makeartalanya-app</a></td>
-<td>Make Art Studio Alanya – Buchungssystem (TR/EN/RU)</td>
+<td>Make Art Studio Alanya, Buchungssystem (TR/EN/RU)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Wamocon/marketing_powerhouse">marketing_powerhouse</a></td>
@@ -2324,7 +2345,7 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><a href="https://github.com/Wamocon/plan-it">plan-it</a></td>
-<td>Architekturplaner – planen, analysieren, dokumentieren</td>
+<td>Architekturplaner, planen, analysieren, dokumentieren</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Wamocon/realityCheck">realityCheck</a></td>
@@ -2340,7 +2361,7 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><a href="https://github.com/Wamocon/Sirin">Sirin</a></td>
-<td>Zeitmanagement-App – „Hör auf deine Zeit"</td>
+<td>Zeitmanagement-App, „Hör auf deine Zeit"</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Wamocon/skillmapper">skillmapper</a></td>
@@ -2353,10 +2374,6 @@ description: &quot;Gilt für alle Repos&quot;
 <tr>
 <td><a href="https://github.com/Wamocon/TeamRadar">TeamRadar</a></td>
 <td>Mitarbeiterverfügbarkeit visualisieren</td>
-</tr>
-<tr>
-<td><a href="https://github.com/Wamocon/template_repo">template_repo</a></td>
-<td>Basis-Template für alle neuen Apps</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Wamocon/treffpunkt">treffpunkt</a></td>
@@ -2392,7 +2409,7 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><a href="https://github.com/Wamocon/wamohub">wamohub</a></td>
-<td>WAMOCON Hub – zentrales internes Dashboard &amp; App-Template</td>
+<td>WAMOCON Hub, zentrales internes Dashboard &amp; App-Template</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Wamocon/wartezeit-waechter">wartezeit-waechter</a></td>
@@ -2412,8 +2429,32 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 </tbody>
 </table>
+<h2>Infrastruktur-Repositories</h2>
+<p>Folgende Repositories sind keine Apps, sondern Infrastruktur-Komponenten der Organisation:</p>
+<table>
+<thead>
+<tr>
+<th>Repository</th>
+<th>Beschreibung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/Wamocon/github_workflow">github_workflow</a></td>
+<td>Zentrale CI/CD-Workflows der Organisation</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/localSupabaseDB">localSupabaseDB</a></td>
+<td>Template für lokale Supabase-Instanzen</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Wamocon/template_repo">template_repo</a></td>
+<td>Basis-Template für alle neuen Apps</td>
+</tr>
+</tbody>
+</table>
 <h2>Landing Page Repositories</h2>
-<p>Jede App hat ein eigenes Landing-Page-Repository (<code>[app-name]_lp</code>), generiert über den KI-Workflow (→ <strong>Kapitel 08, Abschnitt 6</strong>):</p>
+<p>Jede App hat ein eigenes Landing-Page-Repository (<code>[app-name]_lp</code>), generiert über den KI-Workflow (→ <strong>Kapitel 3, Abschnitt 6</strong>):</p>
 <table>
 <thead>
 <tr>
@@ -2523,7 +2564,7 @@ description: &quot;Gilt für alle Repos&quot;
 </section>
 
 <section class="chapter" id="kap10">
-<h1>Kapitel 15 – Glossar &amp; Referenzen</h1>
+<h1>Kapitel 5, Glossar &amp; Referenzen</h1>
 <h2>WAMOCON-spezifische Begriffe</h2>
 <table>
 <thead>
@@ -2539,11 +2580,11 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><strong>Anforderungsdokument</strong></td>
-<td>Strukturiertes Dokument, das eine neue App beschreibt (Zweck, Funktionen, Datenbankschema) — Basis für die Copilot-gestützte Entwicklung</td>
+<td>Strukturiertes Dokument, das eine neue App beschreibt (Zweck, Funktionen, Datenbankschema), Basis für die Copilot-gestützte Entwicklung</td>
 </tr>
 <tr>
 <td><strong>LP</strong></td>
-<td>Landing Page — statische HTML-Seite zur Vorstellung einer App</td>
+<td>Landing Page, statische HTML-Seite zur Vorstellung einer App</td>
 </tr>
 <tr>
 <td><strong>EHB</strong></td>
@@ -2559,7 +2600,7 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><strong>template_repo</strong></td>
-<td>Basis-Repository für alle neuen WAMOCON-Apps — enthält vollständige Konfiguration</td>
+<td>Basis-Repository für alle neuen WAMOCON-Apps, enthält vollständige Konfiguration</td>
 </tr>
 </tbody>
 </table>
@@ -2578,15 +2619,11 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><strong>CI/CD</strong></td>
-<td>Continuous Integration / Continuous Deployment — automatisierte Build-, Test- und Deploy-Pipeline</td>
+<td>Continuous Integration / Continuous Deployment, automatisierte Build-, Test- und Deploy-Pipeline</td>
 </tr>
 <tr>
 <td><strong>CNAME</strong></td>
 <td>DNS-Eintrag (Canonical Name) für Subdomain-Weiterleitung</td>
-</tr>
-<tr>
-<td><strong>Conventional Commits</strong></td>
-<td>Standard für Commit-Nachrichten: <code>feat:</code>, <code>fix:</code>, <code>chore:</code> etc.</td>
 </tr>
 <tr>
 <td><strong>Edge Function</strong></td>
@@ -2602,7 +2639,7 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><strong>MCP</strong></td>
-<td>Model Context Protocol — Standard für die Verbindung von KI-Tools mit externen Datenquellen</td>
+<td>Model Context Protocol, Standard für die Verbindung von KI-Tools mit externen Datenquellen</td>
 </tr>
 <tr>
 <td><strong>Migration</strong></td>
@@ -2610,7 +2647,7 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><strong>npm</strong></td>
-<td>Node Package Manager — Paket-Manager für Node.js/JavaScript</td>
+<td>Node Package Manager, Paket-Manager für Node.js/JavaScript</td>
 </tr>
 <tr>
 <td><strong>PostgREST</strong></td>
@@ -2618,15 +2655,15 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><strong>PR</strong></td>
-<td>Pull Request — Anfrage zum Zusammenführen von Branches</td>
+<td>Pull Request, Anfrage zum Zusammenführen von Branches</td>
 </tr>
 <tr>
 <td><strong>RLS</strong></td>
-<td>Row Level Security — feingranulare Zugriffssteuerung in PostgreSQL auf Zeilenebene</td>
+<td>Row Level Security, feingranulare Zugriffssteuerung in PostgreSQL auf Zeilenebene</td>
 </tr>
 <tr>
 <td><strong>SSR</strong></td>
-<td>Server-Side Rendering — HTML wird auf dem Server generiert</td>
+<td>Server-Side Rendering, HTML wird auf dem Server generiert</td>
 </tr>
 <tr>
 <td><strong>Tailwind CSS</strong></td>
@@ -2638,7 +2675,7 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><strong>TypeScript</strong></td>
-<td>Typisiertes JavaScript — verhindert Laufzeitfehler durch statische Typprüfung</td>
+<td>Typisiertes JavaScript, verhindert Laufzeitfehler durch statische Typprüfung</td>
 </tr>
 <tr>
 <td><strong>Zod</strong></td>
@@ -2673,7 +2710,7 @@ description: &quot;Gilt für alle Repos&quot;
 </tr>
 <tr>
 <td><strong>Supabase</strong></td>
-<td>Backend-as-a-Service (PostgreSQL, Auth, Storage) — Pro-Version</td>
+<td>Backend-as-a-Service (PostgreSQL, Auth, Storage), Pro-Version</td>
 <td><a href="https://supabase.com">supabase.com</a></td>
 </tr>
 <tr>
@@ -2734,10 +2771,6 @@ description: &quot;Gilt für alle Repos&quot;
 <tr>
 <td>GitHub Copilot Customization</td>
 <td><a href="https://docs.github.com/en/copilot/customizing-copilot">docs.github.com/en/copilot/customizing-copilot</a></td>
-</tr>
-<tr>
-<td>Conventional Commits</td>
-<td><a href="https://www.conventionalcommits.org/">conventionalcommits.org</a></td>
 </tr>
 <tr>
 <td>awesome-copilot</td>
@@ -2801,6 +2834,9 @@ description: &quot;Gilt für alle Repos&quot;
 </tbody>
 </table>
 </section>
+
+
+
       </main>
     </div>
 

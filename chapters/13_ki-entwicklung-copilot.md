@@ -1,4 +1,4 @@
-# Kapitel 13 – KI-Entwicklung & Copilot-Workflows
+# Kapitel 8, KI-Entwicklung & Copilot-Workflows
 
 ## Überblick
 
@@ -22,7 +22,7 @@ Jedes App-Repository enthält vorkonfigurierte Agents, Instructions und globale 
 ```text
 ## Die drei Copilot-Agents
 
-### `@planner` — Technische Planung
+### `@planner`, Technische Planung
 
 **Wann verwenden:**
 - Vor dem Start eines neuen Features
@@ -43,7 +43,7 @@ benötigt wird. Erstelle einen nummerierten Implementierungsplan.
 ```text
 ---
 
-### `@developer` — Strukturierte Implementierung
+### `@developer`, Strukturierte Implementierung
 
 **Wann verwenden:**
 - Nach der Planung mit `@planner`
@@ -52,10 +52,10 @@ benötigt wird. Erstelle einen nummerierten Implementierungsplan.
 
 **Vierphasiger Prozess:**
 
-1. **Vorbereitung** — Plan lesen, Codebase verstehen
-2. **Implementierung** — Schrittweise, Fehler sofort beheben
-3. **Verifikation (Pflicht)** — `typecheck` → `lint` → `build` → lokal testen
-4. **Dokumentation** — Handbuch bei Bedarf aktualisieren
+1. **Vorbereitung**, Plan lesen, Codebase verstehen
+2. **Implementierung**, Schrittweise, Fehler sofort beheben
+3. **Verifikation (Pflicht)**, `typecheck` → `lint` → `build` → lokal testen
+4. **Dokumentation**, Handbuch bei Bedarf aktualisieren
 
 **Beispiel:**
 
@@ -64,7 +64,7 @@ benötigt wird. Erstelle einen nummerierten Implementierungsplan.
 ```text
 ---
 
-### `@reviewer` — Code-Review vor dem PR
+### `@reviewer`, Code-Review vor dem PR
 
 **Wann verwenden:**
 - Bevor ein PR erstellt wird
@@ -93,7 +93,7 @@ benötigt wird. Erstelle einen nummerierten Implementierungsplan.
 3. `@reviewer`: Code prüfen lassen, Review-Bericht lesen
 4. PR erstellen (erst wenn @reviewer keine kritischen Probleme meldet)
 
-## Instructions — Datei-spezifische Regeln
+## Instructions, Datei-spezifische Regeln
 
 Instructions werden automatisch geladen, wenn Copilot an Dateien arbeitet, die dem `applyTo`-Glob-Muster entsprechen:
 
@@ -112,7 +112,7 @@ applyTo: "**/*.tsx"
 ---
 # Deine projektspezifischen Regeln hier
 ```text
-## Supabase MCP — Datenbankkontext für Copilot
+## Supabase MCP, Datenbankkontext für Copilot
 
 Der **Supabase MCP (Model Context Protocol) Server** gibt Copilot Zugriff auf das echte Datenbankschema. Damit generiert Copilot akkuraten Code statt Tabellenstrukturen zu raten.
 
@@ -141,7 +141,7 @@ Der **Supabase MCP (Model Context Protocol) Server** gibt Copilot Zugriff auf da
 ```text
 ### VS Code Setup (Benutzer-Ebene, gilt für alle Repos)
 
-In VS Code User Settings (`settings.json`) unter `"mcp"` eintragen — Struktur wie oben.
+In VS Code User Settings (`settings.json`) unter `"mcp"` eintragen, Struktur wie oben.
 
 ### Access Token generieren
 
@@ -169,7 +169,7 @@ MCP aktiviert folgende Fähigkeiten in Copilot:
 ### Sicherheitsregeln für MCP
 
 - Immer `--read-only` verwenden (außer wenn Schreibzugriff explizit benötigt)
-- Token nie committen — in User-Level-Settings oder Umgebungsvariablen ablegen
+- Token nie committen, in User-Level-Settings oder Umgebungsvariablen ablegen
 - `test`-Schema für KI-unterstützte Entwicklung verwenden, nicht `prod`
 - Alle generierten SQL-Statements vor der Ausführung prüfen
 - Tokens regelmäßig rotieren
@@ -197,7 +197,7 @@ description: "Gilt für alle Repos"
 
 | Problem | Lösung |
 | --- | --- |
-| Agent ignoriert Instructions | `applyTo`-Glob-Muster prüfen — ggf. breiter setzen (`**/*.ts` statt `src/**/*.ts`) |
+| Agent ignoriert Instructions | `applyTo`-Glob-Muster prüfen, ggf. breiter setzen (`**/*.ts` statt `src/**/*.ts`) |
 | Agent überspringt typecheck/lint | In `.agent.md` die Anweisung verschärfen: „muss" statt „sollte" |
 | Agent schreibt schlechten Next.js-Code | Konkretes Code-Beispiel in `nextjs.instructions.md` hinzufügen |
 | Agent „vergisst" Kontext | Neues Chat-Fenster öffnen, Plan explizit übergeben |
@@ -207,6 +207,6 @@ description: "Gilt für alle Repos"
 ## Referenzen
 
 - [GitHub Copilot Customization Docs](https://docs.github.com/en/copilot/customizing-copilot)
-- [awesome-copilot](https://github.com/github/awesome-copilot) — Beispiele und Best Practices
+- [awesome-copilot](https://github.com/github/awesome-copilot), Beispiele und Best Practices
 - `Wamocon/github_workflow` → `docs/github-copilot-guide.md`
 - `Wamocon/github_workflow` → `docs/mcp-setup.md`

@@ -1,4 +1,4 @@
-# Kapitel 11 – Vercel Deployment
+# Kapitel 6, Vercel Deployment
 
 ## Überblick
 
@@ -28,7 +28,7 @@ Merge auf main
 ```text
 ## Erforderliche Secrets & Variablen
 
-### GitHub-Organisationsebene (bereits konfiguriert — nichts zu tun)
+### GitHub-Organisationsebene (bereits konfiguriert, nichts zu tun)
 
 | Secret | Beschreibung |
 | --- | --- |
@@ -84,7 +84,7 @@ Für jede Variable den korrekten Scope setzen:
 
 ## Domain-Verwaltung
 
-1. Domain bei [Strato](https://www.strato.de) per E-Mail beantragen (→ **Kapitel 08, Abschnitt 2**)
+1. Domain bei [Strato](https://www.strato.de) per E-Mail beantragen (→ **Kapitel 3, Abschnitt 2**)
 2. In Vercel: `Project → Settings → Domains → Add`
 3. DNS-Einträge bei Strato konfigurieren:
    - **A-Record** für Root-Domain (`@`)
@@ -103,7 +103,7 @@ Landing Pages (`[app-name]_lp`) werden bevorzugt über **GitHub Pages** veröffe
 
 **Vorteile GitHub Pages:**
 - Kostenlos, kein Build-Step nötig
-- Reines HTML — direkt deploybar
+- Reines HTML, direkt deploybar
 - Kein Vercel-Projekt nötig
 
 **Optional Vercel:** Wenn erweiterte Deployment-Features oder Custom Domain mit SSL-Handling über Vercel gewünscht sind.

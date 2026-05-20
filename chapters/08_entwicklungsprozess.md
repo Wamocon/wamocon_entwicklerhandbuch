@@ -1,6 +1,6 @@
-# Kapitel 08 – Entwicklungsprozess
+# Kapitel 3, Entwicklungsprozess
 
-> **Wichtig:** Die gesamte App-Entwicklung bei WAMOCON wird vollständig mit **GitHub Copilot** durchgeführt. Copilot ist nicht nur ein Hilfsmittel, sondern das primäre Entwicklungswerkzeug – von der Planung über die Implementierung bis hin zu Migrationen und Deployment-Konfigurationen.
+> **Wichtig:** Die gesamte App-Entwicklung bei WAMOCON wird vollständig mit **GitHub Copilot** durchgeführt. Copilot ist nicht nur ein Hilfsmittel, sondern das primäre Entwicklungswerkzeug, von der Planung über die Implementierung bis hin zu Migrationen und Deployment-Konfigurationen.
 
 ## Überblick: Von der Idee bis zur Produktion
 
@@ -17,7 +17,7 @@ Freigabe abwarten
        └─→ Strato-Domain per E-Mail beantragen (→ Kapitel 11)
                 │
                 ▼
-Template Repo klonen → dev-Branch → Anforderungsdokument in Copilot laden
+Neues GitHub-Repository aus template_repo erstellen, dev-Branch anlegen, Anforderungsdokument in Copilot laden
        │
        ▼
 Copilot erstellt Entwicklungsplan → iterative Implementierung
@@ -60,7 +60,7 @@ OneDrive / Welle [Nummer] / [App-Name] / Anforderungsdokument_[App-Name].docx
 
 ## 2. Nach Freigabe: Infrastruktur beantragen
 
-Direkt nach der Freigabe des Anforderungsdokuments — damit keine Wartezeit beim Go-live entsteht:
+Direkt nach der Freigabe des Anforderungsdokuments, damit keine Wartezeit beim Go-live entsteht:
 
 ### Supabase Cloud Projekt beantragen
 
@@ -68,17 +68,16 @@ Das Supabase Cloud Projekt wird **per E-Mail beantragt** (kein Self-Service).
 
 Angaben in der E-Mail:
 - App-Name (identisch mit dem geplanten Repo-Namen)
-- Kurzbeschreibung / Zweck der App
-- Gewünschte Region (z. B. `eu-central-1`)
 
-Details zur Einrichtung nach Freigabe → **Kapitel 10 – Supabase Cloud Projekt**
+
+Details zur Einrichtung nach Freigabe → **Kapitel 5, Supabase Cloud Projekt**
 
 ### Strato-Domain beantragen
 
 Die Domain für die App wird **per E-Mail bei Strato beantragt**.
 
 - Domain-Name angeben (z. B. `app-name.de` oder `app-name.wamocon.de`)
-- Nach Zuteilung wird die Domain in Vercel konfiguriert → **Kapitel 11 – Vercel Deployment**
+- Nach Zuteilung wird die Domain in Vercel konfiguriert → **Kapitel 6, Vercel Deployment**
 
 ---
 
@@ -88,9 +87,9 @@ Die Domain für die App wird **per E-Mail bei Strato beantragt**.
 
 1. Auf GitHub: [`Wamocon/template_repo`](https://github.com/Wamocon/template_repo) → **„Use this template"** → **„Create a new repository"**
 2. Repository in der `Wamocon`-Organisation anlegen
-3. Name nach Naming Convention setzen (→ **Kapitel 06**)
+3. Name nach Naming Convention setzen (→ **Kapitel 1**)
 4. Sichtbarkeit: **Internal**
-5. `dev`-Branch anlegen — `main` bleibt geschützt
+5. `dev`-Branch anlegen, `main` bleibt geschützt
 
 ### Anforderungsdokument in GitHub Copilot laden
 
@@ -150,7 +149,7 @@ npm run dev
 ### Supabase-Fallback: Lokale Instanz
 
 Solange das Supabase Cloud Projekt noch **in Beantragung** ist, lokale Instanz nutzen:
-→ **Kapitel 10.5 – Lokale Supabase Instanz**
+→ **Kapitel 5.7, Lokale Supabase Instanz**
 
 ### Datenbankmigrationen
 
@@ -193,7 +192,7 @@ Push auf dev
 PR von dev → main gemergt
   └─→ Vercel: Produktions-Deployment
 ```text
-Details → **Kapitel 11 – Vercel Deployment**
+Details → **Kapitel 6, Vercel Deployment**
 
 ---
 
@@ -216,7 +215,7 @@ Landing Pages werden **nicht manuell gebaut**, sondern über den **KI-Generierun
 - **Bevorzugt:** GitHub Pages (kostenlos, kein Build-Step, direkt über GitHub)
 - **Optional:** Vercel (für erweiterte Deployment-Features)
 
-Standard: reines HTML, kein Framework-Overhead — direkt deploybar ohne Build-Prozess.
+Standard: reines HTML, kein Framework-Overhead, direkt deploybar ohne Build-Prozess.
 
 ---
 

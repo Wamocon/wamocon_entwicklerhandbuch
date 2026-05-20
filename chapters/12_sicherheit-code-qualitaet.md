@@ -1,4 +1,4 @@
-# Kapitel 12 – Sicherheit & Code-Qualität
+# Kapitel 7, Sicherheit & Code-Qualität
 
 ## Grundsätze
 
@@ -6,7 +6,7 @@ Sicherheit wird nicht nachträglich ergänzt, sondern von Anfang an eingebaut. J
 
 ## Supabase-Sicherheit
 
-### Row Level Security (RLS) — Pflicht
+### Row Level Security (RLS), Pflicht
 
 RLS muss für **jede Tabelle** aktiviert sein. Ohne RLS hat jeder authentifizierte Nutzer uneingeschränkten Zugriff.
 
@@ -63,7 +63,7 @@ if (!result.success) {
 
 ## Auth & Session
 
-- Auth-Tokens in **httpOnly-Cookies** speichern — niemals in `localStorage`
+- Auth-Tokens in **httpOnly-Cookies** speichern, niemals in `localStorage`
 - `@supabase/ssr` übernimmt das Cookie-Management korrekt
 - Session auf Server-Seite immer verifizieren, nicht nur im Client
 
@@ -78,9 +78,9 @@ Strict Mode verhindert eine ganze Klasse von Bugs zur Laufzeit:
   }
 }
 ```text
-- `any` vermeiden — erzwingt explizite Typen
-- `unknown` statt `any` bei unbekannten Werten — Typ muss vor Nutzung eingeschränkt werden
-- Generierte Supabase-Typen nutzen — keine falsch getippten Spaltennamen
+- `any` vermeiden, erzwingt explizite Typen
+- `unknown` statt `any` bei unbekannten Werten, Typ muss vor Nutzung eingeschränkt werden
+- Generierte Supabase-Typen nutzen, keine falsch getippten Spaltennamen
 
 ## Sicherheits-Checkliste vor dem Produktions-Deploy
 
@@ -118,15 +118,15 @@ npx tsc --noEmit
 ```text
 ### Code-Review (Vier-Augen-Prinzip)
 
-Jeder Code-Merge auf `main` muss über einen Pull Request erfolgen. Direkte Pushes auf `main` sind nicht erlaubt. Vor dem PR-Erstellen den `@reviewer`-Copilot-Agent nutzen (Details in Kapitel 13).
+Jeder Code-Merge auf `main` muss über einen Pull Request erfolgen. Direkte Pushes auf `main` sind nicht erlaubt. Vor dem PR-Erstellen den `@reviewer`-Copilot-Agent nutzen (Details in Kapitel 8).
 
 ### Performance-Grundregeln
 
 **Datenbankabfragen:**
 
-- Nur benötigte Spalten selektieren — kein `select('*')` in Produktionscode
+- Nur benötigte Spalten selektieren, kein `select('*')` in Produktionscode
 - Indizes für Spalten in `WHERE`, `ORDER BY` und `JOIN` anlegen
-- Paginierung verwenden — niemals unbegrenzte Listen laden
+- Paginierung verwenden, niemals unbegrenzte Listen laden
 - Datenbank-Views für häufig genutzte komplexe Abfragen
 
 **Next.js:**

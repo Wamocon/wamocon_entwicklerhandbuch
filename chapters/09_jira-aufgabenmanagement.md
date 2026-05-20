@@ -1,10 +1,10 @@
-# Kapitel 09 – Jira & Aufgabenmanagement
+# Kapitel 4, Jira & Aufgabenmanagement
 
 ## Einsatz: Wann ist Jira verpflichtend?
 
 | Projekttyp | Jira-Nutzung |
 | --- | --- |
-| **Wellen-Appentwicklung** (kleine, schnelle Apps im Wellen-Rhythmus) | **Optional** — empfohlen, aber nicht verpflichtend |
+| **Wellen-Appentwicklung** (kleine, schnelle Apps im Wellen-Rhythmus) | **Optional**, empfohlen, aber nicht verpflichtend |
 | **Große Projekte** (nicht im Wellen-Rhythmus, längere Laufzeit) | **Verpflichtend** |
 
 Bei Wellen-Apps kann die Aufgabenverwaltung auch über GitHub Issues oder direkt über Copilot-Pläne erfolgen.
@@ -13,7 +13,7 @@ Bei Wellen-Apps kann die Aufgabenverwaltung auch über GitHub Issues oder direkt
 
 Automatisierte Ticket-Erstellung via [`wamocon_Jira_Ticket_Creation`](https://github.com/Wamocon/wamocon_Jira_Ticket_Creation) (Python).
 
-### Ticket-Typen
+### Ticket-Typen (optional, empfohlener Standard)
 
 | Typ | Verwendung |
 | --- | --- |
@@ -21,21 +21,15 @@ Automatisierte Ticket-Erstellung via [`wamocon_Jira_Ticket_Creation`](https://gi
 | **Task** | Technische Aufgabe ohne direkten Nutzernutzen |
 | **Bug** | Fehlverhalten in einer bestehenden Funktion |
 | **Sub-Task** | Teilaufgabe einer Story oder Task |
-| **Hotfix** | Kritischer Produktionsfehler, sofort beheben |
 
-### Verlinkung mit GitHub
+Die Ticket-Typen sind ein empfohlener Standard. Abweichungen sind projektspezifisch möglich.
 
-Ticket-Nummer im Branch-Namen oder PR-Titel angeben:
-
-```text
-feature/WMC-123-login-seite
-fix/WMC-456-berechnung-korrigieren
-```text
 ## Status-Workflow
 
-```text
+```
 Backlog → To Do → In Progress → In Review → Done
-```text
+```
+
 | Status | Bedeutung |
 | --- | --- |
 | **Backlog** | Idee/Anforderung, noch nicht priorisiert |
@@ -44,37 +38,34 @@ Backlog → To Do → In Progress → In Review → Done
 | **In Review** | PR ist offen, Code-Review läuft |
 | **Done** | PR gemergt, Feature ist live |
 
-## ARGUS Review Pipeline
+## Jira GitHub Integration
 
-Die [ARGUS Review Pipeline](https://github.com/Wamocon/ARGUS) ist ein Multi-Agenten-Review-System für Inhalte und Anforderungen.
+Durch die Verlinkung von GitHub und Jira werden Jira-Tickets automatisch aktualisiert,
+sobald ein Branch oder Pull Request erstellt wird.
 
-Einsatz:
-- Qualitätskontrolle vor Freigabe von Entwicklungsartefakten
-- Review von Anforderungsdokumenten
-- Prüfung von KI-generierten Outputs
+### Branch-Name und Ticket-Nummer
+
+Um die automatische Verknüpfung zu aktivieren, muss die Jira-Ticket-Nummer im Branch-Namen enthalten sein:
+
+```
+feature/WMC-123-login-seite
+fix/WMC-456-berechnung-korrigieren
+```
+
+### Jira Automation: Automatische Statusübergänge
+
+| Aktion in GitHub | Ticket-Status in Jira |
+| --- | --- |
+| Branch mit Ticket-Nummer erstellt | **In Arbeit** |
+| Pull Request geöffnet | **In Review** |
+| Pull Request gemergt | **Fertig** |
+
+Die Statusübergänge sind über Jira Automation konfiguriert und laufen automatisch ohne manuellen Eingriff.
 
 ## Standard-Prozessablauf
 
 Verbindliche Vorlage für alle Entwicklungsprojekte:
 
-🔗 **[wamocon.github.io/standard_prozessablauf/](https://wamocon.github.io/standard_prozessablauf/)**
+**[wamocon.github.io/standard_prozessablauf/](https://wamocon.github.io/standard_prozessablauf/)**
 
 Repo: [`Wamocon/standard_prozessablauf`](https://github.com/Wamocon/standard_prozessablauf)
-
-## Prioritäten
-
-| Priorität | Reaktionszeit | Beschreibung |
-| --- | --- | --- |
-| **Kritisch** | Sofort | Produktionsausfall oder Datenverlust |
-| **Hoch** | Innerhalb 24h | Wichtige Funktion defekt, kein Workaround |
-| **Mittel** | Nächster Sprint | Einschränkung mit Workaround |
-| **Niedrig** | Nach Kapazität | Nice-to-have, kein Nutzerimpact |
-
-## Sprint-Planung (bei großen Projekten)
-
-Entwicklung in zweiwöchigen Sprints:
-
-1. **Sprint Planning** — Tickets aus dem Backlog in den Sprint ziehen, Aufwände schätzen
-2. **Daily Standup** — Kurzes Update: Was wurde gemacht? Was kommt? Gibt es Hindernisse?
-3. **Sprint Review** — Fertige Features präsentieren
-4. **Retrospektive** — Was lief gut? Was kann verbessert werden?

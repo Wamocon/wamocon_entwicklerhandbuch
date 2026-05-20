@@ -1,27 +1,25 @@
-# Kapitel 10 – Supabase Cloud Projekt
+# Kapitel 5, Supabase Cloud Projekt
 
 ## Was ist Supabase?
 
 WAMOCON nutzt **Supabase Pro** als primären Backend-as-a-Service für alle Apps. Es stellt bereit:
 
 - **PostgreSQL-Datenbank** mit vollem SQL-Zugriff
-- **Auth** — Benutzerauthentifizierung (E-Mail, OAuth, Magic Links)
-- **Row Level Security (RLS)** — feingranulare Zugriffssteuerung auf Datenbankebene
-- **Storage** — Dateispeicherung (Bilder, Dokumente)
-- **Edge Functions** — Serverless-Funktionen (bei Bedarf)
-- **REST & Realtime API** — automatisch generiert aus dem Datenbankschema
+- **Auth**, Benutzerauthentifizierung (E-Mail, OAuth, Magic Links)
+- **Row Level Security (RLS)**, feingranulare Zugriffssteuerung auf Datenbankebene
+- **Storage**, Dateispeicherung (Bilder, Dokumente)
+- **Edge Functions**, Serverless-Funktionen (bei Bedarf)
+- **REST & Realtime API**, automatisch generiert aus dem Datenbankschema
 
 ## 1. Beantragung (Pflicht vor Entwicklungsstart)
 
-Das Supabase Cloud Projekt wird **per E-Mail beantragt** — kein Self-Service.
+Das Supabase Cloud Projekt wird **per E-Mail beantragt**, kein Self-Service.
 
-**Zeitpunkt:** Direkt nach Freigabe des Anforderungsdokuments (→ **Kapitel 08, Abschnitt 2**)
+**Zeitpunkt:** Direkt nach Freigabe des Anforderungsdokuments (→ **Kapitel 3, Abschnitt 2**)
 
 **Angaben in der E-Mail:**
 
 - App-Name (identisch mit dem GitHub-Repo-Namen)
-- Kurzbeschreibung und Zweck der App
-- Gewünschte Region (z. B. `eu-central-1` für Deutschland)
 
 > Durch frühzeitige Beantragung entsteht keine Wartezeit kurz vor dem Go-live.
 
@@ -55,32 +53,35 @@ SUPABASE_DB_SCHEMA=public
 
 | Schema | Zweck |
 | --- | --- |
-| `public` | Standard-Schema (Supabase-Default) |
-| `test` | Entwicklungs- und Testdaten |
-| `prod` | Produktionsdaten (Trennung von Testdaten) |
+| `[appname]_dev` | Entwicklungs- und Testdaten (ersetzt `public`) |
+| `[appname]_test` | Separates Test-Schema |
+| `[appname]_prod` | Produktionsdaten (Trennung von Testdaten) |
+
+Die Schema-Struktur ist empfohlen und kann projektspezifisch angepasst werden.
 
 ### Schema erstellen und Berechtigungen setzen
 
 ```sql
-CREATE SCHEMA IF NOT EXISTS test;
-CREATE SCHEMA IF NOT EXISTS prod;
+-- Beispiel für App "carman"
+CREATE SCHEMA IF NOT EXISTS carman_dev;
+CREATE SCHEMA IF NOT EXISTS carman_test;
+CREATE SCHEMA IF NOT EXISTS carman_prod;
 
-GRANT USAGE ON SCHEMA test TO anon, authenticated, service_role;
-GRANT USAGE ON SCHEMA prod TO anon, authenticated, service_role;
+GRANT USAGE ON SCHEMA carman_dev TO anon, authenticated, service_role;
+GRANT USAGE ON SCHEMA carman_test TO anon, authenticated, service_role;
+GRANT USAGE ON SCHEMA carman_prod TO anon, authenticated, service_role;
 
-GRANT ALL ON ALL TABLES IN SCHEMA test TO anon, authenticated, service_role;
-ALTER DEFAULT PRIVILEGES IN SCHEMA test
-  GRANT ALL ON TABLES TO anon, authenticated, service_role;
-
-GRANT ALL ON ALL TABLES IN SCHEMA prod TO anon, authenticated, service_role;
-ALTER DEFAULT PRIVILEGES IN SCHEMA prod
-  GRANT ALL ON TABLES TO anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA carman_dev TO anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA carman_test TO anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA carman_prod TO anon, authenticated, service_role;
 ```text
 Schemas über die API zugänglich machen: **Project Settings → API → Exposed schemas** → Schema-Namen hinzufügen.
 
 ## 4. Datenbankmigrationen
 
-Schema-Änderungen werden **ausschließlich über Migrations-Dateien** vorgenommen — niemals direkt über das Supabase-Dashboard.
+Schema-Änderungen können auf zwei Wegen vorgenommen werden.
+
+**Option 1: Migrations-Dateien** (empfohlen, versionierbar)
 
 **GitHub Copilot übernimmt die Erstellung und Ausführung der Migrationen** auf Basis des Anforderungsdokuments.
 
@@ -98,11 +99,15 @@ npx supabase db push
 # Migrations-Status prüfen
 npx supabase migration list
 ```text
+**Option 2: SQL Editor** (für schnelle Anpassungen)
+
+Schema-Änderungen können auch direkt im SQL Editor des Supabase Dashboards vorgenommen werden. In diesem Fall sollte die Änderung nachträglich als Migrations-Datei dokumentiert werden.
+
 **Wichtig:** Migrations-Dateien in `supabase/migrations/` immer in Git committen. Bestehende Migrations-Dateien niemals nachträglich ändern.
 
 ## 5. Row Level Security (RLS)
 
-RLS muss für **jede Tabelle** aktiviert sein — Copilot wird mit der Anweisung gesteuert, RLS immer zu aktivieren und niemals deaktiviert zu lassen.
+RLS muss für **jede Tabelle** aktiviert sein, Copilot wird mit der Anweisung gesteuert, RLS immer zu aktivieren und niemals deaktiviert zu lassen.
 
 ```sql
 -- RLS aktivieren
@@ -122,13 +127,13 @@ Auth-Konfiguration über das Supabase Dashboard:
 - OAuth-Provider konfigurieren (Google, GitHub, etc.)
 - E-Mail-Templates anpassen
 
-In der App wird `@supabase/ssr` für serverseitige Auth-Integration genutzt (Details → **Kapitel 07 – Tech Stack**).
+In der App wird `@supabase/ssr` für serverseitige Auth-Integration genutzt (Details → **Kapitel 2, Tech Stack**).
 
 ## 7. Lokale Supabase Instanz (Fallback & Entwicklungsphase)
 
 ### Wann nutzen?
 
-- Supabase Cloud Projekt noch in Beantragung (→ Kapitel 08, Abschnitt 1)
+- Supabase Cloud Projekt noch in Beantragung (→ Kapitel 3, Abschnitt 1)
 - Offline-Entwicklung und schnelles Prototyping ohne Cloud-Anbindung
 
 ### Lokale Instanzen via localSupabaseDB
@@ -174,16 +179,16 @@ Sobald das Supabase Cloud Projekt genehmigt ist:
 
 Der Supabase MCP (Model Context Protocol) Server gibt Copilot Zugriff auf das echte Datenbankschema.
 
-Details zur Konfiguration → **Kapitel 13 – KI-Entwicklung & Copilot-Workflows**
+Details zur Konfiguration → **Kapitel 8, KI-Entwicklung & Copilot-Workflows**
 
 ## 9. Checkliste: Supabase-Setup
 
 - [ ] Supabase Cloud Projekt per E-Mail beantragt (direkt nach Anforderungsfreigabe)
 - [ ] Projekt erstellt und Status „Healthy"
 - [ ] `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL` in `.env.local` eingetragen
-- [ ] Alle Variablen als Vercel Environment Variables hinterlegt (→ Kapitel 11)
+- [ ] Alle Variablen als Vercel Environment Variables hinterlegt (→ Kapitel 6)
 - [ ] `SUPABASE_SERVICE_ROLE_KEY` **kein** `NEXT_PUBLIC_`-Prefix
 - [ ] `.env.local` in `.gitignore` vorhanden
 - [ ] RLS für alle Tabellen aktiviert
 - [ ] Erste Migration erstellt und in `supabase/migrations/` committed
-- [ ] MCP für lokale Copilot-Tools konfiguriert (→ Kapitel 13)
+- [ ] MCP für lokale Copilot-Tools konfiguriert (→ Kapitel 8)

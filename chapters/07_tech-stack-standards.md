@@ -1,9 +1,9 @@
-# Kapitel 07 – Tech Stack & Standards
+# Kapitel 2, Tech Stack & Standards
 
 ## Übersicht
 
 Alle WAMOCON-Webanwendungen basieren auf einem einheitlichen Tech Stack.
-Dieser Standard gilt für alle neuen Apps und sollte nicht ohne Absprache abgewichen werden.
+Dieser Tech Stack ist der Standard für alle neuen Apps. Abweichungen sind möglich und können themenspezifisch begründet werden.
 
 | Schicht | Technologie | Version |
 | --- | --- | --- |
@@ -11,19 +11,19 @@ Dieser Standard gilt für alle neuen Apps und sollte nicht ohne Absprache abgewi
 | Sprache | TypeScript (strict mode) | 5.x |
 | Styling | Tailwind CSS | v4 |
 | Backend & Datenbank | Supabase (PostgreSQL, Auth, RLS) | 2.x |
-| Deployment | Vercel | – |
-| Package Manager | npm | – |
+| Deployment | Vercel |, |
+| Package Manager | npm |, |
 | Linter | ESLint | 9.x |
-| Dev-Server | Next.js mit Turbopack | – |
-| E2E-Tests | Playwright | – |
+| Dev-Server | Next.js mit Turbopack |, |
+| E2E-Tests | Playwright |, |
 
-## Next.js 16 – App Router
+## Next.js 16, App Router
 
 Alle Apps verwenden den **App Router** (`src/app/`). Der Pages Router wird nicht verwendet.
 
 ### Wichtigste Regeln
 
-- **Server Components sind der Standard** — `"use client"` nur hinzufügen, wenn Interaktivität benötigt wird
+- **Server Components sind der Standard**, `"use client"` nur hinzufügen, wenn Interaktivität benötigt wird
 - Server Actions in eigene Dateien auslagern (`actions.ts` im Feature-Ordner)
 - `loading.tsx` und `error.tsx` für jedes Route-Segment anlegen
 - Formulareingaben auf Client- und Server-Seite validieren
@@ -51,7 +51,7 @@ Alle Projekte nutzen TypeScript im **Strict Mode** (`strict: true` in `tsconfig.
 
 ### Konventionen
 
-- **`any` vermeiden** — `unknown` verwenden und den Typ einschränken
+- **`any` vermeiden**, `unknown` verwenden und den Typ einschränken
 - **Zod für Runtime-Validierung** an API-Grenzen einsetzen
 - **Interfaces bevorzugen** gegenüber `type` für Objektformen (bessere Fehlermeldungen)
 - **Typen zentral exportieren** pro Feature in `types.ts`
@@ -67,15 +67,15 @@ Alle Apps verwenden Tailwind CSS v4 mit dem PostCSS-Plugin (`@tailwindcss/postcs
 
 ### Grundregeln
 
-- Utility-First-Ansatz — keine separaten CSS-Dateien außer für globale Styles
+- Utility-First-Ansatz, keine separaten CSS-Dateien außer für globale Styles
 - Responsive Design mit den Standard-Breakpoints von Tailwind
-- Keine magischen Zahlen — Tailwind-Scale-Werte verwenden
+- Keine magischen Zahlen, Tailwind-Scale-Werte verwenden
 - Das WAMOCON-Design-System (dunkler Blauverlauf, Akzentfarbe `#1fd0b0`) aus Kapitel 05 beachten
 
 ## Supabase
 
 Supabase stellt PostgreSQL-Datenbank, Authentifizierung und Row Level Security bereit.
-Details zur Konfiguration und Nutzung in **Kapitel 10 – Supabase Cloud Projekt**.
+Details zur Konfiguration und Nutzung in **Kapitel 5, Supabase Cloud Projekt**.
 
 ### Supabase-Client-Regeln
 
