@@ -5246,8 +5246,8 @@ description: &quot;Applies to all repos&quot;
         var hide = lang === 'de' ? 'en' : 'de';
         document.querySelectorAll('.lang-de').forEach(function(el){ el.style.display = show === 'de' ? '' : 'none'; });
         document.querySelectorAll('.lang-en').forEach(function(el){ el.style.display = show === 'en' ? '' : 'none'; });
-        document.querySelectorAll('.txt-de').forEach(function(el){ el.style.display = show === 'de' ? '' : 'none'; });
-        document.querySelectorAll('.txt-en').forEach(function(el){ el.style.display = show === 'en' ? '' : 'none'; });
+        document.querySelectorAll('.txt-de').forEach(function(el){ el.style.display = show === 'de' ? 'inline' : 'none'; });
+        document.querySelectorAll('.txt-en').forEach(function(el){ el.style.display = show === 'en' ? 'inline' : 'none'; });
         var btn = document.getElementById('lang-toggle');
         if (btn) btn.textContent = lang === 'de' ? 'EN' : 'DE';
       }
