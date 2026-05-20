@@ -2481,6 +2481,8 @@ npx supabase migration list
 <p>Schema-Änderungen können auch direkt im SQL Editor des Supabase Dashboards vorgenommen werden. In diesem Fall sollte die Änderung nachträglich als Migrations-Datei dokumentiert werden.</p>
 <p><strong>Option 2: SQL Editor</strong> (für schnelle Anpassungen)</p>
 <p>Schema-Änderungen können auch direkt im SQL Editor des Supabase Dashboards vorgenommen werden. In diesem Fall sollte die Änderung nachträglich als Migrations-Datei dokumentiert werden.</p>
+<p><strong>Option 2: SQL Editor</strong> (für schnelle Anpassungen)</p>
+<p>Schema-Änderungen können auch direkt im SQL Editor des Supabase Dashboards vorgenommen werden. In diesem Fall sollte die Änderung nachträglich als Migrations-Datei dokumentiert werden.</p>
 <p><strong>Wichtig:</strong> Migrations-Dateien in <code>supabase/migrations/</code> immer in Git committen. Bestehende Migrations-Dateien niemals nachträglich ändern.</p>
 <h2>5. Row Level Security (RLS)</h2>
 <p>RLS muss für <strong>jede Tabelle</strong> aktiviert sein, Copilot wird mit der Anweisung gesteuert, RLS immer zu aktivieren und niemals deaktiviert zu lassen.</p>
@@ -4217,30 +4219,6 @@ description: &quot;Applies to all repos&quot;
 </tr>
 </tbody>
 </table>
-<h2>Infrastruktur-Repositories</h2>
-<p>Folgende Repositories sind keine Apps, sondern Infrastruktur-Komponenten der Organisation:</p>
-<table>
-<thead>
-<tr>
-<th>Repository</th>
-<th>Beschreibung</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://github.com/Wamocon/github_workflow">github_workflow</a></td>
-<td>Zentrale CI/CD-Workflows der Organisation</td>
-</tr>
-<tr>
-<td><a href="https://github.com/Wamocon/localSupabaseDB">localSupabaseDB</a></td>
-<td>Template für lokale Supabase-Instanzen</td>
-</tr>
-<tr>
-<td><a href="https://github.com/Wamocon/template_repo">template_repo</a></td>
-<td>Basis-Template für alle neuen Apps</td>
-</tr>
-</tbody>
-</table>
 <h2>Landing Page Repositories</h2>
 <p>Jede App hat ein eigenes Landing-Page-Repository (<code>[app-name]_lp</code>), generiert über den KI-Workflow (→ <strong>Kapitel 3, Abschnitt 6</strong>):</p>
 <table>
@@ -5243,6 +5221,7 @@ description: &quot;Applies to all repos&quot;
 </table>
 </div>
 </section>
+
 
 
 

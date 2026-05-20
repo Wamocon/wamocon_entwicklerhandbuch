@@ -656,11 +656,12 @@ GRANT ALL ON ALL TABLES IN SCHEMA carman_prod TO anon, authenticated, service_ro
             '',
             content
         )
-    # Add Infrastruktur section before Landing Pages
-    content = content.replace(
-        '\n## Landing Page Repositories\n',
-        OEKOSYSTEM_INFRA_SECTION + '\n## Landing Page Repositories\n'
-    )
+    # Add Infrastruktur section before Landing Pages (only if not already present)
+    if '## Infrastruktur-Repositories' not in content:
+        content = content.replace(
+            '\n## Landing Page Repositories\n',
+            OEKOSYSTEM_INFRA_SECTION + '\n## Landing Page Repositories\n'
+        )
     content = fix_dashes(content)
     write_file(path, content)
 

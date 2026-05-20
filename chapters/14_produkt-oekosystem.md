@@ -64,16 +64,6 @@ Folgende Repositories sind keine Apps, sondern Infrastruktur-Komponenten der Org
 | Repository | Beschreibung |
 | --- | --- |
 
-## Infrastruktur-Repositories
-
-Folgende Repositories sind keine Apps, sondern Infrastruktur-Komponenten der Organisation:
-
-| Repository | Beschreibung |
-| --- | --- |
-| [github_workflow](https://github.com/Wamocon/github_workflow) | Zentrale CI/CD-Workflows der Organisation |
-| [localSupabaseDB](https://github.com/Wamocon/localSupabaseDB) | Template für lokale Supabase-Instanzen |
-| [template_repo](https://github.com/Wamocon/template_repo) | Basis-Template für alle neuen Apps |
-
 ## Landing Page Repositories
 
 Jede App hat ein eigenes Landing-Page-Repository (`[app-name]_lp`), generiert über den KI-Workflow (→ **Kapitel 3, Abschnitt 6**):
