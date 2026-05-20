@@ -692,6 +692,21 @@ CHAPTERS = [
     ('kap10', 'chapters/15_glossar-referenzen.md'),
 ]
 
+CHAPTERS_EN = [
+    ('kap00', 'chapters/en/00_introduction.md'),
+    ('kapQS', 'chapters/en/01_quickstart.md'),
+    ('kap01', 'chapters/en/06_github-repository-structure.md'),
+    ('kap02', 'chapters/en/07_tech-stack-standards.md'),
+    ('kap03', 'chapters/en/08_development-process.md'),
+    ('kap04', 'chapters/en/09_jira-task-management.md'),
+    ('kap05', 'chapters/en/10_supabase.md'),
+    ('kap06', 'chapters/en/11_vercel-deployment.md'),
+    ('kap07', 'chapters/en/12_security-code-quality.md'),
+    ('kap08', 'chapters/en/13_ai-development-copilot.md'),
+    ('kap09', 'chapters/en/14_product-ecosystem.md'),
+    ('kap10', 'chapters/en/15_glossary-references.md'),
+]
+
 SIDEBAR_LABELS = [
     ('kap00', '00', 'Einleitung'),
     ('kapQS', 'QS', 'Quickstart'),
@@ -705,6 +720,21 @@ SIDEBAR_LABELS = [
     ('kap08', '08', 'KI-Entwicklung &amp; Copilot-Workflows'),
     ('kap09', '09', 'Produkt-\u00d6kosystem &amp; App-Katalog'),
     ('kap10', '10', 'Glossar &amp; Referenzen'),
+]
+
+SIDEBAR_LABELS_EN = [
+    ('kap00', '00', 'Introduction'),
+    ('kapQS', 'QS', 'Quickstart'),
+    ('kap01', '01', 'GitHub &amp; Repository Structure'),
+    ('kap02', '02', 'Tech Stack &amp; Standards'),
+    ('kap03', '03', 'Development Process'),
+    ('kap04', '04', 'Jira &amp; Task Management'),
+    ('kap05', '05', 'Supabase Cloud Project'),
+    ('kap06', '06', 'Vercel Deployment'),
+    ('kap07', '07', 'Security &amp; Code Quality'),
+    ('kap08', '08', 'AI Development &amp; Copilot Workflows'),
+    ('kap09', '09', 'Product Ecosystem &amp; App Catalogue'),
+    ('kap10', '10', 'Glossary &amp; References'),
 ]
 
 def preprocess_md(text):
@@ -742,10 +772,14 @@ def build_html():
     index_path = os.path.join(BASE, 'index.html')
     html = read_file(index_path)
 
-    # --- Sidebar ersetzen ---
+    # --- Sidebar ersetzen (DE + EN Labels) ---
     nav_items = '\n'.join(
-        f'            <li><a href="#{kap_id}"><span class="kap-num">{num}</span> {label}</a></li>'
-        for kap_id, num, label in SIDEBAR_LABELS
+        f'            <li><a href="#{kap_de[0]}">'
+        f'<span class="kap-num">{kap_de[1]}</span> '
+        f'<span class="txt-de">{kap_de[2]}</span>'
+        f'<span class="txt-en">{kap_en[2]}</span>'
+        f'</a></li>'
+        for kap_de, kap_en in zip(SIDEBAR_LABELS, SIDEBAR_LABELS_EN)
     )
     html = re.sub(
         r'(<nav>\s*<ol>).*?(</ol>\s*</nav>)',
@@ -755,7 +789,7 @@ def build_html():
         flags=re.DOTALL
     )
 
-    # --- Kapitel-Sections ersetzen ---
+    # --- Kapitel-Sections ersetzen (DE + EN) ---
     # Alles zwischen erstem <section class="chapter" und letztem </section> (vor </main>)
     first = html.index('\n<section class="chapter"')
     # Find the last </section> before </main>
@@ -763,11 +797,17 @@ def build_html():
     last_section_end += len('</section>')
 
     sections_html = ''
-    for kap_id, rel_path in CHAPTERS:
-        md_path = os.path.join(BASE, rel_path)
-        md_text = read_file(md_path)
-        body = convert_md(md_text)
-        sections_html += f'\n<section class="chapter" id="{kap_id}">\n{body}\n</section>\n'
+    for (kap_id, rel_path_de), (_, rel_path_en) in zip(CHAPTERS, CHAPTERS_EN):
+        md_de = read_file(os.path.join(BASE, rel_path_de))
+        md_en = read_file(os.path.join(BASE, rel_path_en))
+        body_de = convert_md(md_de)
+        body_en = convert_md(md_en)
+        sections_html += (
+            f'\n<section class="chapter" id="{kap_id}">\n'
+            f'<div class="lang-de">\n{body_de}\n</div>\n'
+            f'<div class="lang-en">\n{body_en}\n</div>\n'
+            f'</section>\n'
+        )
 
     html = html[:first] + sections_html + html[last_section_end:]
 
